@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeMove – Multi-Modal Transport</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .gradient-bg { background: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%); min-height: 100vh; }
+    .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-bottom: 1px solid #e5e7eb; }
+    .header-content { max-width: 1280px; margin: 0 auto; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; height: 64px; }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon { width: 40px; height: 40px; background: #2563eb; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem; }
+    .logo-text { font-size: 1.5rem; font-weight: bold; color: #111827; }
+    .nav { display: flex; gap: 24px; }
+    .nav a { color: #4b5563; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .nav a:hover { color: #2563eb; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 3rem 1rem; }
+    .hero-title { font-size: 2.5rem; font-weight: bold; text-align: center; color: #111827; margin-bottom: 1rem; }
+    .hero-subtitle { font-size: 1.25rem; text-align: center; color: #4b5563; margin-bottom: 2rem; }
+    .grid { display: grid; gap: 1.5rem; margin-bottom: 3rem; }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .card { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; text-align: center; }
+    .card-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .card-title { font-weight: 600; color: #111827; margin-bottom: 0.5rem; }
+    .card-text { color: #6b7280; font-size: 0.875rem; }
+    .booking-card { background: white; border-radius: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 2rem; max-width: 1024px; margin: 0 auto; }
+    .section-title { font-size: 1.5rem; font-weight: bold; color: #111827; margin-bottom: 1.5rem; text-align: center; }
+    .transport-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-bottom: 2rem; }
+    .transport-btn { padding: 1rem; border-radius: 12px; border: 2px solid #e5e7eb; background: white; cursor: pointer; transition: all 0.2s; text-align: center; }
+    .transport-btn:hover { border-color: #d1d5db; }
+    .transport-btn.active { border-color: #2563eb; background: #eff6ff; }
+    .transport-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .transport-name { font-weight: 600; color: #111827; font-size: 0.875rem; }
+    .transport-desc { color: #6b7280; font-size: 0.75rem; }
+    .input-group { margin-bottom: 1.5rem; }
+    .input-label { display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem; }
+    .input-wrapper { position: relative; }
+    .input-icon { position: absolute; left: 12px; top: 12px; color: #9ca3af; }
+    .input-field { width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; }
+    .input-field:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.5); }
+    .fare-display { background: #d1fae5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; display: none; }
+    .fare-display.active { display: block; }
+    .fare-amount { font-size: 1.25rem; font-weight: 600; color: #111827; margin-bottom: 0.5rem; }
+    .btn-primary { width: 100%; background: #2563eb; color: white; padding: 1rem; border-radius: 12px; font-weight: 600; font-size: 1.125rem; border: none; cursor: pointer; transition: background 0.2s; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-primary:disabled { background: #d1d5db; cursor: not-allowed; }
+    .demo-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .demo-card { background: white; border-radius: 12px; padding: 1.5rem; border: 2px solid #e5e7eb; transition: all 0.2s; text-decoration: none; display: block; }
+    .demo-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .demo-card.blue { background: #eff6ff; border-color: #bfdbfe; }
+    .demo-card.green { background: #f0fdf4; border-color: #bbf7d0; }
+    .demo-card.purple { background: #faf5ff; border-color: #e9d5ff; }
+    .demo-card.orange { background: #fff7ed; border-color: #fed7aa; }
+    .demo-title { font-weight: 600; color: #111827; margin-bottom: 0.5rem; }
+    .demo-text { color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem; }
+    .demo-link { font-weight: 500; }
+    .demo-link.blue { color: #2563eb; }
+    .demo-link.green { color: #16a34a; }
+    .demo-link.purple { color: #9333ea; }
+    .demo-link.orange { color: #ea580c; }
+  </style>
+</head>
+<body class="gradient-bg">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">S</div>
+        <h1 class="logo-text">SafeMove</h1>
+      </div>
+      <nav class="nav">
+        <a href="#" onclick="goToDashboard()">Dashboard</a>
+        <a href="#" onclick="logout()">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Hero Section -->
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <h2 class="hero-title">Safe. Simple. Inclusive. Multimodal.</h2>
+      <p class="hero-subtitle">Transparent, fixed rate transport across East Africa. No surge pricing, no hidden fees.</p>
+    </div>
+
+    <!-- Platform Accessibility -->
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-icon">💻</div>
+        <h3 class="card-title">Web Platform</h3>
+        <p class="card-text">Full-featured web application with voice assistance and family profiles</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📱</div>
+        <h3 class="card-title">USSD Support</h3>
+        <p class="card-text">Works on any phone via *284*20# - no smartphone or internet required</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔊</div>
+        <h3 class="card-title">Voice Accessible</h3>
+        <p class="card-text">Voice narration and hands-free booking for accessibility</p>
+      </div>
+    </div>
+
+    <!-- Fixed Rate Benefits -->
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card-icon">🛡️</div>
+        <h3 class="card-title">Fixed Pricing</h3>
+        <p class="card-text">No surge pricing or hidden fees</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⏱️</div>
+        <h3 class="card-title">Instant Quotes</h3>
+        <p class="card-text">See exact fare before booking</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⭐</div>
+        <h3 class="card-title">Trusted Service</h3>
+        <p class="card-text">Reliable drivers and vehicles</p>
+      </div>
+    </div>
+
+    <!-- Demo Links -->
+    <div class="booking-card" style="margin-bottom: 3rem;">
+      <h3 class="section-title">Explore All SafeMove Features</h3>
+      <div class="grid demo-grid">
+        <a href="javascript:void(0)" onclick="goToRider()" class="demo-card blue">
+        <div class="card-icon">🧍‍♂️</div>
+        <h4 class="demo-title">Enhanced Rider Experience</h4>
+        <p class="demo-text">Complete booking with voice assistance and SOS alerts</p>
+        <span class="demo-link blue">Book Your Journey →</span>
+        </a>
+        <a href="javascript:void(0)" onclick="goToDriver()" class="demo-card green">
+        <div class="card-icon">🚗</div>
+        <h4 class="demo-title">Driver Dashboard</h4>
+        <p class="demo-text">Trip requests with upfront earnings and document verification</p>
+        <span class="demo-link green">View Dashboard →</span>
+        </a>
+        <a href="javascript:void(0)" onclick="goToAdmin()" class="demo-card purple">
+        <div class="card-icon">⚙️</div>
+        <h4 class="demo-title">Admin Dashboard</h4>
+        <p class="demo-text">Live monitoring, driver tracking, and verification management</p>
+        <span class="demo-link purple">Admin Panel →</span>
+        </a>
+        <a href="ussd-demo.html" class="demo-card orange">
+        <div class="card-icon">📱</div>
+        <h4 class="demo-title">USSD Feature Phone Demo</h4>
+        <p class="demo-text">How SafeMove works on basic phones via *284*20#</p>
+        <span class="demo-link orange">Try USSD Demo →</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Booking Interface -->
+    <div class="booking-card">
+      <h3 class="section-title">Quick Booking Demo</h3>
+      
+      <div style="margin-bottom: 2rem;">
+        <label class="input-label">Choose Transport Mode</label>
+        <div class="transport-grid" id="transportModes">
+          <button class="transport-btn active" data-mode="boda" data-fare="5">
+            <div class="transport-icon">🛵</div>
+            <div class="transport-name">Boda</div>
+            <div class="transport-desc">Quick & affordable</div>
+          </button>
+          <button class="transport-btn" data-mode="taxi" data-fare="15">
+            <div class="transport-icon">🚕</div>
+            <div class="transport-name">Taxi</div>
+            <div class="transport-desc">Comfortable ride</div>
+          </button>
+          <button class="transport-btn" data-mode="car" data-fare="25">
+            <div class="transport-icon">🚗</div>
+            <div class="transport-name">Car</div>
+            <div class="transport-desc">Premium service</div>
+          </button>
+          <button class="transport-btn" data-mode="bus" data-fare="10">
+            <div class="transport-icon">🚌</div>
+            <div class="transport-name">Bus</div>
+            <div class="transport-desc">Budget friendly</div>
+          </button>
+          <button class="transport-btn" data-mode="train" data-fare="35">
+            <div class="transport-icon">🚆</div>
+            <div class="transport-name">Train</div>
+            <div class="transport-desc">Long distance</div>
+          </button>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+        <div class="input-group">
+          <label class="input-label">Pickup Location</label>
+          <div class="input-wrapper">
+            <span class="input-icon">📍</span>
+            <input type="text" id="pickup" class="input-field" placeholder="Enter pickup location">
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Destination</label>
+          <div class="input-wrapper">
+            <span class="input-icon">📍</span>
+            <input type="text" id="destination" class="input-field" placeholder="Enter destination">
+          </div>
+        </div>
+      </div>
+
+      <div id="fareDisplay" class="fare-display">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="margin-bottom: 0.5rem;">
+              <span style="background: #d1fae5; color: #065f46; font-size: 0.75rem; font-weight: 500; padding: 4px 10px; border-radius: 12px;">
+                Fixed Rate ✅
+              </span>
+            </div>
+            <h4 class="fare-amount">$<span id="fareAmount">0</span></h4>
+            <p style="font-size: 0.875rem; color: #6b7280;">Your fare is fixed. No extra charges.</p>
+          </div>
+          <div style="text-align: right;">
+            <div id="selectedIcon" style="font-size: 2rem; margin-bottom: 0.5rem;">🛵</div>
+            <div id="selectedMode" style="font-size: 0.875rem; font-weight: 500; color: #374151;">Boda</div>
+          </div>
+        </div>
+      </div>
+
+      <button id="bookBtn" class="btn-primary" disabled>Experience Full Booking - $0</button>
+    </div>
+
+    <!-- Features Grid -->
+    <div style="margin-top: 4rem;" class="grid grid-3">
+      <div class="card">
+        <div class="card-icon">🛡️</div>
+        <h3 class="card-title">Safe & Secure</h3>
+        <p class="card-text">All drivers are verified and vehicles inspected</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⏱️</div>
+        <h3 class="card-title">On Time</h3>
+        <p class="card-text">Reliable pickup and arrival times</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⭐</div>
+        <h3 class="card-title">Rated Drivers</h3>
+        <p class="card-text">Top-rated professional drivers</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📍</div>
+        <h3 class="card-title">Wide Coverage</h3>
+        <p class="card-text">Available across all major routes</p>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <script>
+    // Check authentication on page load
+    window.addEventListener('DOMContentLoaded', function() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        // Redirect to login if not authenticated
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Decode token to get user role (simplified - in production use proper JWT decoding)
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const userRole = payload.role || 'rider';
+
+        // Redirect to appropriate dashboard based on role
+        if (userRole === 'driver') {
+          window.location.href = 'driver-dashboard.html';
+        } else if (userRole === 'admin') {
+          window.location.href = 'admin-dashboard.html';
+        }
+        // Stay on index.html for riders
+      } catch (e) {
+        // Invalid token, redirect to login
+        localStorage.removeItem('token');
+        window.location.href = 'login.html';
+      }
+    });
+
+    let selectedMode = 'boda';
+    let selectedFare = 5;
+    let selectedIcon = '🛵';
+    let selectedName = 'Boda';
+
+    const transportBtns = document.querySelectorAll('.transport-btn');
+    const pickupInput = document.getElementById('pickup');
+    const destinationInput = document.getElementById('destination');
+    const fareDisplay = document.getElementById('fareDisplay');
+    const fareAmount = document.getElementById('fareAmount');
+    const bookBtn = document.getElementById('bookBtn');
+    const selectedIconEl = document.getElementById('selectedIcon');
+    const selectedModeEl = document.getElementById('selectedMode');
+
+    transportBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        transportBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedMode = btn.dataset.mode;
+        selectedFare = parseInt(btn.dataset.fare);
+        selectedIcon = btn.querySelector('.transport-icon').textContent;
+        selectedName = btn.querySelector('.transport-name').textContent;
+        updateFare();
+      });
+    });
+
+    function updateFare() {
+      const pickup = pickupInput.value.trim();
+      const destination = destinationInput.value.trim();
+
+      if (pickup && destination) {
+        fareDisplay.classList.add('active');
+        fareAmount.textContent = selectedFare;
+        selectedIconEl.textContent = selectedIcon;
+        selectedModeEl.textContent = selectedName;
+        bookBtn.disabled = false;
+        bookBtn.textContent = `Experience Full Booking - $${selectedFare}`;
+      } else {
+        fareDisplay.classList.remove('active');
+        bookBtn.disabled = true;
+        bookBtn.textContent = 'Experience Full Booking - $0';
+      }
+    }
+
+    pickupInput.addEventListener('input', updateFare);
+    destinationInput.addEventListener('input', updateFare);
+
+    bookBtn.addEventListener('click', () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        window.location.href = 'booking.html';
+      } else {
+        localStorage.setItem('intendedDestination', 'booking.html');
+        window.location.href = 'login.html';
+      }
+    });
+
+    // Navigation functions
+    function goToRider() {
+      const token = localStorage.getItem('token');
+      if (token) {
+        window.location.href = 'booking.html';
+      } else {
+        localStorage.setItem('intendedDestination', 'booking.html');
+        localStorage.setItem('intendedRole', 'rider');
+        window.location.href = 'login.html';
+      }
+    }
+
+    function goToDriver() {
+      const token = localStorage.getItem('token');
+      if (token) {
+        window.location.href = 'driver-dashboard.html';
+      } else {
+        localStorage.setItem('intendedDestination', 'driver-dashboard.html');
+        localStorage.setItem('intendedRole', 'driver');
+        window.location.href = 'login.html';
+      }
+    }
+
+    function goToAdmin() {
+      const token = localStorage.getItem('token');
+      if (token) {
+        window.location.href = 'admin-dashboard.html';
+      } else {
+        localStorage.setItem('intendedDestination', 'admin-dashboard.html');
+        localStorage.setItem('intendedRole', 'admin');
+        window.location.href = 'login.html';
+      }
+    }
+
+    function goToDashboard() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const userRole = payload.role || 'rider';
+
+        if (userRole === 'driver') {
+          window.location.href = 'driver-dashboard.html';
+        } else if (userRole === 'admin') {
+          window.location.href = 'admin-dashboard.html';
+        } else {
+          window.location.href = 'rider-dashboard.html';
+        }
+      } catch (e) {
+        window.location.href = 'login.html';
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('token');
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

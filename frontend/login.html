@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login – SafeMove</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .back-link {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .back-link a {
+      color: #007bff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body onload="checkAuth()">
+  <div class="container">
+    <div class="back-link">
+      <a href="index.html">← Back to Home</a>
+    </div>
+    <h2>Login to SafeMove</h2>
+    <input type="text" id="phone" placeholder="Phone Number" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button onclick="login()">Login</button>
+    <p id="status"></p>
+    <p style="text-align: center;"><a href="register.html">Need an account? Register</a></p>
+  </div>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - SafeMove</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; }
+    .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-bottom: 1px solid #e5e7eb; }
+    .header-content { max-width: 1280px; margin: 0 auto; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; height: 64px; }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon { width: 40px; height: 40px; background: #2563eb; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem; }
+    .logo-text { font-size: 1.5rem; font-weight: bold; color: #111827; }
+    .nav { display: flex; gap: 24px; }
+    .nav a { color: #4b5563; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .nav a:hover { color: #2563eb; }
+    .dashboard { max-width: 1280px; margin: 0 auto; padding: 2rem 1rem; }
+    .welcome { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+    .welcome-title { font-size: 1.5rem; font-weight: bold; color: #111827; margin-bottom: 0.5rem; }
+    .welcome-text { color: #6b7280; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    .stat-card { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .stat-title { font-weight: 600; color: #111827; margin-bottom: 0.5rem; }
+    .stat-value { font-size: 2rem; font-weight: bold; color: #7c3aed; }
+    .quick-actions { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+    .actions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .action-btn { display: flex; align-items: center; gap: 12px; padding: 1rem; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 8px; text-decoration: none; color: #374151; transition: all 0.2s; }
+    .action-btn:hover { background: #faf5ff; border-color: #7c3aed; color: #7c3aed; }
+    .action-icon { font-size: 1.5rem; }
+    .monitoring-section { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+    .section-title { font-size: 1.25rem; font-weight: bold; color: #111827; margin-bottom: 1rem; }
+    .monitoring-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .monitoring-card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 1rem; }
+    .driver-list { max-height: 300px; overflow-y: auto; }
+    .driver-item { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid #f3f4f6; }
+    .driver-name { font-weight: 500; }
+    .driver-status { font-size: 0.875rem; }
+    .status-online { color: #16a34a; }
+    .status-offline { color: #dc2626; }
+    .status-busy { color: #ea580c; }
+    .recent-trips { max-height: 300px; overflow-y: auto; }
+    .trip-item { padding: 0.5rem 0; border-bottom: 1px solid #f3f4f6; }
+    .trip-route { font-weight: 500; color: #111827; }
+    .trip-time { font-size: 0.875rem; color: #6b7280; }
+    .verification-section { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .pending-verifications { display: grid; gap: 1rem; }
+    .verification-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border: 1px solid #e5e7eb; border-radius: 8px; }
+    .verification-info { flex: 1; }
+    .verification-name { font-weight: 600; color: #111827; }
+    .verification-type { font-size: 0.875rem; color: #6b7280; }
+    .verification-actions { display: flex; gap: 8px; }
+    .btn-approve { background: #16a34a; color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-size: 0.875rem; }
+    .btn-reject { background: #dc2626; color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-size: 0.875rem; }
+    .logout-btn { background: #dc2626; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 500; transition: background 0.2s; }
+    .logout-btn:hover { background: #b91c1c; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">S</div>
+        <h1 class="logo-text">SafeMove</h1>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="#" onclick="logout()">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="dashboard">
+    <!-- Welcome Section -->
+    <div class="welcome">
+      <h2 class="welcome-title">Admin Dashboard</h2>
+      <p class="welcome-text">Monitor platform activity, manage drivers, and oversee operations.</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-title">Total Users</div>
+        <div class="stat-value">1,247</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Active Drivers</div>
+        <div class="stat-value">89</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Today's Trips</div>
+        <div class="stat-value">342</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Revenue</div>
+        <div class="stat-value">$2,450</div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <h3 class="section-title">Quick Actions</h3>
+      <div class="actions-grid">
+        <a href="#" class="action-btn">
+          <span class="action-icon">👥</span>
+          <div>
+            <div style="font-weight: 600;">User Management</div>
+            <div style="font-size: 0.875rem; color: #6b7280;">Manage users</div>
+          </div>
+        </a>
+        <a href="#" class="action-btn">
+          <span class="action-icon">🚗</span>
+          <div>
+            <div style="font-weight: 600;">Driver Management</div>
+            <div style="font-size: 0.875rem; color: #6b7280;">Manage drivers</div>
+          </div>
+        </a>
+        <a href="#" class="action-btn">
+          <span class="action-icon">📊</span>
+          <div>
+            <div style="font-weight: 600;">Analytics</div>
+            <div style="font-size: 0.875rem; color: #6b7280;">View reports</div>
+          </div>
+        </a>
+        <a href="#" class="action-btn">
+          <span class="action-icon">⚙️</span>
+          <div>
+            <div style="font-weight: 600;">Settings</div>
+            <div style="font-size: 0.875rem; color: #6b7280;">Platform settings</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Monitoring Section -->
+    <div class="monitoring-section">
+      <h3 class="section-title">Live Monitoring</h3>
+      <div class="monitoring-grid">
+        <div class="monitoring-card">
+          <h4 style="font-weight: 600; margin-bottom: 1rem;">Active Drivers</h4>
+          <div class="driver-list">
+            <div class="driver-item">
+              <span class="driver-name">John Driver</span>
+              <span class="driver-status status-online">Online</span>
+            </div>
+            <div class="driver-item">
+              <span class="driver-name">Sarah Transport</span>
+              <span class="driver-status status-busy">Busy</span>
+            </div>
+            <div class="driver-item">
+              <span class="driver-name">Mike Rider</span>
+              <span class="driver-status status-online">Online</span>
+            </div>
+            <div class="driver-item">
+              <span class="driver-name">Anna Quick</span>
+              <span class="driver-status status-offline">Offline</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="monitoring-card">
+          <h4 style="font-weight: 600; margin-bottom: 1rem;">Recent Trips</h4>
+          <div class="recent-trips">
+            <div class="trip-item">
+              <div class="trip-route">Kampala → Entebbe</div>
+              <div class="trip-time">2 mins ago • $15</div>
+            </div>
+            <div class="trip-item">
+              <div class="trip-route">Nakawa → Downtown</div>
+              <div class="trip-time">5 mins ago • $8</div>
+            </div>
+            <div class="trip-item">
+              <div class="trip-route">Jinja → Kampala</div>
+              <div class="trip-time">12 mins ago • $25</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Verification Section -->
+    <div class="verification-section">
+      <h3 class="section-title">Pending Verifications</h3>
+      <div class="pending-verifications">
+        <div class="verification-item">
+          <div class="verification-info">
+            <div class="verification-name">David Wilson</div>
+            <div class="verification-type">Driver License Verification</div>
+          </div>
+          <div class="verification-actions">
+            <a href="#" class="btn-approve">Approve</a>
+            <a href="#" class="btn-reject">Reject</a>
+          </div>
+        </div>
+
+        <div class="verification-item">
+          <div class="verification-info">
+            <div class="verification-name">Emma Johnson</div>
+            <div class="verification-type">Vehicle Insurance</div>
+          </div>
+          <div class="verification-actions">
+            <a href="#" class="btn-approve">Approve</a>
+            <a href="#" class="btn-reject">Reject</a>
+          </div>
+        </div>
+
+        <div class="verification-item">
+          <div class="verification-info">
+            <div class="verification-name">Robert Brown</div>
+            <div class="verification-type">Background Check</div>
+          </div>
+          <div class="verification-actions">
+            <a href="#" class="btn-approve">Approve</a>
+            <a href="#" class="btn-reject">Reject</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Check authentication on page load
+    window.addEventListener('DOMContentLoaded', function() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Decode token to verify role
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        if (payload.role !== 'admin') {
+          // Redirect to appropriate dashboard
+          if (payload.role === 'rider') {
+            window.location.href = 'rider-dashboard.html';
+          } else if (payload.role === 'driver') {
+            window.location.href = 'driver-dashboard.html';
+          }
+        }
+      } catch (e) {
+        localStorage.removeItem('token');
+        window.location.href = 'login.html';
+      }
+    });
+
+    function logout() {
+      localStorage.removeItem('token');
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Driver Dashboard - SafeMove</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; }
+    .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-bottom: 1px solid #e5e7eb; }
+    .header-content { max-width: 1280px; margin: 0 auto; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; height: 64px; }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon { width: 40px; height: 40px; background: #2563eb; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem; }
+    .logo-text { font-size: 1.5rem; font-weight: bold; color: #111827; }
+    .nav { display: flex; gap: 24px; }
+    .nav a { color: #4b5563; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .nav a:hover { color: #2563eb; }
+    .dashboard { max-width: 1280px; margin: 0 auto; padding: 2rem 1rem; }
+    .welcome { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+    .welcome-title { font-size: 1.5rem; font-weight: bold; color: #111827; margin-bottom: 0.5rem; }
+    .welcome-text { color: #6b7280; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    .stat-card { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .stat-title { font-weight: 600; color: #111827; margin-bottom: 0.5rem; }
+    .stat-value { font-size: 2rem; font-weight: bold; color: #16a34a; }
+    .status-indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+    .status-online { background: #16a34a; }
+    .status-offline { background: #dc2626; }
+    .status-busy { background: #ea580c; }
+    .quick-actions { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+    .actions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .action-btn { display: flex; align-items: center; gap: 12px; padding: 1rem; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 8px; text-decoration: none; color: #374151; transition: all 0.2s; }
+    .action-btn:hover { background: #f0fdf4; border-color: #16a34a; color: #16a34a; }
+    .action-icon { font-size: 1.5rem; }
+    .trip-requests { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .trip-card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+    .trip-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+    .trip-route { font-weight: 600; color: #111827; }
+    .trip-fare { font-weight: bold; color: #16a34a; }
+    .trip-details { color: #6b7280; font-size: 0.875rem; margin-bottom: 0.5rem; }
+    .trip-actions { display: flex; gap: 8px; }
+    .btn-accept { background: #16a34a; color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-size: 0.875rem; }
+    .btn-decline { background: #dc2626; color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; font-size: 0.875rem; }
+    .logout-btn { background: #dc2626; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 500; transition: background 0.2s; }
+    .logout-btn:hover { background: #b91c1c; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">S</div>
+        <h1 class="logo-text">SafeMove</h1>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="#" onclick="logout()">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="dashboard">
+    <!-- Welcome Section -->
+    <div class="welcome">
+      <h2 class="welcome-title">Welcome back, Driver!</h2>
+      <p class="welcome-text">Check your trip requests and manage your earnings.</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-title">Today's Earnings</div>
+        <div class="stat-value">$45</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Trips Completed</div>
+        <div class="stat-value">8</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Status</div>
+        <div class="stat-value">
+          <span class="status-indicator status-online"></span>Online
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Rating</div>
+        <div class="stat-value">4.8 ⭐</div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <h3 style="font-size: 1.25rem; font-weight: bold; color: #111827; margin-bottom: 1.5rem;">Quick Actions</h3>
+      <div class="actions-grid">
+        <a href="#" class="action-btn" onclick="toggleStatus()">
+          <span class="action-icon">🔄</span>
+          <div>
+            <div style="font-weight: 600;">Go Offline</div>
+            <div style="font-size: 0.875rem; color: #6b7280;">Stop receiving requests</div>
+          </div>
+        </a>
+        <a href="#" class="action-btn">
+          <span class="action-icon">📊</span>
+          <div>
+            <div style="font-weight: 600;">Earnings</div>
+            <div style="font-size: 0.875rem; color: #6b7280;">View earnings history</div>
+          </div>
+        </a>
+        <a href="#" class="action-btn">
+          <span class="action-icon">👤</span>
+          <div>
+            <div style="font-weight: 600;">Profile</div>
+            <div style="font-size: 0.875rem; color: #6b7280;">Manage account</div>
+          </div>
+        </a>
+        <a href="#" class="action-btn">
+          <span class="action-icon">🚗</span>
+          <div>
+            <div style="font-weight: 600;">Vehicle</div>
+            <div style="font-size: 0.875rem; color: #6b7280;">Vehicle details</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Trip Requests -->
+    <div class="trip-requests">
+      <h3 style="font-size: 1.25rem; font-weight: bold; color: #111827; margin-bottom: 1.5rem;">Trip Requests</h3>
+
+      <div class="trip-card">
+        <div class="trip-header">
+          <div class="trip-route">Kampala → Entebbe</div>
+          <div class="trip-fare">$15</div>
+        </div>
+        <div class="trip-details">Distance: 35km • Duration: 45min • Passenger: John Doe</div>
+        <div class="trip-actions">
+          <a href="#" class="btn-accept">Accept</a>
+          <a href="#" class="btn-decline">Decline</a>
+        </div>
+      </div>
+
+      <div class="trip-card">
+        <div class="trip-header">
+          <div class="trip-route">Nakawa → Downtown</div>
+          <div class="trip-fare">$8</div>
+        </div>
+        <div class="trip-details">Distance: 12km • Duration: 20min • Passenger: Jane Smith</div>
+        <div class="trip-actions">
+          <a href="#" class="btn-accept">Accept</a>
+          <a href="#" class="btn-decline">Decline</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Check authentication on page load
+    window.addEventListener('DOMContentLoaded', function() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Decode token to verify role
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        if (payload.role !== 'driver') {
+          // Redirect to appropriate dashboard
+          if (payload.role === 'rider') {
+            window.location.href = 'rider-dashboard.html';
+          } else if (payload.role === 'admin') {
+            window.location.href = 'admin-dashboard.html';
+          }
+        }
+      } catch (e) {
+        localStorage.removeItem('token');
+        window.location.href = 'login.html';
+      }
+    });
+
+    function toggleStatus() {
+      // Toggle online/offline status
+      const statusIndicator = document.querySelector('.status-indicator');
+      const statusText = statusIndicator.nextSibling;
+
+      if (statusIndicator.classList.contains('status-online')) {
+        statusIndicator.classList.remove('status-online');
+        statusIndicator.classList.add('status-offline');
+        statusText.textContent = 'Offline';
+        event.target.innerHTML = '<span class="action-icon">🔄</span><div><div style="font-weight: 600;">Go Online</div><div style="font-size: 0.875rem; color: #6b7280;">Start receiving requests</div></div>';
+      } else {
+        statusIndicator.classList.remove('status-offline');
+        statusIndicator.classList.add('status-online');
+        statusText.textContent = 'Online';
+        event.target.innerHTML = '<span class="action-icon">🔄</span><div><div style="font-weight: 600;">Go Offline</div><div style="font-size: 0.875rem; color: #6b7280;">Stop receiving requests</div></div>';
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('token');
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

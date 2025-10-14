@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trip Tracking - SafeMove</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; }
+    .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-bottom: 1px solid #e5e7eb; }
+    .header-content { max-width: 1280px; margin: 0 auto; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; height: 64px; }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon { width: 40px; height: 40px; background: #2563eb; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem; }
+    .nav { display: flex; gap: 24px; }
+    .nav a { color: #4b5563; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .nav a:hover { color: #2563eb; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 2rem 1rem; }
+    .tracking-layout { display: grid; grid-template-columns: 1fr 350px; gap: 2rem; }
+    .map-section { background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 2rem; }
+    .map-placeholder { width: 100%; height: 400px; background: #f3f4f6; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 2px dashed #d1d5db; }
+    .driver-info { background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 2rem; }
+    .driver-card { display: flex; align-items: center; gap: 16px; margin-bottom: 2rem; }
+    .driver-avatar { width: 60px; height: 60px; background: #e5e7eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+    .driver-details h3 { font-size: 1.25rem; font-weight: 600; color: #111827; margin-bottom: 4px; }
+    .driver-details p { color: #6b7280; font-size: 0.875rem; }
+    .rating { display: flex; align-items: center; gap: 4px; margin-top: 8px; }
+    .star { color: #fbbf24; }
+    .trip-status { background: #d1fae5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 1rem; margin-bottom: 2rem; }
+    .status-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .status-badge { background: #16a34a; color: white; padding: 4px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 500; }
+    .trip-details { display: flex; flex-direction: column; gap: 8px; }
+    .detail-row { display: flex; justify-content: space-between; }
+    .detail-label { color: #6b7280; }
+    .detail-value { font-weight: 500; color: #111827; }
+    .actions { display: flex; flex-direction: column; gap: 12px; }
+    .btn-primary { background: #2563eb; color: white; padding: 12px; border-radius: 8px; text-decoration: none; text-align: center; font-weight: 600; transition: background 0.2s; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-secondary { background: #f3f4f6; color: #374151; padding: 12px; border-radius: 8px; text-decoration: none; text-align: center; font-weight: 600; transition: background 0.2s; }
+    .btn-secondary:hover { background: #e5e7eb; }
+    .sos-btn { width: 100%; height: 60px; background: #dc2626; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1.125rem; margin-top: 1rem; }
+    .sos-btn:hover { background: #b91c1c; }
+    @media (max-width: 1024px) {
+      .tracking-layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <a href="index.html" style="text-decoration: none; color: inherit;">
+          <div class="logo-icon">S</div>
+        </a>
+        <h1 style="font-size: 1.25rem; font-weight: 600;">SafeMove Trip Tracking</h1>
+      </div>
+      <nav class="nav">
+        <a href="rider-dashboard.html">Dashboard</a>
+        <a href="#" onclick="logout()">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="tracking-layout">
+      <!-- Map Section -->
+      <div class="map-section">
+        <h2 style="font-size: 1.5rem; font-weight: bold; color: #111827; margin-bottom: 1.5rem;">Live Trip Tracking</h2>
+        <div class="map-placeholder">
+          <div style="text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🗺️</div>
+            <div style="font-size: 1.125rem; font-weight: 600; color: #374151; margin-bottom: 8px;">Interactive Map</div>
+            <div style="color: #6b7280;">Driver location updates in real-time</div>
+            <div style="color: #6b7280; font-size: 0.875rem; margin-top: 8px;">📍 Driver is 2.3km away • ETA: 8 mins</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Driver Info Sidebar -->
+      <div>
+        <!-- Driver Information -->
+        <div class="driver-info">
+          <h3 style="font-size: 1.25rem; font-weight: bold; color: #111827; margin-bottom: 1.5rem;">Your Driver</h3>
+
+          <div class="driver-card">
+            <div class="driver-avatar">🚗</div>
+            <div class="driver-details">
+              <h3>John Driver</h3>
+              <p>Toyota Corolla • ABC 123</p>
+              <div class="rating">
+                <span class="star">⭐</span>
+                <span class="star">⭐</span>
+                <span class="star">⭐</span>
+                <span class="star">⭐</span>
+                <span class="star">⭐</span>
+                <span style="color: #6b7280; margin-left: 4px;">4.8 (127 trips)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trip Status -->
+          <div class="trip-status">
+            <div class="status-header">
+              <h4 style="font-weight: 600; color: #065f46;">Trip in Progress</h4>
+              <span class="status-badge">On Route</span>
+            </div>
+            <div class="trip-details">
+              <div class="detail-row">
+                <span class="detail-label">From:</span>
+                <span class="detail-value">Kampala Central</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">To:</span>
+                <span class="detail-value">Entebbe Airport</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Distance:</span>
+                <span class="detail-value">35km</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">ETA:</span>
+                <span class="detail-value">8 minutes</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">Fare:</span>
+                <span class="detail-value">UGX 45,000</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="actions">
+            <a href="tel:+256700000000" class="btn-secondary">📞 Call Driver</a>
+            <a href="#" class="btn-secondary" onclick="shareTrip()">📤 Share Trip Status</a>
+            <button onclick="triggerSOS()" class="sos-btn">🚨 EMERGENCY SOS</button>
+            <button onclick="endTrip()" class="btn-primary" style="margin-top: 1rem;">Trip Completed</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Check authentication on page load
+    window.addEventListener('DOMContentLoaded', function() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Decode token to verify role
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        if (payload.role !== 'rider') {
+          window.location.href = 'index.html';
+        }
+      } catch (e) {
+        localStorage.removeItem('token');
+        window.location.href = 'login.html';
+      }
+
+      // Simulate real-time updates
+      setInterval(updateTripStatus, 10000); // Update every 10 seconds
+    });
+
+    function updateTripStatus() {
+      // Simulate location updates
+      const distances = ['2.3km', '2.1km', '1.8km', '1.5km', '1.2km', '0.9km', '0.6km', '0.3km', 'Arrived'];
+      const etas = ['8 mins', '7 mins', '6 mins', '5 mins', '4 mins', '3 mins', '2 mins', '1 min', 'Arrived'];
+
+      const randomIndex = Math.floor(Math.random() * distances.length);
+      const mapPlaceholder = document.querySelector('.map-placeholder');
+      const statusText = mapPlaceholder.querySelector('div:last-child');
+
+      statusText.textContent = `📍 Driver is ${distances[randomIndex]} away • ETA: ${etas[randomIndex]}`;
+
+      // Update trip details
+      const etaElement = document.querySelector('.detail-value:last-child');
+      if (etaElement && etaElement.previousElementSibling.textContent === 'ETA:') {
+        etaElement.textContent = etas[randomIndex];
+      }
+    }
+
+    function shareTrip() {
+      const tripInfo = `SafeMove Trip Update\nDriver: John Driver\nFrom: Kampala Central\nTo: Entebbe Airport\nETA: 8 minutes\nStatus: On Route`;
+      if (navigator.share) {
+        navigator.share({ text: tripInfo });
+      } else {
+        navigator.clipboard.writeText(tripInfo).then(() => {
+          alert('Trip status copied to clipboard!');
+        });
+      }
+    }
+
+    function triggerSOS() {
+      if (confirm('Send emergency alert? This will notify authorities and your emergency contacts.')) {
+        alert('🚨 EMERGENCY ALERT SENT!\nAuthorities and emergency contacts have been notified.\nYour location has been shared.');
+      }
+    }
+
+    function endTrip() {
+      if (confirm('Confirm that the trip has been completed?')) {
+        window.location.href = 'trip-feedback.html';
+      }
+    }
+
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userRole');
+        window.location.href = 'index.html';
+      }
+    }
+  </script>
+</body>
+</html>

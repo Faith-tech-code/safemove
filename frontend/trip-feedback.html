@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trip Feedback - SafeMove</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; }
+    .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-bottom: 1px solid #e5e7eb; }
+    .header-content { max-width: 1280px; margin: 0 auto; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; height: 64px; }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon { width: 40px; height: 40px; background: #2563eb; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem; }
+    .nav { display: flex; gap: 24px; }
+    .nav a { color: #4b5563; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .nav a:hover { color: #2563eb; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 2rem 1rem; }
+    .feedback-card { background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 2rem; max-width: 600px; margin: 0 auto; }
+    .section-title { font-size: 1.5rem; font-weight: bold; color: #111827; margin-bottom: 1.5rem; text-align: center; }
+    .driver-info { display: flex; align-items: center; gap: 16px; margin-bottom: 2rem; padding: 1rem; background: #f8fafc; border-radius: 8px; }
+    .driver-avatar { width: 60px; height: 60px; background: #e5e7eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+    .driver-details h3 { font-size: 1.25rem; font-weight: 600; color: #111827; margin-bottom: 4px; }
+    .driver-details p { color: #6b7280; font-size: 0.875rem; }
+    .rating-section { margin-bottom: 2rem; }
+    .rating-label { display: block; font-size: 1rem; font-weight: 600; color: #374151; margin-bottom: 1rem; }
+    .stars { display: flex; gap: 8px; justify-content: center; margin-bottom: 1rem; }
+    .star { font-size: 2rem; cursor: pointer; color: #d1d5db; transition: color 0.2s; }
+    .star.active { color: #fbbf24; }
+    .rating-text { text-align: center; color: #6b7280; font-size: 0.875rem; }
+    .feedback-section { margin-bottom: 2rem; }
+    .feedback-label { display: block; font-size: 1rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem; }
+    .feedback-textarea { width: 100%; padding: 1rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; min-height: 100px; resize: vertical; }
+    .feedback-textarea:focus { outline: none; border-color: #2563eb; }
+    .btn-primary { width: 100%; background: #2563eb; color: white; padding: 1rem; border-radius: 8px; font-weight: 600; font-size: 1.125rem; border: none; cursor: pointer; transition: background 0.2s; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .trip-summary { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 1rem; margin-bottom: 2rem; }
+    .summary-title { font-weight: 600; color: #065f46; margin-bottom: 0.5rem; }
+    .summary-details { color: #16a34a; font-size: 0.875rem; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <a href="rider-dashboard.html" style="text-decoration: none; color: inherit;">
+          <div class="logo-icon">S</div>
+        </a>
+        <h1 style="font-size: 1.25rem; font-weight: 600;">SafeMove Trip Feedback</h1>
+      </div>
+      <nav class="nav">
+        <a href="#" onclick="logout()">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="feedback-card">
+      <h2 class="section-title">Rate Your Trip</h2>
+
+      <!-- Trip Summary -->
+      <div class="trip-summary">
+        <div class="summary-title">Trip Completed Successfully! 🎉</div>
+        <div class="summary-details">
+          <div>From: Kampala Central → To: Entebbe Airport</div>
+          <div>Distance: 35km • Duration: 45 minutes</div>
+          <div>Fare: UGX 45,000 (Fixed Rate)</div>
+        </div>
+      </div>
+
+      <!-- Driver Info -->
+      <div class="driver-info">
+        <div class="driver-avatar">🚗</div>
+        <div class="driver-details">
+          <h3>John Driver</h3>
+          <p>Toyota Corolla • ABC 123</p>
+          <p>⭐ 4.8 (127 trips)</p>
+        </div>
+      </div>
+
+      <!-- Rating Section -->
+      <div class="rating-section">
+        <label class="rating-label">How was your experience?</label>
+        <div class="stars" id="ratingStars">
+          <span class="star" data-rating="1">⭐</span>
+          <span class="star" data-rating="2">⭐</span>
+          <span class="star" data-rating="3">⭐</span>
+          <span class="star" data-rating="4">⭐</span>
+          <span class="star" data-rating="5">⭐</span>
+        </div>
+        <div class="rating-text" id="ratingText">Select a rating</div>
+      </div>
+
+      <!-- Feedback Section -->
+      <div class="feedback-section">
+        <label class="feedback-label">Additional Comments (Optional)</label>
+        <textarea class="feedback-textarea" id="feedbackText" placeholder="Tell us about your experience..."></textarea>
+      </div>
+
+      <button onclick="submitFeedback()" class="btn-primary">Submit Feedback</button>
+    </div>
+  </div>
+
+  <script>
+    let selectedRating = 0;
+
+    // Check authentication on page load
+    window.addEventListener('DOMContentLoaded', function() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Decode token to verify role
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        if (payload.role !== 'rider') {
+          window.location.href = 'rider-dashboard.html';
+        }
+      } catch (e) {
+        localStorage.removeItem('token');
+        window.location.href = 'login.html';
+      }
+
+      // Initialize star rating
+      initRating();
+    });
+
+    function initRating() {
+      const stars = document.querySelectorAll('.star');
+      const ratingText = document.getElementById('ratingText');
+
+      stars.forEach(star => {
+        star.addEventListener('click', function() {
+          const rating = parseInt(this.dataset.rating);
+          selectedRating = rating;
+
+          // Update star display
+          stars.forEach((s, index) => {
+            if (index < rating) {
+              s.classList.add('active');
+            } else {
+              s.classList.remove('active');
+            }
+          });
+
+          // Update rating text
+          const ratingTexts = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+          ratingText.textContent = ratingTexts[rating];
+        });
+      });
+    }
+
+    function submitFeedback() {
+      if (selectedRating === 0) {
+        alert('Please select a rating for your trip.');
+        return;
+      }
+
+      const feedback = document.getElementById('feedbackText').value;
+
+      // Here you would typically send the feedback to your backend
+      console.log('Rating:', selectedRating);
+      console.log('Feedback:', feedback);
+
+      alert('Thank you for your feedback! 🎉');
+
+      // Redirect to dashboard
+      window.location.href = 'rider-dashboard.html';
+    }
+
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userRole');
+        window.location.href = 'index.html';
+      }
+    }
+  </script>
+</body>
+</html>

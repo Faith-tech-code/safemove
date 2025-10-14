@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeMove Booking - Enhanced Rider Experience</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f9fafb; }
+    .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-bottom: 1px solid #e5e7eb; }
+    .header-content { max-width: 1280px; margin: 0 auto; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; height: 64px; }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon { width: 40px; height: 40px; background: #2563eb; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem; }
+    .header-actions { display: flex; align-items: center; gap: 16px; }
+    .icon-btn { padding: 8px; border-radius: 8px; border: none; cursor: pointer; background: #f3f4f6; color: #6b7280; transition: all 0.2s; }
+    .icon-btn:hover { background: #e5e7eb; }
+    .icon-btn.active { background: #dbeafe; color: #2563eb; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 2rem 1rem; }
+    .grid-layout { display: grid; grid-template-columns: 1fr 350px; gap: 2rem; }
+    .card { background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; padding: 2rem; }
+    .section-title { font-size: 1.5rem; font-weight: bold; color: #111827; margin-bottom: 1.5rem; }
+    .transport-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 12px; margin-bottom: 2rem; }
+    .transport-btn { padding: 1rem; border-radius: 12px; border: 2px solid #e5e7eb; background: white; cursor: pointer; transition: all 0.2s; text-align: center; }
+    .transport-btn:hover { border-color: #d1d5db; }
+    .transport-btn.active { border-color: #2563eb; background: #eff6ff; }
+    .transport-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .transport-name { font-weight: 600; color: #111827; font-size: 0.875rem; margin-bottom: 4px; }
+    .transport-desc { color: #6b7280; font-size: 0.75rem; }
+    .transport-price { color: #16a34a; font-size: 0.75rem; font-weight: 600; }
+    .input-group { margin-bottom: 1.5rem; }
+    .input-label { display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem; }
+    .input-field { width: 100%; padding: 0.75rem 1rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; }
+    .input-field:focus { outline: none; border-color: #2563eb; }
+    .route-card { padding: 1rem; border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; margin-bottom: 12px; transition: all 0.2s; }
+    .route-card:hover { border-color: #d1d5db; }
+    .route-card.active { border-color: #2563eb; background: #eff6ff; }
+    .fare-display { background: #d1fae5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .fare-amount { font-size: 1.25rem; font-weight: 600; color: #111827; }
+    .btn-primary { width: 100%; background: #2563eb; color: white; padding: 1rem; border-radius: 12px; font-weight: 600; font-size: 1.125rem; border: none; cursor: pointer; transition: background 0.2s; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-primary:disabled { background: #d1d5db; cursor: not-allowed; }
+    .alert-card { padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; }
+    .alert-red { background: #fef2f2; border: 1px solid #fecaca; }
+    .alert-green { background: #f0fdf4; border: 1px solid #bbf7d0; }
+    .alert-blue { background: #eff6ff; border: 1px solid #bfdbfe; }
+    .checkbox { width: 16px; height: 16px; }
+    .addon-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .addon-card { padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .addon-card:hover { background: #f9fafb; }
+    .hidden { display: none; }
+    .ticket-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 50; }
+    .ticket-content { background: white; border-radius: 16px; padding: 2rem; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; }
+    .qr-placeholder { width: 128px; height: 128px; background: white; border: 2px dashed #d1d5db; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto; }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @media (max-width: 1024px) {
+      .grid-layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <a href="index.html" style="text-decoration: none; color: inherit;">
+          <div class="logo-icon">S</div>
+        </a>
+        <h1 style="font-size: 1.25rem; font-weight: 600;">SafeMove Booking</h1>
+      </div>
+      <div class="header-actions">
+        <button id="voiceToggle" class="icon-btn" title="Toggle voice assistance">
+          🔊
+        </button>
+        <button class="icon-btn" title="Family members">
+          👥 <span id="familyCount">2</span>
+        </button>
+        <span style="color: #6b7280; margin: 0 12px;">|</span>
+        <span style="color: #374151; font-weight: 500;" id="userNameDisplay">User</span>
+        <button onclick="logout()" style="margin-left: 12px; padding: 6px 12px; background: #dc2626; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.875rem;">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Current Trip Display -->
+    <div id="currentTripDisplay" class="hidden alert-card alert-blue">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+        <h3 style="font-size: 1.125rem; font-weight: 600;">Your Trip</h3>
+        <span id="tripStatus" style="background: #fef3c7; color: #92400e; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 500;">Finding Driver...</span>
+      </div>
+      <div id="tripDetails"></div>
+      <div style="display: flex; gap: 12px; margin-top: 16px;">
+        <button onclick="cancelTrip()" style="width: 100%; background: #6b7280; color: white; padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-weight: 500;">Cancel Trip</button>
+      </div>
+    </div>
+
+
+    <div class="grid-layout">
+      <!-- Main Booking Form -->
+      <div>
+        <div class="card">
+          <h2 class="section-title">Book Your Journey</h2>
+
+          <!-- Transport Mode Selection -->
+          <div style="margin-bottom: 32px;">
+            <label class="input-label">Choose Transport Mode</label>
+            <div class="transport-grid" id="transportModes"></div>
+          </div>
+
+          <!-- Regular Booking Form -->
+          <div id="regularBooking">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px;">
+              <div class="input-group">
+                <label class="input-label">Pickup Location</label>
+                <input type="text" id="pickup" class="input-field" placeholder="Enter pickup location">
+              </div>
+              <div class="input-group">
+                <label class="input-label">Destination</label>
+                <input type="text" id="destination" class="input-field" placeholder="Enter destination">
+              </div>
+            </div>
+          </div>
+
+          <!-- Train/Bus Booking Form -->
+          <div id="trainBooking" class="hidden">
+            <div class="input-group">
+              <label class="input-label">Select Route</label>
+              <div id="routesList"></div>
+            </div>
+
+            <div id="scheduleForm" class="hidden">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+                <div class="input-group">
+                  <label class="input-label">Departure Date</label>
+                  <input type="date" id="departureDate" class="input-field">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Departure Time</label>
+                  <select id="departureTime" class="input-field">
+                    <option value="">Select time</option>
+                    <option value="06:00">06:00 AM</option>
+                    <option value="09:00">09:00 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="15:00">03:00 PM</option>
+                    <option value="18:00">06:00 PM</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Service Class -->
+              <div id="serviceClassSection" class="hidden input-group">
+                <label class="input-label">Service Class</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                  <button class="route-card active" data-class="standard">
+                    <h4 style="font-weight: 600; margin-bottom: 4px;">Standard</h4>
+                    <p style="font-size: 0.875rem; color: #6b7280; margin-bottom: 8px;">Regular seating</p>
+                    <p id="standardPrice" style="color: #16a34a; font-weight: 600;">UGX 25,000</p>
+                  </button>
+                  <button class="route-card" data-class="first">
+                    <h4 style="font-weight: 600; margin-bottom: 4px;">First Class</h4>
+                    <p style="font-size: 0.875rem; color: #6b7280; margin-bottom: 8px;">Premium comfort</p>
+                    <p id="firstPrice" style="color: #16a34a; font-weight: 600;">UGX 37,500</p>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Family Members -->
+          <div class="input-group">
+            <label class="input-label">Traveling With Family</label>
+            <div id="familyMembers"></div>
+          </div>
+
+          <!-- Add-on Services -->
+          <div class="input-group">
+            <label class="input-label">Add-on Services</label>
+            <div id="addons" class="addon-grid"></div>
+          </div>
+
+          <!-- Fare Display -->
+          <div id="fareDisplay" class="fare-display hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="margin-bottom: 8px;">
+                  <span style="background: #d1fae5; color: #065f46; font-size: 0.75rem; font-weight: 500; padding: 4px 10px; border-radius: 12px;">
+                    🛡️ Fixed Rate ✅
+                  </span>
+                </div>
+                <h4 class="fare-amount">UGX <span id="totalFare">0</span></h4>
+                <p style="font-size: 0.875rem; color: #065f46;">Your fare is fixed. No extra charges.</p>
+                <p id="addonSummary" style="font-size: 0.875rem; color: #065f46; margin-top: 8px;"></p>
+              </div>
+              <div style="text-align: right;">
+                <div id="selectedIcon" style="font-size: 2rem; margin-bottom: 8px;">🛵</div>
+                <div id="selectedMode" style="font-size: 0.875rem; font-weight: 600;">Boda</div>
+              </div>
+            </div>
+          </div>
+
+          <button id="bookBtn" class="btn-primary" disabled>Book Now - UGX 0</button>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <!-- SOS Emergency -->
+        <div class="card alert-red">
+          <h3 style="font-size: 1.125rem; font-weight: 600; color: #991b1b; margin-bottom: 12px;">Emergency</h3>
+          <button onclick="triggerSOS()" style="width: 100%; background: #dc2626; color: white; padding: 12px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 1rem;">
+            ⚠️ SOS Alert
+          </button>
+          <p style="font-size: 0.875rem; color: #991b1b; margin-top: 12px;">
+            Press to send emergency alert to authorities and emergency contacts
+          </p>
+        </div>
+
+        <!-- Fixed Rate Benefits -->
+        <div class="card alert-green">
+          <h3 style="font-size: 1.125rem; font-weight: 600; color: #065f46; margin-bottom: 16px;">Fixed Rate Benefits</h3>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; gap: 12px;">
+              <span>🛡️</span>
+              <div>
+                <h4 style="font-weight: 600; color: #065f46; margin-bottom: 4px;">No Surprises</h4>
+                <p style="font-size: 0.875rem; color: #16a34a;">Price agreed upfront</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px;">
+              <span>⏱️</span>
+              <div>
+                <h4 style="font-weight: 600; color: #065f46; margin-bottom: 4px;">Instant Quotes</h4>
+                <p style="font-size: 0.875rem; color: #16a34a;">See exact fare immediately</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px;">
+              <span>❤️</span>
+              <div>
+                <h4 style="font-weight: 600; color: #065f46; margin-bottom: 4px;">Fair to All</h4>
+                <p style="font-size: 0.875rem; color: #16a34a;">Drivers know their earnings</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Voice Features -->
+        <div class="card alert-blue">
+          <h3 style="font-size: 1.125rem; font-weight: 600; color: #1e40af; margin-bottom: 16px;">Accessibility</h3>
+          <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+            <input type="checkbox" id="voiceCheckbox" class="checkbox">
+            <span>🔊</span>
+            <span style="color: #1e40af;">Voice Assistance</span>
+          </label>
+          <p style="font-size: 0.875rem; color: #2563eb; margin-top: 12px;">
+            Enable voice narration for booking confirmations and trip updates
+          </p>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card">
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 16px;">Quick Actions</h3>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <a href="dashboard.html" style="display: block; text-align: center; background: #f3f4f6; color: #374151; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: 500;">View Trip History</a>
+            <a href="dashboard.html" style="display: block; text-align: center; background: #f3f4f6; color: #374151; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: 500;">Manage Family</a>
+            <a href="dashboard.html" style="display: block; text-align: center; background: #f3f4f6; color: #374151; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: 500;">Payment Methods</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State
+    let state = {
+      selectedMode: 'boda',
+      pickup: '',
+      destination: '',
+      selectedRoute: null,
+      departureDate: '',
+      departureTime: '',
+      serviceClass: 'standard',
+      selectedPassengers: [],
+      selectedAddons: [],
+      voiceEnabled: false,
+      currentTrip: null
+    };
+
+    const transportModes = [
+      { id: 'boda', name: 'Boda', icon: '🛵', description: 'Quick & affordable', basefare: 5000 },
+      { id: 'taxi', name: 'Taxi', icon: '🚕', description: 'Comfortable ride', basefare: 15000 },
+      { id: 'car', name: 'Car', icon: '🚗', description: 'Premium service', basefare: 25000 },
+      { id: 'bus', name: 'Bus', icon: '🚌', description: 'Budget friendly', basefare: 8000 },
+      { id: 'train', name: 'Train', icon: '🚆', description: 'Long distance', basefare: 25000 },
+    ];
+
+    const routes = [
+      { id: '1', name: 'Northern Line', transport_mode: 'train', origin: 'Kampala Central', destination: 'Gulu Station', base_fare_ugx: 25000, duration: 480 },
+      { id: '2', name: 'Western Line', transport_mode: 'train', origin: 'Kampala Central', destination: 'Mbarara Central', base_fare_ugx: 20000, duration: 360 },
+      { id: '3', name: 'Kampala-Entebbe Express', transport_mode: 'bus', origin: 'Kampala Central', destination: 'Entebbe Airport', base_fare_ugx: 8000, duration: 45 }
+    ];
+
+    const fareAddons = [
+      { id: '1', name: 'Safety Helmet', price_ugx: 1000, icon: '🪖', transport_modes: ['boda'] },
+      { id: '2', name: 'Child Assistance', price_ugx: 0, icon: '👶', transport_modes: ['boda', 'taxi', 'car', 'bus', 'train'] },
+      { id: '3', name: 'Elderly Assistance', price_ugx: 0, icon: '👴', transport_modes: ['boda', 'taxi', 'car', 'bus', 'train'] },
+      { id: '4', name: 'Luggage Assistance', price_ugx: 1500, icon: '🧳', transport_modes: ['taxi', 'car', 'train'] },
+      { id: '5', name: 'Premium Service', price_ugx: 3000, icon: '⭐', transport_modes: ['car', 'train'] },
+      { id: '6', name: 'WiFi Access', price_ugx: 2000, icon: '📶', transport_modes: ['bus', 'train'] }
+    ];
+
+    const familyMembers = [
+      { id: '1', name: 'Sarah (Daughter)', age_group: 'child', special_needs: 'child_seat' },
+      { id: '2', name: 'Grandma Mary', age_group: 'elderly', special_needs: 'assistance' }
+    ];
+
+    // Initialize
+    function init() {
+      renderTransportModes();
+      renderFamilyMembers();
+      renderAddons();
+      setupEventListeners();
+      
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('departureDate').min = today;
+    }
+
+    function renderTransportModes() {
+      const container = document.getElementById('transportModes');
+      container.innerHTML = transportModes.map(mode => `
+        <button class="transport-btn ${mode.id === state.selectedMode ? 'active' : ''}" onclick="selectMode('${mode.id}')">
+          <div class="transport-icon">${mode.icon}</div>
+          <div class="transport-name">${mode.name}</div>
+          <div class="transport-desc">${mode.description}</div>
+          <div class="transport-price">UGX ${mode.basefare.toLocaleString()}</div>
+        </button>
+      `).join('');
+    }
+
+    function renderFamilyMembers() {
+      const container = document.getElementById('familyMembers');
+      container.innerHTML = familyMembers.map(member => `
+        <label style="display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 8px; cursor: pointer;">
+          <input type="checkbox" class="checkbox" onchange="togglePassenger('${member.id}', this.checked)">
+          <span>👤</span>
+          <div style="flex: 1;">
+            <div style="font-weight: 600;">${member.name}</div>
+            <div style="font-size: 0.875rem; color: #6b7280;">${member.age_group} • ${member.special_needs}</div>
+          </div>
+        </label>
+      `).join('');
+    }
+
+    function renderAddons() {
+      updateAddons();
+    }
+
+    function updateAddons() {
+      const container = document.getElementById('addons');
+      const available = fareAddons.filter(a => a.transport_modes.includes(state.selectedMode));
+      container.innerHTML = available.map(addon => `
+        <label class="addon-card">
+          <input type="checkbox" class="checkbox" onchange="toggleAddon('${addon.id}', this.checked)">
+          <span style="font-size: 1.25rem;">${addon.icon}</span>
+          <div style="flex: 1;">
+            <div style="font-weight: 600; font-size: 0.875rem;">${addon.name}</div>
+            <div style="font-size: 0.75rem; color: #6b7280;">${addon.price_ugx > 0 ? '+UGX ' + addon.price_ugx.toLocaleString() : 'Free'}</div>
+          </div>
+        </label>
+      `).join('');
+    }
+
+    function selectMode(modeId) {
+      state.selectedMode = modeId;
+      state.selectedAddons = [];
+      renderTransportModes();
+      updateAddons();
+      
+      if (modeId === 'train' || modeId === 'bus') {
+        document.getElementById('regularBooking').classList.add('hidden');
+        document.getElementById('trainBooking').classList.remove('hidden');
+        renderRoutes();
+        if (modeId === 'train') {
+          document.getElementById('serviceClassSection').classList.remove('hidden');
+        } else {
+          document.getElementById('serviceClassSection').classList.add('hidden');
+        }
+      } else {
+        document.getElementById('regularBooking').classList.remove('hidden');
+        document.getElementById('trainBooking').classList.add('hidden');
+      }
+      
+      updateFare();
+    }
+
+    function renderRoutes() {
+      const container = document.getElementById('routesList');
+      const filtered = routes.filter(r => r.transport_mode === state.selectedMode);
+      container.innerHTML = filtered.map(route => `
+        <div class="route-card ${state.selectedRoute?.id === route.id ? 'active' : ''}" onclick="selectRoute('${route.id}')">
+          <div style="display: flex; justify-between;">
+            <div>
+              <h4 style="font-weight: 600; margin-bottom: 4px;">${route.name}</h4>
+              <p style="font-size: 0.875rem; color: #6b7280; margin-bottom: 4px;">${route.origin} → ${route.destination}</p>
+              <p style="font-size: 0.75rem; color: #9ca3af;">Duration: ${Math.floor(route.duration/60)}h ${route.duration%60}m</p>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 1.125rem; font-weight: 600; color: #16a34a;">UGX ${route.base_fare_ugx.toLocaleString()}</div>
+              <div style="font-size: 0.75rem; color: #6b7280;">Fixed Rate</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function selectRoute(routeId) {
+      state.selectedRoute = routes.find(r => r.id === routeId);
+      renderRoutes();
+      document.getElementById('scheduleForm').classList.remove('hidden');
+      
+      if (state.selectedMode === 'train') {
+        const baseFare = state.selectedRoute.base_fare_ugx;
+        document.getElementById('standardPrice').textContent = 'UGX ' + baseFare.toLocaleString();
+        document.getElementById('firstPrice').textContent = 'UGX ' + Math.round(baseFare * 1.5).toLocaleString();
+      }
+      
+      updateFare();
+    }
+
+    function setupEventListeners() {
+      document.getElementById('pickup').addEventListener('input', (e) => {
+        state.pickup = e.target.value;
+        updateFare();
+      });
+      
+      document.getElementById('destination').addEventListener('input', (e) => {
+        state.destination = e.target.value;
+        updateFare();
+      });
+      
+      document.getElementById('departureDate').addEventListener('change', (e) => {
+        state.departureDate = e.target.value;
+        updateFare();
+      });
+      
+      document.getElementById('departureTime').addEventListener('change', (e) => {
+        state.departureTime = e.target.value;
+        updateFare();
+      });
+      
+      document.getElementById('voiceToggle').addEventListener('click', toggleVoice);
+      document.getElementById('voiceCheckbox').addEventListener('change', (e) => {
+        state.voiceEnabled = e.target.checked;
+        document.getElementById('voiceToggle').classList.toggle('active', e.target.checked);
+      });
+      
+      document.querySelectorAll('[data-class]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll('[data-class]').forEach(b => b.classList.remove('active'));
+          e.currentTarget.classList.add('active');
+          state.serviceClass = e.currentTarget.dataset.class;
+          updateFare();
+        });
+      });
+      
+      document.getElementById('bookBtn').addEventListener('click', handleBookTrip);
+    }
+
+    function togglePassenger(id, checked) {
+      if (checked) {
+        state.selectedPassengers.push(id);
+      } else {
+        state.selectedPassengers = state.selectedPassengers.filter(p => p !== id);
+      }
+    }
+
+    function toggleAddon(id, checked) {
+      if (checked) {
+        state.selectedAddons.push(id);
+      } else {
+        state.selectedAddons = state.selectedAddons.filter(a => a !== id);
+      }
+      updateFare();
+    }
+
+    function toggleVoice() {
+      state.voiceEnabled = !state.voiceEnabled;
+      document.getElementById('voiceToggle').classList.toggle('active');
+      document.getElementById('voiceCheckbox').checked = state.voiceEnabled;
+    }
+
+    function calculateFare() {
+      const mode = transportModes.find(m => m.id === state.selectedMode);
+      let baseFare = state.selectedRoute?.base_fare_ugx || mode?.basefare || 0;
+      
+      if (state.serviceClass === 'first' && state.selectedMode === 'train') {
+        baseFare = Math.round(baseFare * 1.5);
+      }
+      
+      const addonCharges = state.selectedAddons.reduce((sum, addonId) => {
+        const addon = fareAddons.find(a => a.id === addonId);
+        return sum + (addon?.price_ugx || 0);
+      }, 0);
+      
+      return baseFare + addonCharges;
+    }
+
+    function updateFare() {
+      const isTrainBus = state.selectedMode === 'train' || state.selectedMode === 'bus';
+      const canCalculate = isTrainBus 
+        ? (state.selectedRoute && state.departureDate && state.departureTime)
+        : (state.pickup && state.destination);
+      
+      const fareDisplay = document.getElementById('fareDisplay');
+      const bookBtn = document.getElementById('bookBtn');
+      
+      if (canCalculate) {
+        const total = calculateFare();
+        fareDisplay.classList.remove('hidden');
+        document.getElementById('totalFare').textContent = total.toLocaleString();
+        
+        const mode = transportModes.find(m => m.id === state.selectedMode);
+        document.getElementById('selectedIcon').textContent = mode.icon;
+        document.getElementById('selectedMode').textContent = mode.name;
+        
+        if (state.selectedAddons.length > 0) {
+          const addonNames = state.selectedAddons.map(id => fareAddons.find(a => a.id === id)?.name).join(', ');
+          document.getElementById('addonSummary').textContent = 'Includes: ' + addonNames;
+        } else {
+          document.getElementById('addonSummary').textContent = '';
+        }
+        
+        bookBtn.disabled = false;
+        bookBtn.textContent = `Book Now - UGX ${total.toLocaleString()}`;
+      } else {
+        fareDisplay.classList.add('hidden');
+        bookBtn.disabled = true;
+        bookBtn.textContent = 'Book Now - UGX 0';
+      }
+    }
+
+    function handleBookTrip() {
+      const booking = {
+        id: 'trip-' + Date.now(),
+        booking_id: 'SM' + Date.now(),
+        transport_mode: state.selectedMode,
+        pickup: state.pickup,
+        destination: state.destination,
+        route: state.selectedRoute,
+        total_fare_ugx: calculateFare(),
+        status: 'pending'
+      };
+
+      if (state.selectedMode === 'train' || state.selectedMode === 'bus') {
+        showTicket(booking);
+      } else {
+        state.currentTrip = booking;
+        showCurrentTrip();
+        // Redirect to trip tracking page after 2 seconds
+        setTimeout(() => {
+          window.location.href = 'trip-tracking.html';
+        }, 2000);
+      }
+
+      speakText('Your trip has been booked successfully');
+    }
+
+    function showCurrentTrip() {
+      const display = document.getElementById('currentTripDisplay');
+      const details = document.getElementById('tripDetails');
+      const mode = transportModes.find(m => m.id === state.currentTrip.transport_mode);
+      
+      details.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+          <span style="font-size: 1.5rem;">${mode.icon}</span>
+          <span style="color: #1e40af;">${state.currentTrip.pickup} → ${state.currentTrip.destination}</span>
+        </div>
+        <div style="color: #1e40af; font-size: 0.875rem;">Booking ID: ${state.currentTrip.booking_id}</div>
+        <div style="color: #1e40af; font-size: 0.875rem;">Fare: UGX ${state.currentTrip.total_fare_ugx.toLocaleString()} (Fixed)</div>
+      `;
+      
+      display.classList.remove('hidden');
+      window.scrollTo(0, 0);
+    }
+
+    function showTicket(booking) {
+      const modal = document.getElementById('ticketModal');
+      const details = document.getElementById('ticketDetails');
+      
+      details.innerHTML = `
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+          <div>
+            <h3 style="font-weight: 600; margin-bottom: 12px;">Journey Details</h3>
+            <div style="font-size: 0.875rem; display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; justify-between;"><span style="color: #6b7280;">Booking ID:</span><strong>${booking.booking_id}</strong></div>
+              <div style="display: flex; justify-between;"><span style="color: #6b7280;">Route:</span><strong>${state.selectedRoute.name}</strong></div>
+              <div style="display: flex; justify-between;"><span style="color: #6b7280;">From:</span><strong>${state.selectedRoute.origin}</strong></div>
+              <div style="display: flex; justify-between;"><span style="color: #6b7280;">To:</span><strong>${state.selectedRoute.destination}</strong></div>
+              <div style="display: flex; justify-between;"><span style="color: #6b7280;">Date & Time:</span><strong>${state.departureDate} ${state.departureTime}</strong></div>
+              <div style="display: flex; justify-between;"><span style="color: #6b7280;">Class:</span><strong>${state.serviceClass === 'first' ? 'First Class' : 'Standard'}</strong></div>
+              <div style="display: flex; justify-between; margin-top: 8px; padding-top: 8px; border-top: 1px solid #e5e7eb;"><span style="font-weight: 600;">Total Fare:</span><strong style="color: #16a34a;">UGX ${booking.total_fare_ugx.toLocaleString()}</strong></div>
+            </div>
+          </div>
+          <div style="background: #f9fafb; border-radius: 8px; padding: 16px; text-align: center;">
+            <div class="qr-placeholder">
+              <div style="font-size: 4rem; opacity: 0.3;">📱</div>
+            </div>
+            <p style="font-size: 0.875rem; color: #6b7280; margin-top: 12px;">QR Code for boarding</p>
+            <p style="font-size: 0.75rem; color: #9ca3af;">Show this to conductor</p>
+          </div>
+        </div>
+      `;
+      
+      modal.classList.remove('hidden');
+    }
+
+    function closeTicket() {
+      document.getElementById('ticketModal').classList.add('hidden');
+    }
+
+    function cancelTrip() {
+      if (confirm('Are you sure you want to cancel this trip?')) {
+        state.currentTrip = null;
+        document.getElementById('currentTripDisplay').classList.add('hidden');
+      }
+    }
+
+    function shareTrip() {
+      const text = `I'm traveling with SafeMove. Track my trip: ${window.location.origin}/track/mock-token`;
+      if (navigator.share) {
+        navigator.share({ text });
+      } else {
+        navigator.clipboard.writeText(text);
+        alert('Trip sharing link copied to clipboard!');
+      }
+    }
+
+    function shareTicket() {
+      const booking = state.currentTrip || { booking_id: 'SM' + Date.now() };
+      const text = `SafeMove Ticket - Booking ID: ${booking.booking_id}\nRoute: ${state.selectedRoute?.name || state.pickup + ' → ' + state.destination}\nFare: UGX ${calculateFare().toLocaleString()}\nTrack: ${window.location.origin}/track/${booking.booking_id}`;
+
+      if (navigator.share) {
+        navigator.share({
+          title: 'SafeMove Ticket',
+          text: text
+        }).then(() => {
+          showShareSuccess();
+        }).catch(() => {
+          fallbackShare(text);
+        });
+      } else {
+        fallbackShare(text);
+      }
+    }
+
+    function fallbackShare(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showShareSuccess();
+      }).catch(() => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showShareSuccess();
+      });
+    }
+
+    function showShareSuccess() {
+      // Create success notification
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #16a34a;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        z-index: 1000;
+        font-weight: 500;
+        animation: slideIn 0.3s ease-out;
+      `;
+      notification.innerHTML = '✅ Ticket shared successfully!';
+
+      // Add animation
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+      `;
+      document.head.appendChild(style);
+
+      document.body.appendChild(notification);
+
+      // Remove after 3 seconds
+      setTimeout(() => {
+        notification.style.animation = 'slideIn 0.3s ease-in reverse';
+        setTimeout(() => {
+          document.body.removeChild(notification);
+        }, 300);
+      }, 3000);
+    }
+
+    function triggerSOS() {
+      if (confirm('Send emergency alert? This will notify authorities and your emergency contacts.')) {
+        alert('🚨 EMERGENCY ALERT SENT!\nHelp is on the way.\nCall 999 for immediate police assistance.');
+        speakText('Emergency alert sent. Help is on the way.');
+      }
+    }
+
+    function speakText(text) {
+      if (state.voiceEnabled && 'speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        speechSynthesis.speak(utterance);
+      }
+    }
+
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userRole');
+        window.location.href = 'index.html';
+      }
+    }
+
+    // Load user name
+    const userName = localStorage.getItem('userName');
+    if (userName) {
+      document.getElementById('userNameDisplay').textContent = userName;
+    }
+
+    // Initialize on load
+    init();
+  </script>
+</body>
+</html>
