@@ -17,6 +17,8 @@ fastify.register(require('@fastify/cors'), {
     const allowedOrigins = [
       'http://localhost:8000',
       'http://127.0.0.1:8000',
+      'http://localhost:5500',
+      'http://127.0.0.1:5500',
       'https://imaginative-mooncake-de0de1.netlify.app',
       'https://safemove.netlify.app',
       'https://main--safemove.netlify.app'

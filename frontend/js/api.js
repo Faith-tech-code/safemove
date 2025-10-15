@@ -12,7 +12,7 @@ async function apiFetch(endpoint, method = 'GET', body = null, requireAuth = tru
     if (requireAuth) {
         const token = localStorage.getItem('token');
         if (!token) {
-            window.location.href = 'login.html';
+            window.location.href = 'register.html';
             throw new Error('Unauthorized');
         }
         headers['Authorization'] = `Bearer ${token}`;
@@ -27,7 +27,7 @@ async function apiFetch(endpoint, method = 'GET', body = null, requireAuth = tru
 
     if (res.status === 401 && window.location.pathname.includes('dashboard.html')) {
         localStorage.removeItem('token');
-        window.location.href = 'login.html';
+        window.location.href = 'register.html';
         throw new Error('Session expired. Please log in again.');
     }
 
@@ -48,7 +48,7 @@ async function apiFetch(endpoint, method = 'GET', body = null, requireAuth = tru
                 // For other endpoints, redirect to login
                 if (requireAuth) {
                     localStorage.removeItem('token');
-                    window.location.href = 'login.html';
+                    window.location.href = 'register.html';
                     throw new Error('Session expired. Please log in again.');
                 }
             }

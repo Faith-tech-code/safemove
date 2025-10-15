@@ -85,7 +85,7 @@
       margin-bottom: 20px;
     }
     .back-link a {
-      color: #007bff;
+      color: #7b68ee;
       text-decoration: none;
       font-size: 14px;
     }
@@ -124,7 +124,7 @@
     .demo-user:hover {
       border-color: #7b68ee;
       transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,123,255,0.2);
+      box-shadow: 0 4px 8px rgba(123,104,238,0.2);
     }
 
     .demo-user.selected {
@@ -154,9 +154,9 @@
       color: #888;
     }
 
-    .rider-card { border-left: 4px solid #28a745; }
-    .driver-card { border-left: 4px solid #007bff; }
-    .admin-card { border-left: 4px solid #dc3545; }
+    .rider-card { border-left: 4px solid #ba55d3; }
+    .driver-card { border-left: 4px solid #7b68ee; }
+    .admin-card { border-left: 4px solid #ff69b4; }
 
     .login-form {
       margin-top: 20px;
@@ -234,7 +234,7 @@
     }
 
     .register-link a {
-      color: #007bff;
+      color: #7b68ee;
       text-decoration: none;
     }
 
@@ -261,6 +261,31 @@
     </div>
 
     <h2 style="text-align: center; color: black; margin-bottom: 30px;">Login to SafeMove</h2>
+
+    <!-- Demo Users Section -->
+    <div class="demo-section">
+      <h3 class="demo-title">Try Demo Accounts</h3>
+      <div class="demo-users">
+        <div class="demo-user rider-card" onclick="selectDemoUser('rider')">
+          <div class="demo-user-icon">🧍‍♂️</div>
+          <div class="demo-user-name">Demo Rider</div>
+          <div class="demo-user-role">Passenger Account</div>
+          <div class="demo-user-phone">+256701234567</div>
+        </div>
+        <div class="demo-user driver-card" onclick="selectDemoUser('driver')">
+          <div class="demo-user-icon">🚗</div>
+          <div class="demo-user-name">Demo Driver</div>
+          <div class="demo-user-role">Driver Account</div>
+          <div class="demo-user-phone">+256707654321</div>
+        </div>
+        <div class="demo-user admin-card" onclick="selectDemoUser('admin')">
+          <div class="demo-user-icon">⚙️</div>
+          <div class="demo-user-name">Demo Admin</div>
+          <div class="demo-user-role">Administrator</div>
+          <div class="demo-user-phone">+256789012345</div>
+        </div>
+      </div>
+    </div>
 
     <!-- Transport Mode Showcase -->
     <div class="transport-showcase">

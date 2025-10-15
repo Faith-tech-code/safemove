@@ -26,7 +26,7 @@ async function register() {
         statusEl.innerText = `Success! ${data.message || 'Registered successfully'}. Redirecting...`;
         statusEl.style.color = 'green';
         localStorage.removeItem('intendedRole');
-        setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+        setTimeout(() => { window.location.href = 'register.html'; }, 1500);
     } catch (e) {
         statusEl.innerText = e.message || 'Registration failed. Please try again.';
         statusEl.style.color = 'red';
@@ -118,7 +118,7 @@ function checkAuth() {
 
     if (!token && isProtectedPage) {
         localStorage.setItem('intendedDestination', path.split('/').pop());
-        window.location.href = 'login.html';
+        window.location.href = 'register.html';
     } else if (token && (path.includes('login.html') || path.includes('register.html'))) {
         const userRole = localStorage.getItem('userRole');
         if (userRole === 'driver') {
