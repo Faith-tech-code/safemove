@@ -204,6 +204,32 @@
             </div>
           </div>
 
+          <!-- Payment Method Selection -->
+          <div id="paymentSection" class="hidden" style="margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 10px; border: 1px solid #e5e7eb;">
+            <h4 style="margin-bottom: 15px; color: #333;">💳 Select Payment Method</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 15px;">
+              <button class="payment-method-btn" onclick="selectPaymentMethod('card')" style="padding: 10px; border: 2px solid #e5e7eb; background: white; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                <div style="font-size: 1.5rem; margin-bottom: 5px;">💳</div>
+                <div style="font-size: 0.75rem; font-weight: 600;">SafeMove Card</div>
+              </button>
+              <button class="payment-method-btn" onclick="selectPaymentMethod('visa')" style="padding: 10px; border: 2px solid #e5e7eb; background: white; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                <div style="font-size: 1.5rem; margin-bottom: 5px;">💳</div>
+                <div style="font-size: 0.75rem; font-weight: 600;">Visa Card</div>
+              </button>
+              <button class="payment-method-btn" onclick="selectPaymentMethod('momo')" style="padding: 10px; border: 2px solid #e5e7eb; background: white; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                <div style="font-size: 1.5rem; margin-bottom: 5px;">📱</div>
+                <div style="font-size: 0.75rem; font-weight: 600;">Mobile Money</div>
+              </button>
+              <button class="payment-method-btn" onclick="selectPaymentMethod('airtel')" style="padding: 10px; border: 2px solid #e5e7eb; background: white; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                <div style="font-size: 1.5rem; margin-bottom: 5px;">📱</div>
+                <div style="font-size: 0.75rem; font-weight: 600;">Airtel Money</div>
+              </button>
+            </div>
+            <div style="text-align: center;">
+              <a href="payments.html" style="color: #007bff; text-decoration: none; font-size: 0.875rem;">Manage Payment Methods →</a>
+            </div>
+          </div>
+
           <button id="bookBtn" class="btn-primary" disabled>Book Now - UGX 0</button>
         </div>
       </div>
@@ -288,7 +314,9 @@
       selectedPassengers: [],
       selectedAddons: [],
       voiceEnabled: false,
-      currentTrip: null
+      currentTrip: null,
+      selectedPaymentMethod: null,
+      paymentCompleted: false
     };
 
     const transportModes = [
@@ -523,51 +551,202 @@
         const total = calculateFare();
         fareDisplay.classList.remove('hidden');
         document.getElementById('totalFare').textContent = total.toLocaleString();
-        
+
         const mode = transportModes.find(m => m.id === state.selectedMode);
         document.getElementById('selectedIcon').textContent = mode.icon;
         document.getElementById('selectedMode').textContent = mode.name;
-        
+
         if (state.selectedAddons.length > 0) {
           const addonNames = state.selectedAddons.map(id => fareAddons.find(a => a.id === id)?.name).join(', ');
           document.getElementById('addonSummary').textContent = 'Includes: ' + addonNames;
         } else {
           document.getElementById('addonSummary').textContent = '';
         }
-        
+
+        // Show payment section when fare is calculated
+        document.getElementById('paymentSection').classList.remove('hidden');
+
         bookBtn.disabled = false;
-        bookBtn.textContent = `Book Now - UGX ${total.toLocaleString()}`;
+        bookBtn.textContent = `Complete Payment - UGX ${total.toLocaleString()}`;
       } else {
         fareDisplay.classList.add('hidden');
+        document.getElementById('paymentSection').classList.add('hidden');
         bookBtn.disabled = true;
         bookBtn.textContent = 'Book Now - UGX 0';
       }
     }
 
-    function handleBookTrip() {
-      const booking = {
-        id: 'trip-' + Date.now(),
-        booking_id: 'SM' + Date.now(),
-        transport_mode: state.selectedMode,
-        pickup: state.pickup,
-        destination: state.destination,
-        route: state.selectedRoute,
-        total_fare_ugx: calculateFare(),
-        status: 'pending'
-      };
+    function selectPaymentMethod(method) {
+      // Remove previous selection
+      document.querySelectorAll('.payment-method-btn').forEach(btn => {
+        btn.style.borderColor = '#e5e7eb';
+        btn.style.background = 'white';
+      });
 
-      if (state.selectedMode === 'train' || state.selectedMode === 'bus') {
-        showTicket(booking);
-      } else {
-        state.currentTrip = booking;
-        showCurrentTrip();
-        // Redirect to trip tracking page after 2 seconds
-        setTimeout(() => {
-          window.location.href = 'trip-tracking.html';
-        }, 2000);
+      // Add selection to clicked method
+      event.target.closest('.payment-method-btn').style.borderColor = '#007bff';
+      event.target.closest('.payment-method-btn').style.background = '#eff6ff';
+
+      state.selectedPaymentMethod = method;
+    }
+
+    function handleBookTrip() {
+      // Check if payment method is selected
+      if (!state.selectedPaymentMethod) {
+        alert('Please select a payment method first');
+        document.getElementById('paymentSection').scrollIntoView({ behavior: 'smooth' });
+        return;
       }
 
-      speakText('Your trip has been booked successfully');
+      // Process payment based on method
+      processPayment().then(success => {
+        if (success) {
+          const booking = {
+            id: 'trip-' + Date.now(),
+            booking_id: 'SM' + Date.now(),
+            transport_mode: state.selectedMode,
+            pickup: state.pickup,
+            destination: state.destination,
+            route: state.selectedRoute,
+            total_fare_ugx: calculateFare(),
+            payment_method: state.selectedPaymentMethod,
+            status: 'confirmed'
+          };
+
+          if (state.selectedMode === 'train' || state.selectedMode === 'bus') {
+            showTicket(booking);
+          } else {
+            state.currentTrip = booking;
+            showCurrentTrip();
+            // Redirect to trip tracking page after 2 seconds
+            setTimeout(() => {
+              window.location.href = 'trip-tracking.html';
+            }, 2000);
+          }
+
+          speakText('Your trip has been booked successfully');
+        }
+      });
+    }
+
+    async function processPayment() {
+      const amount = calculateFare();
+
+      try {
+        switch(state.selectedPaymentMethod) {
+          case 'card':
+            // Process SafeMove card payment
+            return await processCardPayment(amount);
+
+          case 'visa':
+            // Process Visa card payment
+            return await processVisaPayment(amount);
+
+          case 'momo':
+            // Process Mobile Money payment
+            return await processMobileMoneyPayment(amount);
+
+          case 'airtel':
+            // Process Airtel Money payment
+            return await processAirtelMoneyPayment(amount);
+
+          default:
+            throw new Error('Invalid payment method');
+        }
+      } catch (error) {
+        console.error('Payment error:', error);
+        alert('Payment failed: ' + error.message);
+        return false;
+      }
+    }
+
+    async function processCardPayment(amount) {
+      // Check if card has sufficient balance
+      const cardBalance = 25000; // This would come from API
+      if (cardBalance < amount) {
+        if (confirm(`Insufficient card balance (UGX ${cardBalance.toLocaleString()}). Would you like to load more funds?`)) {
+          window.location.href = 'payments.html';
+          return false;
+        }
+        throw new Error('Insufficient card balance');
+      }
+
+      // Simulate card payment processing
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      // Show success message
+      showPaymentStatus('✅ SafeMove Card payment successful!', 'success');
+      return true;
+    }
+
+    async function processVisaPayment(amount) {
+      // Simulate Visa payment processing
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      showPaymentStatus('✅ Visa card payment successful!', 'success');
+      return true;
+    }
+
+    async function processMobileMoneyPayment(amount) {
+      // Simulate Mobile Money payment processing
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      showPaymentStatus('✅ Mobile Money payment successful!', 'success');
+      return true;
+    }
+
+    async function processAirtelMoneyPayment(amount) {
+      // Simulate Airtel Money payment processing
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      showPaymentStatus('✅ Airtel Money payment successful!', 'success');
+      return true;
+    }
+
+    function showPaymentStatus(message, type) {
+      // Create temporary status message
+      const statusDiv = document.createElement('div');
+      statusDiv.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: ${type === 'success' ? '#d4edda' : '#f8d7da'};
+        color: ${type === 'success' ? '#155724' : '#721c24'};
+        padding: 20px 30px;
+        border-radius: 10px;
+        border: 1px solid ${type === 'success' ? '#c3e6cb' : '#f5c6cb'};
+        font-weight: bold;
+        z-index: 1000;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        animation: fadeIn 0.3s ease-out;
+      `;
+      statusDiv.innerHTML = `
+        <div style="text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 10px;">${type === 'success' ? '✅' : '❌'}</div>
+          <div>${message}</div>
+        </div>
+      `;
+
+      // Add animation
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+          to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+      `;
+      document.head.appendChild(style);
+
+      document.body.appendChild(statusDiv);
+
+      // Remove after 3 seconds
+      setTimeout(() => {
+        statusDiv.style.animation = 'fadeIn 0.3s ease-in reverse';
+        setTimeout(() => {
+          document.body.removeChild(statusDiv);
+        }, 300);
+      }, 3000);
     }
 
     function showCurrentTrip() {

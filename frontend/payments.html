@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payments – SafeMove</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    :root {
+      --primary-bg: #0A0F24;
+      --accent-color: #00BFA6;
+      --alert-color: #FFD369;
+      --success-color: #4CAF50;
+      --error-color: #f44336;
+      --warning-color: #ff9800;
+      --text-light: #ffffff;
+      --text-dark: #333333;
+      --card-bg: #ffffff;
+      --border-color: #e0e0e0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0A0F24 0%, #1a1f3a 100%);
+      min-height: 100vh;
+      color: var(--text-light);
+    }
+
+    .payments-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--accent-color);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .logo-text {
+      font-size: 28px;
+      font-weight: bold;
+      color: var(--text-light);
+    }
+
+    .header-title {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: var(--accent-color);
+    }
+
+    .header-subtitle {
+      font-size: 16px;
+      opacity: 0.8;
+    }
+
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-tab {
+      padding: 12px 20px;
+      background: transparent;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      opacity: 0.7;
+    }
+
+    .nav-tab.active {
+      background: var(--accent-color);
+      opacity: 1;
+    }
+
+    .nav-tab:hover {
+      opacity: 1;
+      background: rgba(0, 191, 166, 0.2);
+    }
+
+    .content-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: var(--accent-color);
+      text-align: center;
+    }
+
+    .safemove-card {
+      background: linear-gradient(135deg, var(--accent-color), #00a693);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 20px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .safemove-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      transform: rotate(45deg);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .card-number {
+      font-size: 18px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .card-balance {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+
+    .card-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-holder {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .card-expiry {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    .payment-methods {
+      display: grid;
+      gap: 20px;
+    }
+
+    .payment-method {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .payment-method:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border-color: var(--accent-color);
+    }
+
+    .payment-method.selected {
+      border-color: var(--accent-color);
+      background: rgba(0, 191, 166, 0.05);
+    }
+
+    .payment-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .visa-icon {
+      background: linear-gradient(135deg, #1a1f71, #003d82);
+      color: white;
+    }
+
+    .mobile-money-icon {
+      background: linear-gradient(135deg, #ff6b35, #f7931e);
+      color: white;
+    }
+
+    .airtel-icon {
+      background: linear-gradient(135deg, #e21100, #d40900);
+      color: white;
+    }
+
+    .card-icon {
+      background: var(--accent-color);
+      color: white;
+    }
+
+    .payment-name {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--text-dark);
+      margin-bottom: 5px;
+    }
+
+    .payment-description {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .payment-fee {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .load-card-section {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 25px;
+      margin-top: 20px;
+    }
+
+    .load-amount {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .amount-btn {
+      padding: 15px;
+      border: 2px solid var(--border-color);
+      background: white;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+      color: var(--text-dark);
+    }
+
+    .amount-btn:hover {
+      border-color: var(--accent-color);
+      background: rgba(0, 191, 166, 0.05);
+    }
+
+    .amount-btn.selected {
+      border-color: var(--accent-color);
+      background: var(--accent-color);
+      color: white;
+    }
+
+    .custom-amount {
+      margin: 20px 0;
+    }
+
+    .custom-amount input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .custom-amount input:focus {
+      outline: none;
+      border-color: var(--accent-color);
+    }
+
+    .load-btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .load-btn:hover {
+      background: #00a693;
+    }
+
+    .status-message {
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+      font-weight: bold;
+    }
+
+    .status-success {
+      background: rgba(76, 175, 80, 0.1);
+      color: var(--success-color);
+      border: 1px solid var(--success-color);
+    }
+
+    .status-error {
+      background: rgba(244, 67, 54, 0.1);
+      color: var(--error-color);
+      border: 1px solid var(--error-color);
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .back-link a {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .payments-container {
+        padding: 15px;
+      }
+
+      .nav-tabs {
+        flex-wrap: wrap;
+      }
+
+      .demo-users {
+        grid-template-columns: 1fr;
+      }
+
+      .load-amount {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="payments-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-section">
+        <div class="logo-icon">S</div>
+        <div class="logo-text">SafeMove</div>
+      </div>
+      <div class="header-title">Payment Methods</div>
+      <div class="header-subtitle">Choose how to pay for your rides</div>
+    </div>
+
+    <!-- SafeMove Card Section -->
+    <div class="content-section">
+      <div class="section-title">💳 Your SafeMove Card</div>
+      <div class="safemove-card">
+        <div class="card-header">
+          <div class="card-number">**** **** **** 1234</div>
+          <div class="card-balance">UGX 25,000</div>
+        </div>
+        <div class="card-info">
+          <div class="card-holder">John Rider</div>
+          <div class="card-expiry">Valid until: 12/25</div>
+        </div>
+      </div>
+
+      <!-- Card Loading Section -->
+      <div class="load-card-section">
+        <h3 style="margin-bottom: 20px; color: var(--text-dark);">Load Card Balance</h3>
+        <div class="load-amount">
+          <button class="amount-btn" onclick="selectAmount(5000)">UGX 5,000</button>
+          <button class="amount-btn" onclick="selectAmount(10000)">UGX 10,000</button>
+          <button class="amount-btn" onclick="selectAmount(25000)">UGX 25,000</button>
+          <button class="amount-btn" onclick="selectAmount(50000)">UGX 50,000</button>
+        </div>
+        <div class="custom-amount">
+          <input type="number" id="customAmount" placeholder="Enter custom amount (UGX)" min="1000" step="1000">
+        </div>
+        <button class="load-btn" onclick="loadCard()">Load Card</button>
+      </div>
+    </div>
+
+    <!-- Payment Methods -->
+    <div class="content-section">
+      <div class="section-title">💳 Other Payment Methods</div>
+      <div class="payment-methods">
+        <div class="payment-method" onclick="selectPaymentMethod('visa')">
+          <div class="payment-icon visa-icon">💳</div>
+          <div class="payment-name">Visa Card</div>
+          <div class="payment-description">Pay with your Visa credit or debit card</div>
+          <div class="payment-fee">No additional fees</div>
+        </div>
+
+        <div class="payment-method" onclick="selectPaymentMethod('mobile-money')">
+          <div class="payment-icon mobile-money-icon">📱</div>
+          <div class="payment-name">Mobile Money</div>
+          <div class="payment-description">MTN Mobile Money payments</div>
+          <div class="payment-fee">2.5% convenience fee</div>
+        </div>
+
+        <div class="payment-method" onclick="selectPaymentMethod('airtel-money')">
+          <div class="payment-icon airtel-icon">📱</div>
+          <div class="payment-name">Airtel Money</div>
+          <div class="payment-description">Airtel Money wallet payments</div>
+          <div class="payment-fee">2.5% convenience fee</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Form (shown when method selected) -->
+    <div class="content-section" id="paymentForm" style="display: none;">
+      <div class="section-title" id="formTitle">Complete Payment</div>
+      <form id="paymentDetailsForm">
+        <div id="paymentFields"></div>
+        <button type="submit" class="load-btn" id="payBtn">Complete Payment</button>
+      </form>
+    </div>
+
+    <!-- Status Messages -->
+    <div id="statusMessage" class="status-message" style="display: none;"></div>
+
+    <!-- Navigation -->
+    <div class="back-link">
+      <a href="rider-dashboard.html">← Back to Dashboard</a>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    let selectedPaymentMethod = null;
+    let selectedAmount = 0;
+
+    function selectPaymentMethod(method) {
+      // Remove previous selection
+      document.querySelectorAll('.payment-method').forEach(pm => {
+        pm.classList.remove('selected');
+      });
+
+      // Add selection to clicked method
+      event.target.closest('.payment-method').classList.add('selected');
+      selectedPaymentMethod = method;
+
+      // Show payment form
+      showPaymentForm(method);
+    }
+
+    function showPaymentForm(method) {
+      const formSection = document.getElementById('paymentForm');
+      const formTitle = document.getElementById('formTitle');
+      const paymentFields = document.getElementById('paymentFields');
+
+      formSection.style.display = 'block';
+
+      let fields = '';
+
+      switch(method) {
+        case 'visa':
+          formTitle.textContent = '💳 Visa Card Details';
+          fields = `
+            <div class="form-group">
+              <label for="cardNumber">Card Number</label>
+              <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+            </div>
+            <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+              <div>
+                <label for="expiryDate">Expiry Date</label>
+                <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" required>
+              </div>
+              <div>
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" placeholder="123" maxlength="4" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cardName">Cardholder Name</label>
+              <input type="text" id="cardName" placeholder="John Smith" required>
+            </div>
+          `;
+          break;
+
+        case 'mobile-money':
+          formTitle.textContent = '📱 MTN Mobile Money';
+          fields = `
+            <div class="form-group">
+              <label for="momoNumber">Mobile Money Number</label>
+              <input type="tel" id="momoNumber" placeholder="256771234567" required>
+            </div>
+            <div class="form-group">
+              <label for="momoName">Account Name</label>
+              <input type="text" id="momoName" placeholder="John Smith" required>
+            </div>
+            <div class="form-group">
+              <label for="momoPin">Mobile Money PIN</label>
+              <input type="password" id="momoPin" placeholder="Enter your MoMo PIN" maxlength="4" required>
+            </div>
+          `;
+          break;
+
+        case 'airtel-money':
+          formTitle.textContent = '📱 Airtel Money';
+          fields = `
+            <div class="form-group">
+              <label for="airtelNumber">Airtel Money Number</label>
+              <input type="tel" id="airtelNumber" placeholder="256751234567" required>
+            </div>
+            <div class="form-group">
+              <label for="airtelName">Account Name</label>
+              <input type="text" id="airtelName" placeholder="John Smith" required>
+            </div>
+            <div class="form-group">
+              <label for="airtelPin">Airtel Money PIN</label>
+              <input type="password" id="airtelPin" placeholder="Enter your Airtel PIN" maxlength="4" required>
+            </div>
+          `;
+          break;
+      }
+
+      paymentFields.innerHTML = fields;
+    }
+
+    function selectAmount(amount) {
+      // Remove previous selection
+      document.querySelectorAll('.amount-btn').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+
+      // Add selection to clicked amount
+      event.target.classList.add('selected');
+      selectedAmount = amount;
+
+      // Update custom amount field
+      document.getElementById('customAmount').value = '';
+    }
+
+    function loadCard() {
+      const customAmount = document.getElementById('customAmount').value;
+      const amount = customAmount ? parseInt(customAmount) : selectedAmount;
+
+      if (!amount || amount < 1000) {
+        showStatus('Please select or enter a valid amount (minimum UGX 1,000)', 'error');
+        return;
+      }
+
+      // Here you would integrate with payment processing
+      showStatus(`Loading UGX ${amount.toLocaleString()} to your SafeMove card...`, 'success');
+
+      // Simulate payment processing
+      setTimeout(() => {
+        showStatus(`✅ Successfully loaded UGX ${amount.toLocaleString()} to your SafeMove card!`, 'success');
+      }, 2000);
+    }
+
+    function showStatus(message, type) {
+      const statusEl = document.getElementById('statusMessage');
+      statusEl.textContent = message;
+      statusEl.className = `status-message status-${type}`;
+      statusEl.style.display = 'block';
+
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        statusEl.style.display = 'none';
+      }, 5000);
+    }
+
+    // Format card number input
+    document.addEventListener('DOMContentLoaded', function() {
+      // Card number formatting
+      const cardNumberInput = document.getElementById('cardNumber');
+      if (cardNumberInput) {
+        cardNumberInput.addEventListener('input', function(e) {
+          let value = e.target.value.replace(/\s/g, '');
+          value = value.replace(/(.{4})/g, '$1 ').trim();
+          e.target.value = value;
+        });
+      }
+
+      // Expiry date formatting
+      const expiryInput = document.getElementById('expiryDate');
+      if (expiryInput) {
+        expiryInput.addEventListener('input', function(e) {
+          let value = e.target.value.replace(/\D/g, '');
+          if (value.length >= 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2, 4);
+          }
+          e.target.value = value;
+        });
+      }
+    });
+  </script>
+</body>
+</html>

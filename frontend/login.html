@@ -167,7 +167,7 @@
     }
   </style>
 </head>
-<body onload="checkAuth()">
+<body onload="checkAuth(); checkJustRegistered()">
   <div class="container">
     <div class="back-link">
       <a href="index.html">← Back to Home</a>
@@ -278,6 +278,24 @@
       statusEl.className = 'status';
     }
 
+    // Check if user just registered
+    function checkJustRegistered() {
+      const justRegistered = localStorage.getItem('justRegistered');
+      const registeredPhone = localStorage.getItem('registeredPhone');
+
+      if (justRegistered === 'true' && registeredPhone) {
+        // Pre-populate phone number
+        document.getElementById('phone').value = registeredPhone;
+
+        // Show welcome message
+        showStatus('Welcome! Please enter your password to complete login.', 'info');
+
+        // Clear the registration flags
+        localStorage.removeItem('justRegistered');
+        localStorage.removeItem('registeredPhone');
+      }
+    }
+
     // Enhanced login function
     async function login() {
       const phone = document.getElementById('phone').value.trim();
@@ -308,7 +326,7 @@
             const payload = JSON.parse(atob(response.token.split('.')[1]));
             const userRole = payload.role || 'rider';
 
-            showStatus('Login successful! Redirecting...', 'success');
+            showStatus('Login successful! Redirecting to dashboard...', 'success');
 
             // Redirect based on role
             setTimeout(() => {
@@ -323,7 +341,10 @@
 
           } catch (e) {
             console.error('Token decode error:', e);
-            window.location.href = 'rider-dashboard.html';
+            showStatus('Login successful! Redirecting...', 'success');
+            setTimeout(() => {
+              window.location.href = 'rider-dashboard.html';
+            }, 1000);
           }
         }
 
