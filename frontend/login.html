@@ -16,6 +16,155 @@
     .back-link a:hover {
       text-decoration: underline;
     }
+
+    .demo-section {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .demo-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .demo-users {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .demo-user {
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: white;
+    }
+
+    .demo-user:hover {
+      border-color: #007bff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,123,255,0.2);
+    }
+
+    .demo-user.selected {
+      border-color: #007bff;
+      background: #f8f9ff;
+    }
+
+    .demo-user-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .demo-user-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .demo-user-role {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .demo-user-phone {
+      font-size: 11px;
+      color: #888;
+    }
+
+    .rider-card { border-left: 4px solid #28a745; }
+    .driver-card { border-left: 4px solid #007bff; }
+    .admin-card { border-left: 4px solid #dc3545; }
+
+    .login-form {
+      margin-top: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background: #0056b3;
+    }
+
+    .login-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .status {
+      text-align: center;
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .register-link a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .register-link a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body onload="checkAuth()">
@@ -24,13 +173,180 @@
       <a href="index.html">← Back to Home</a>
     </div>
     <h2>Login to SafeMove</h2>
-    <input type="text" id="phone" placeholder="Phone Number" required>
-    <input type="password" id="password" placeholder="Password" required>
-    <button onclick="login()">Login</button>
-    <p id="status"></p>
-    <p style="text-align: center;"><a href="register.html">Need an account? Register</a></p>
+
+    <!-- Demo User Selection -->
+    <div class="demo-section">
+      <div class="demo-title">🚀 Quick Demo Login</div>
+      <div class="demo-users">
+        <div class="demo-user rider-card" onclick="selectDemoUser('rider')">
+          <div class="demo-user-icon">👤</div>
+          <div class="demo-user-name">John Rider</div>
+          <div class="demo-user-role">Passenger</div>
+          <div class="demo-user-phone">+256701234567</div>
+        </div>
+
+        <div class="demo-user driver-card" onclick="selectDemoUser('driver')">
+          <div class="demo-user-icon">🚗</div>
+          <div class="demo-user-name">Mary Driver</div>
+          <div class="demo-user-role">Driver</div>
+          <div class="demo-user-phone">+256707654321</div>
+        </div>
+
+        <div class="demo-user admin-card" onclick="selectDemoUser('admin')">
+          <div class="demo-user-icon">⚙️</div>
+          <div class="demo-user-name">Admin User</div>
+          <div class="demo-user-role">Administrator</div>
+          <div class="demo-user-phone">+256789012345</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Form -->
+    <div class="login-form">
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" placeholder="Enter phone number" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter password" required>
+      </div>
+
+      <button class="login-btn" onclick="login()" id="loginBtn">Login</button>
+
+      <div id="status" class="status"></div>
+
+      <div class="register-link">
+        <a href="register.html">Need an account? Register here</a>
+      </div>
+    </div>
   </div>
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
+  <script>
+    // Demo user credentials
+    const demoUsers = {
+      rider: {
+        phone: '+256701234567',
+        password: 'rider123',
+        role: 'rider'
+      },
+      driver: {
+        phone: '+256707654321',
+        password: 'driver123',
+        role: 'driver'
+      },
+      admin: {
+        phone: '+256789012345',
+        password: 'admin123',
+        role: 'admin'
+      }
+    };
+
+    let selectedDemoUser = null;
+
+    function selectDemoUser(userType) {
+      // Remove previous selection
+      document.querySelectorAll('.demo-user').forEach(user => {
+        user.classList.remove('selected');
+      });
+
+      // Add selection to clicked user
+      event.target.closest('.demo-user').classList.add('selected');
+
+      // Store selected user
+      selectedDemoUser = demoUsers[userType];
+
+      // Populate form
+      document.getElementById('phone').value = selectedDemoUser.phone;
+      document.getElementById('password').value = selectedDemoUser.password;
+
+      // Update status
+      showStatus('Demo user selected: ' + userType.toUpperCase(), 'success');
+    }
+
+    function showStatus(message, type) {
+      const statusEl = document.getElementById('status');
+      statusEl.textContent = message;
+      statusEl.className = `status ${type}`;
+    }
+
+    function clearStatus() {
+      const statusEl = document.getElementById('status');
+      statusEl.textContent = '';
+      statusEl.className = 'status';
+    }
+
+    // Enhanced login function
+    async function login() {
+      const phone = document.getElementById('phone').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!phone || !password) {
+        showStatus('Please enter both phone number and password', 'error');
+        return;
+      }
+
+      const loginBtn = document.getElementById('loginBtn');
+      const originalText = loginBtn.textContent;
+
+      try {
+        loginBtn.textContent = 'Logging in...';
+        loginBtn.disabled = true;
+
+        const response = await apiFetch('/auth/login', 'POST', {
+          phone: phone,
+          password: password
+        }, false); // Don't require auth for login
+
+        if (response.token) {
+          localStorage.setItem('token', response.token);
+
+          // Decode token to get user role (simplified)
+          try {
+            const payload = JSON.parse(atob(response.token.split('.')[1]));
+            const userRole = payload.role || 'rider';
+
+            showStatus('Login successful! Redirecting...', 'success');
+
+            // Redirect based on role
+            setTimeout(() => {
+              if (userRole === 'driver') {
+                window.location.href = 'driver-dashboard.html';
+              } else if (userRole === 'admin') {
+                window.location.href = 'admin-dashboard.html';
+              } else {
+                window.location.href = 'rider-dashboard.html';
+              }
+            }, 1000);
+
+          } catch (e) {
+            console.error('Token decode error:', e);
+            window.location.href = 'rider-dashboard.html';
+          }
+        }
+
+      } catch (error) {
+        console.error('Login error:', error);
+        showStatus(error.message || 'Login failed. Please try again.', 'error');
+      } finally {
+        loginBtn.textContent = originalText;
+        loginBtn.disabled = false;
+      }
+    }
+
+    // Clear status when user types
+    document.getElementById('phone').addEventListener('input', clearStatus);
+    document.getElementById('password').addEventListener('input', clearStatus);
+
+    // Allow Enter key to submit
+    document.getElementById('phone').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') login();
+    });
+    document.getElementById('password').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') login();
+    });
+  </script>
 </body>
 </html>

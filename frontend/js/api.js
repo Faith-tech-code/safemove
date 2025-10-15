@@ -1,5 +1,8 @@
 // frontend/js/api.js
-const API_BASE_URL = 'http://localhost:8000/v1';
+// Dynamic API base URL for development and production
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:8000/v1'  // Local development
+    : 'https://safemove.onrender.com/v1'; // Production backend
 
 async function apiFetch(endpoint, method = 'GET', body = null, requireAuth = true) {
     const headers = {
