@@ -50,14 +50,28 @@ async function login() {
 
     try {
         const data = await apiFetch('/auth/login', 'POST', { phone, password }, false);
-        
-        if (!data || !data.access_token) {
+
+        if (!data || !data.token) {
             throw new Error('Invalid response from server');
         }
-        
-        localStorage.setItem('token', data.access_token);
-        localStorage.setItem('userName', data.user.name);
-        localStorage.setItem('userRole', data.user.role);
+
+        localStorage.setItem('token', data.token);
+
+        // Handle different response structures from backend
+        if (data.user) {
+            localStorage.setItem('userName', data.user.name || data.user.username || phone);
+            localStorage.setItem('userRole', data.user.role || 'rider');
+        } else {
+            // Fallback: decode token to get user info
+            try {
+                const payload = JSON.parse(atob(data.token.split('.')[1]));
+                localStorage.setItem('userName', payload.name || payload.username || phone);
+                localStorage.setItem('userRole', payload.role || 'rider');
+            } catch (e) {
+                localStorage.setItem('userName', phone);
+                localStorage.setItem('userRole', 'rider');
+            }
+        }
         
         statusEl.innerText = 'Login successful! Redirecting...';
         statusEl.style.color = 'green';

@@ -39,8 +39,21 @@ async function apiFetch(endpoint, method = 'GET', body = null, requireAuth = tru
         return data;
     } catch (e) {
         if (!res.ok) {
-             throw new Error(`HTTP Error ${res.status}`);
+            // Handle different HTTP status codes appropriately
+            if (res.status === 401) {
+                // Don't throw error for login/register - let calling function handle it
+                if (endpoint.includes('/auth/login') || endpoint.includes('/auth/register')) {
+                    throw new Error(`Authentication failed`);
+                }
+                // For other endpoints, redirect to login
+                if (requireAuth) {
+                    localStorage.removeItem('token');
+                    window.location.href = 'login.html';
+                    throw new Error('Session expired. Please log in again.');
+                }
+            }
+            throw new Error(`HTTP Error ${res.status}`);
         }
-        return {}; 
+        return {};
     }
 }

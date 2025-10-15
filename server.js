@@ -12,8 +12,28 @@ mongoose.connect(process.env.MONGO_URI)
   });
 
 fastify.register(require('@fastify/cors'), {
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: (origin, callback) => {
+    // Allow requests from localhost (development) and Netlify (production)
+    const allowedOrigins = [
+      'http://localhost:8000',
+      'http://127.0.0.1:8000',
+      'https://imaginative-mooncake-de0de1.netlify.app',
+      'https://safemove.netlify.app',
+      'https://main--safemove.netlify.app'
+    ];
+
+    // Allow requests with no origin (mobile apps, etc.)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log('CORS blocked origin:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 });
 
 fastify.register(require('@fastify/multipart'));
