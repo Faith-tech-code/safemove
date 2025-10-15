@@ -6,16 +6,16 @@
   <link rel="stylesheet" href="css/components.css">
   <style>
     :root {
-      --primary-bg: #0A0F24;
-      --accent-color: #00BFA6;
-      --transport-blue: #2563eb;
-      --transport-green: #16a34a;
-      --transport-orange: #ea580c;
+      --primary-bg: #1a1a2e;
+      --accent-color: #7b68ee;
+      --transport-blue: #9370db;
+      --transport-green: #ba55d3;
+      --transport-orange: #ff69b4;
     }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #0A0F24 0%, #1a1f3a 50%, #2d3748 100%);
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #2d1b69 100%);
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
@@ -30,9 +30,9 @@
       right: 0;
       bottom: 0;
       background:
-        radial-gradient(circle at 20% 80%, rgba(0, 191, 166, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 60% 40%, rgba(22, 163, 74, 0.06) 0%, transparent 50%);
+        radial-gradient(circle at 20% 80%, rgba(123, 104, 238, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(147, 112, 219, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 60% 40%, rgba(186, 85, 211, 0.06) 0%, transparent 50%);
       z-index: -2;
     }
 
@@ -44,8 +44,8 @@
       right: 0;
       bottom: 0;
       background-image:
-        url('data:image/svg+xml,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%2300BFA6" fill-opacity="0.02"><path d="M20,20 L80,20 L80,80 L20,80 Z"/></g></svg>'),
-        url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%232563eb" fill-opacity="0.02"><circle cx="30" cy="30" r="3"/></g></svg>');
+        url('data:image/svg+xml,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%237b68ee" fill-opacity="0.02"><path d="M20,20 L80,20 L80,80 L20,80 Z"/></g></svg>'),
+        url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%239370db" fill-opacity="0.02"><circle cx="30" cy="30" r="3"/></g></svg>');
       background-position: 0 0, 50px 50px;
       animation: float 30s ease-in-out infinite;
       z-index: -1;
@@ -122,13 +122,13 @@
     }
 
     .demo-user:hover {
-      border-color: #007bff;
+      border-color: #7b68ee;
       transform: translateY(-2px);
       box-shadow: 0 4px 8px rgba(0,123,255,0.2);
     }
 
     .demo-user.selected {
-      border-color: #007bff;
+      border-color: #7b68ee;
       background: #f8f9ff;
     }
 
@@ -183,14 +183,14 @@
 
     .form-group input:focus {
       outline: none;
-      border-color: #007bff;
-      box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+      border-color: #7b68ee;
+      box-shadow: 0 0 0 2px rgba(123,104,238,0.25);
     }
 
     .login-btn {
       width: 100%;
       padding: 12px;
-      background: #007bff;
+      background: #7b68ee;
       color: white;
       border: none;
       border-radius: 5px;
@@ -201,7 +201,7 @@
     }
 
     .login-btn:hover {
-      background: #0056b3;
+      background: #6a5acd;
     }
 
     .login-btn:disabled {

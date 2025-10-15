@@ -259,7 +259,7 @@
       const token = localStorage.getItem('token');
       if (!token) {
         // Redirect to login if not authenticated
-        window.location.href = 'login.html';
+        window.location.href = 'register.html';
         return;
       }
 
@@ -278,7 +278,7 @@
       } catch (e) {
         // Invalid token, redirect to login
         localStorage.removeItem('token');
-        window.location.href = 'login.html';
+        window.location.href = 'register.html';
       }
     });
 
@@ -335,7 +335,7 @@
         window.location.href = 'booking.html';
       } else {
         localStorage.setItem('intendedDestination', 'booking.html');
-        window.location.href = 'login.html';
+        window.location.href = 'register.html';
       }
     });
 
@@ -347,7 +347,7 @@
       } else {
         localStorage.setItem('intendedDestination', 'booking.html');
         localStorage.setItem('intendedRole', 'rider');
-        window.location.href = 'login.html';
+        window.location.href = 'register.html';
       }
     }
 
@@ -358,7 +358,7 @@
       } else {
         localStorage.setItem('intendedDestination', 'driver-dashboard.html');
         localStorage.setItem('intendedRole', 'driver');
-        window.location.href = 'login.html';
+        window.location.href = 'register.html';
       }
     }
 
@@ -369,14 +369,14 @@
       } else {
         localStorage.setItem('intendedDestination', 'admin-dashboard.html');
         localStorage.setItem('intendedRole', 'admin');
-        window.location.href = 'login.html';
+        window.location.href = 'register.html';
       }
     }
 
     function goToDashboard() {
       const token = localStorage.getItem('token');
       if (!token) {
-        window.location.href = 'login.html';
+        window.location.href = 'register.html';
         return;
       }
 
@@ -392,13 +392,13 @@
           window.location.href = 'rider-dashboard.html';
         }
       } catch (e) {
-        window.location.href = 'login.html';
+        window.location.href = 'register.html';
       }
     }
 
     function logout() {
       localStorage.removeItem('token');
-      window.location.href = 'login.html';
+      window.location.href = 'register.html';
     }
   </script>
 </body>
