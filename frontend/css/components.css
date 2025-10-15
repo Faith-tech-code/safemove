@@ -206,7 +206,11 @@
 
   .transport-showcase {
     grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-    gap: 10px;
+    gap: 5px;
+  }
+
+  .transport-item {
+    width: 100%;
     padding: 15px;
   }
 

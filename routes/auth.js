@@ -31,6 +31,6 @@ module.exports = async function (fastify, opts) {
     if (!valid) return reply.code(401).send({ error: 'Invalid password' });
 
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    return { access_token: token, token_type: 'Bearer', user: { id: user._id, name: user.name, role: user.role } };
+    return { token: token, user: { id: user._id, name: user.name, role: user.role } };
   });
 };
