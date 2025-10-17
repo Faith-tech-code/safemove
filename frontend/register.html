@@ -16,7 +16,7 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #2d1b69 100%);
+      background: linear-gradient(135deg, #0355a6 0%, #a9bf04 50%, #f1a732 100%);
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
@@ -31,9 +31,9 @@
       right: 0;
       bottom: 0;
       background:
-        radial-gradient(circle at 15% 85%, rgba(147, 112, 219, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 85% 15%, rgba(186, 85, 211, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(123, 104, 238, 0.06) 0%, transparent 60%);
+        radial-gradient(circle at 15% 85%, rgba(3, 85, 166, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 85% 15%, rgba(169, 191, 4, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(241, 167, 50, 0.06) 0%, transparent 60%);
       z-index: -2;
     }
 
@@ -45,7 +45,7 @@
       right: 0;
       bottom: 0;
       background-image:
-        url('data:image/svg+xml,<svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%239370db" fill-opacity="0.02"><path d="M10,10 L70,10 L70,70 L10,70 Z" transform="rotate(45 40 40)"/></g></svg>');
+        url("data:image/svg+xml;charset=UTF-8,%3csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' fill-rule='evenodd'%3e%3cg fill='%239370db' fill-opacity='0.02'%3e%3cpath d='M10,10 L70,10 L70,70 L10,70 Z' transform='rotate(45 40 40)'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
       animation: transportFloat 25s ease-in-out infinite;
       z-index: -1;
     }
@@ -85,7 +85,7 @@
       margin-bottom: 20px;
     }
     .back-link a {
-      color: #007bff;
+      color: #0355a6;
       text-decoration: none;
       font-size: 14px;
     }
@@ -107,12 +107,12 @@
     .registration-title {
       font-size: 24px;
       font-weight: bold;
-      color: #333;
+      color: white;
       margin-bottom: 10px;
     }
 
     .registration-subtitle {
-      color: #666;
+      color: white;
       font-size: 14px;
     }
 
@@ -124,7 +124,7 @@
       display: block;
       margin-bottom: 8px;
       font-weight: bold;
-      color: #333;
+      color: white;
       font-size: 14px;
     }
 
@@ -140,8 +140,8 @@
 
     .role-dropdown:focus {
       outline: none;
-      border-color: #7b68ee;
-      box-shadow: 0 0 0 2px rgba(123,104,238,0.25);
+      border-color: #0355a6;
+      box-shadow: 0 0 0 2px rgba(3,85,166,0.25);
     }
 
     .form-section {
@@ -156,7 +156,7 @@
       display: block;
       margin-bottom: 8px;
       font-weight: bold;
-      color: #333;
+      color: white;
       font-size: 14px;
     }
 
@@ -171,8 +171,8 @@
 
     .form-group input:focus {
       outline: none;
-      border-color: #7b68ee;
-      box-shadow: 0 0 0 2px rgba(123,104,238,0.25);
+      border-color: #0355a6;
+      box-shadow: 0 0 0 2px rgba(3,85,166,0.25);
     }
 
     .form-group input:invalid {
@@ -186,7 +186,7 @@
     .register-btn {
       width: 100%;
       padding: 14px;
-      background: #7b68ee;
+      background: #0355a6;
       color: white;
       border: none;
       border-radius: 8px;
@@ -198,7 +198,7 @@
     }
 
     .register-btn:hover {
-      background: #6a5acd;
+      background: #a9bf04;
     }
 
     .register-btn:disabled {
@@ -249,17 +249,18 @@
 
     .role-description {
       font-size: 12px;
-      color: #666;
+      color: #ffffff;
       margin-top: 5px;
       padding: 8px;
-      background: #f8f9fa;
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 5px;
-      border-left: 3px solid #007bff;
+      border-left: 3px solid #0355a6;
+      backdrop-filter: blur(10px);
     }
 
-    .rider-desc { border-left-color: #ba55d3; }
-    .driver-desc { border-left-color: #7b68ee; }
-    .admin-desc { border-left-color: #ff69b4; }
+    .rider-desc { border-left-color: #a9bf04; }
+    .driver-desc { border-left-color: #0355a6; }
+    .admin-desc { border-left-color: #f1a732; }
 
     .form-requirements {
       font-size: 12px;
@@ -275,12 +276,140 @@
     .strength-weak { color: #dc3545; }
     .strength-medium { color: #ffc107; }
     .strength-strong { color: #28a745; }
+
+    /* Driver-specific fields styling */
+    .driver-fields {
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .section-title {
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding-bottom: 8px;
+    }
+
+    .document-upload h4 {
+      color: white;
+      font-size: 14px;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    .file-preview {
+      margin-top: 10px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .file-preview img {
+      border-radius: 5px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Hide file input initially */
+    input[type="file"] {
+      margin-bottom: 10px;
+    }
+
+    /* Global Language Selector Styles */
+    .global-language-selector {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .language-selector-header {
+      text-align: center;
+    }
+
+    .language-label {
+      display: block;
+      font-size: 12px;
+      color: #333;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .global-language-buttons {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+    }
+
+    .global-lang-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 8px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: white;
+      color: #333;
+      font-size: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 50px;
+    }
+
+    .global-lang-btn:hover {
+      background: #f0f0f0;
+      transform: translateY(-1px);
+    }
+
+    .global-lang-btn.active {
+      background: #0355a6;
+      color: white;
+      border-color: #0355a6;
+    }
+
+    .lang-flag {
+      font-size: 14px;
+    }
+
+    .lang-name {
+      font-size: 9px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body onload="checkAuth()">
   <div class="registration-container">
-    <div class="back-link">
-      <a href="index.html">← Back to Home</a>
+    <!-- Language Selector at Top -->
+    <div class="global-language-selector">
+      <div class="language-selector-header">
+        <span class="language-label">🌐 Language / Lugha / Olulimi:</span>
+        <div class="global-language-buttons">
+          <button class="global-lang-btn" onclick="setGlobalLanguage('en')" data-lang="en">
+            <span class="lang-flag">🇺🇸</span>
+            <span class="lang-name">English</span>
+          </button>
+          <button class="global-lang-btn" onclick="setGlobalLanguage('lg')" data-lang="lg">
+            <span class="lang-flag">🇺🇬</span>
+            <span class="lang-name">Luganda</span>
+          </button>
+          <button class="global-lang-btn" onclick="setGlobalLanguage('sw')" data-lang="sw">
+            <span class="lang-flag">🇹🇿</span>
+            <span class="lang-name">Swahili</span>
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Brand Logo Section -->
@@ -299,34 +428,6 @@
       <p class="registration-subtitle">Create your account to get started</p>
     </div>
 
-    <!-- Transport Mode Showcase -->
-    <div class="transport-showcase">
-      <div class="transport-item" data-mode="boda">
-        <span class="transport-icon">🛵</span>
-        <div class="transport-name">Boda</div>
-        <div class="transport-desc">Quick & Affordable</div>
-      </div>
-      <div class="transport-item" data-mode="taxi">
-        <span class="transport-icon">🚕</span>
-        <div class="transport-name">Taxi</div>
-        <div class="transport-desc">Comfortable Ride</div>
-      </div>
-      <div class="transport-item" data-mode="car">
-        <span class="transport-icon">🚗</span>
-        <div class="transport-name">Car</div>
-        <div class="transport-desc">Premium Service</div>
-      </div>
-      <div class="transport-item" data-mode="bus">
-        <span class="transport-icon">🚌</span>
-        <div class="transport-name">Bus</div>
-        <div class="transport-desc">Budget Friendly</div>
-      </div>
-      <div class="transport-item" data-mode="train">
-        <span class="transport-icon">🚆</span>
-        <div class="transport-name">Train</div>
-        <div class="transport-desc">Long Distance</div>
-      </div>
-    </div>
 
     <!-- User Role Selection -->
     <div class="role-selection">
@@ -349,6 +450,12 @@
       </div>
 
       <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="Enter your email address" required>
+        <div class="form-requirements">Required for account verification and notifications</div>
+      </div>
+
+      <div class="form-group">
         <label for="phone">Phone Number</label>
         <input type="tel" id="phone" placeholder="e.g., 256700123456" required pattern="^256[0-9]{9}$">
         <div class="form-requirements">Format: 256700123456 (10 digits after 256)</div>
@@ -358,6 +465,83 @@
         <label for="password">Password</label>
         <input type="password" id="password" placeholder="Minimum 6 characters" required minlength="6" oninput="checkPasswordStrength()">
         <div id="passwordStrength" class="password-strength"></div>
+      </div>
+
+      <!-- Driver-specific fields (shown only when driver role is selected) -->
+      <div id="driverFields" class="driver-fields" style="display: none;">
+        <div class="form-section">
+          <h3 class="section-title">Driver Verification Documents</h3>
+
+          <div class="form-group">
+            <label for="nationalId">National ID Number</label>
+            <input type="text" id="nationalId" placeholder="Enter your national ID number">
+            <div class="form-requirements">Required for driver verification</div>
+          </div>
+
+          <div class="form-group">
+            <label for="drivingLicense">Driving License Number</label>
+            <input type="text" id="drivingLicense" placeholder="Enter your driving license number">
+            <div class="form-requirements">Must be valid and current</div>
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleType">Vehicle Type</label>
+            <select id="vehicleType" class="role-dropdown">
+              <option value="">Select vehicle type</option>
+              <option value="boda">🛵 Boda (Motorcycle)</option>
+              <option value="car">🚗 Car</option>
+              <option value="bus">🚌 Bus</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleRegistration">Vehicle Registration Number</label>
+            <input type="text" id="vehicleRegistration" placeholder="e.g., UBA 123A">
+            <div class="form-requirements">Vehicle registration plate number</div>
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleMake">Vehicle Make & Model</label>
+            <input type="text" id="vehicleMake" placeholder="e.g., Toyota Camry 2020">
+          </div>
+
+          <div class="form-group">
+            <label for="vehicleColor">Vehicle Color</label>
+            <input type="text" id="vehicleColor" placeholder="e.g., White">
+          </div>
+
+          <!-- Document Upload Section -->
+          <div class="document-upload">
+            <h4>Upload Verification Documents</h4>
+
+            <div class="form-group">
+              <label for="nationalIdFile">National ID Photo/Scan</label>
+              <input type="file" id="nationalIdFile" accept="image/*,.pdf" onchange="previewFile(this, 'nationalIdPreview')">
+              <div class="file-preview" id="nationalIdPreview" style="display: none;">
+                <img id="nationalIdImg" src="" alt="National ID Preview" style="max-width: 200px; max-height: 150px;">
+              </div>
+              <div class="form-requirements">Upload clear photo or scan of your national ID</div>
+            </div>
+
+            <div class="form-group">
+              <label for="licenseFile">Driving License Photo/Scan</label>
+              <input type="file" id="licenseFile" accept="image/*,.pdf" onchange="previewFile(this, 'licensePreview')">
+              <div class="file-preview" id="licensePreview" style="display: none;">
+                <img id="licenseImg" src="" alt="License Preview" style="max-width: 200px; max-height: 150px;">
+              </div>
+              <div class="form-requirements">Upload clear photo or scan of your driving license</div>
+            </div>
+
+            <div class="form-group">
+              <label for="vehicleRegistrationFile">Vehicle Registration Document</label>
+              <input type="file" id="vehicleRegistrationFile" accept="image/*,.pdf" onchange="previewFile(this, 'vehiclePreview')">
+              <div class="file-preview" id="vehiclePreview" style="display: none;">
+                <img id="vehicleImg" src="" alt="Vehicle Registration Preview" style="max-width: 200px; max-height: 150px;">
+              </div>
+              <div class="form-requirements">Upload vehicle registration document or logbook</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <button type="submit" class="register-btn" id="registerBtn">Create Account</button>
@@ -373,6 +557,411 @@
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
   <script>
+    // Global Language System (Shared with login page)
+    let currentLanguage = localStorage.getItem('selectedLanguage') || 'en';
+    let selectedVoiceLanguage = 'en-US';
+
+    // Comprehensive language content for registration page
+    const registrationLanguageContent = {
+      en: {
+        pageTitle: 'Register – SafeMove',
+        registrationTitle: 'Join SafeMove',
+        registrationSubtitle: 'Create your account to get started',
+        roleLabel: 'I want to register as:',
+        roleRider: '👤 Rider (Passenger)',
+        roleDriver: '🚗 Driver',
+        roleAdmin: '⚙️ Administrator',
+        nameLabel: 'Full Name',
+        namePlaceholder: 'Enter your full name',
+        emailLabel: 'Email Address',
+        emailPlaceholder: 'Enter your email address',
+        emailHelp: 'Required for account verification and notifications',
+        phoneLabel: 'Phone Number',
+        phonePlaceholder: 'e.g., 256700123456',
+        phoneHelp: 'Format: 256700123456 (10 digits after 256)',
+        passwordLabel: 'Password',
+        passwordPlaceholder: 'Minimum 6 characters',
+        registerButton: 'Create Account',
+        loginLink: 'Already have an account? Sign in here',
+        driverSectionTitle: 'Driver Verification Documents',
+        nationalIdLabel: 'National ID Number',
+        nationalIdPlaceholder: 'Enter your national ID number',
+        nationalIdHelp: 'Required for driver verification',
+        drivingLicenseLabel: 'Driving License Number',
+        drivingLicensePlaceholder: 'Enter your driving license number',
+        drivingLicenseHelp: 'Must be valid and current',
+        vehicleTypeLabel: 'Vehicle Type',
+        vehicleTypePlaceholder: 'Select vehicle type',
+        vehicleTypeBoda: '🛵 Boda (Motorcycle)',
+        vehicleTypeCar: '🚗 Car',
+        vehicleTypeBus: '🚌 Bus',
+        vehicleRegistrationLabel: 'Vehicle Registration Number',
+        vehicleRegistrationPlaceholder: 'e.g., UBA 123A',
+        vehicleRegistrationHelp: 'Vehicle registration plate number',
+        vehicleMakeLabel: 'Vehicle Make & Model',
+        vehicleMakePlaceholder: 'e.g., Toyota Camry 2020',
+        vehicleColorLabel: 'Vehicle Color',
+        vehicleColorPlaceholder: 'e.g., White',
+        documentUploadTitle: 'Upload Verification Documents',
+        nationalIdFileLabel: 'National ID Photo/Scan',
+        nationalIdFileHelp: 'Upload clear photo or scan of your national ID',
+        licenseFileLabel: 'Driving License Photo/Scan',
+        licenseFileHelp: 'Upload clear photo or scan of your driving license',
+        vehicleFileLabel: 'Vehicle Registration Document',
+        vehicleFileHelp: 'Upload vehicle registration document or logbook',
+        creatingAccount: 'Creating Account...',
+        uploadingDocuments: 'Uploading documents...',
+        documentsUploaded: 'Documents uploaded successfully!',
+        uploadFailed: 'Document upload failed, but continuing with registration...',
+        accountCreated: 'Account created successfully! Redirecting to login...',
+        registrationFailed: 'Registration failed. Please try again.',
+        fillAllFields: 'Please fill in all fields',
+        validEmail: 'Please enter a valid email address',
+        validPhone: 'Please enter a valid phone number (256XXXXXXXXX)',
+        passwordTooShort: 'Password must be at least 6 characters long',
+        fillDriverFields: 'Please fill in all driver verification fields',
+        validVehicleReg: 'Please enter a valid vehicle registration number (e.g., UBA 123A)',
+        roleRiderDesc: '🚕 Book rides with transparent, fixed pricing across East Africa',
+        roleDriverDesc: '🚗 Earn money by providing safe, reliable transportation services',
+        roleAdminDesc: '⚙️ Manage users, drivers, and monitor system operations'
+      },
+      lg: {
+        pageTitle: 'Zzaayo – SafeMove',
+        registrationTitle: 'Yingira SafeMove',
+        registrationSubtitle: 'Zzaawo akawunti yo okuyambuka',
+        roleLabel: 'Njagala kweyaza nga:',
+        roleRider: '👤 Omukwenda (Omukusi)',
+        roleDriver: '🚗 Omudduzi',
+        roleAdmin: '⚙️ Omukulu',
+        nameLabel: 'Erinnya lyonna',
+        namePlaceholder: 'Wandika erinnya lyonna',
+        emailLabel: 'Endagiriro',
+        emailPlaceholder: 'Wandika endagiriro yo',
+        emailHelp: 'Kyetaagibwa okukakasa akawunti n\'obubaka',
+        phoneLabel: 'Nomba ya Ssimu',
+        phonePlaceholder: 'e.g., 256700123456',
+        phoneHelp: 'Empisa: 256700123456 (10 digits oluvannyuma lwa 256)',
+        passwordLabel: 'Kigambo kyokwemiriza',
+        passwordPlaceholder: 'Obunuzi 6 characters',
+        registerButton: 'Zzaawo Akawunti',
+        loginLink: 'Oliwo akawunti? Yingira wano',
+        driverSectionTitle: 'Ebyokukakasa byomudduzi',
+        nationalIdLabel: 'Nomba ya ID',
+        nationalIdPlaceholder: 'Wandika nomba ya ID yo',
+        nationalIdHelp: 'Kyetaagibwa okukakasa omudduzi',
+        drivingLicenseLabel: 'Nomba ya Layisensi',
+        drivingLicensePlaceholder: 'Wandika nomba ya layisensi yo',
+        drivingLicenseHelp: 'Eryetaagibwa era eriko obudde',
+        vehicleTypeLabel: 'Ekika kyemmeeza',
+        vehicleTypePlaceholder: 'Londa ekika kyemmeeza',
+        vehicleTypeBoda: '🛵 Boda (Pikipiki)',
+        vehicleTypeCar: '🚗 Mmotoka',
+        vehicleTypeBus: '🚌 Bbas',
+        vehicleRegistrationLabel: 'Nomba yammeeza',
+        vehicleRegistrationPlaceholder: 'e.g., UBA 123A',
+        vehicleRegistrationHelp: 'Nomba ya plate yammeeza',
+        vehicleMakeLabel: 'Ekika n\'emmeeza',
+        vehicleMakePlaceholder: 'e.g., Toyota Camry 2020',
+        vehicleColorLabel: 'Rangi yammeeza',
+        vehicleColorPlaceholder: 'e.g., White',
+        documentUploadTitle: 'Santula ebyokukakasa',
+        nationalIdFileLabel: 'Ekifaananyi kya ID',
+        nationalIdFileHelp: 'Santula ekifaananyi ekirungi kya ID yo',
+        licenseFileLabel: 'Ekifaananyi kya Layisensi',
+        licenseFileHelp: 'Santula ekifaananyi ekirungi kya layisensi yo',
+        vehicleFileLabel: 'Ebyokukakasa byammeeza',
+        vehicleFileHelp: 'Santula ebyokukakasa byammeeza oba logbook',
+        creatingAccount: 'Tukuzzaawo akawunti...',
+        uploadingDocuments: 'Tukusantula ebyokukakasa...',
+        documentsUploaded: 'Ebyokukakasa bisantuuse!',
+        uploadFailed: 'Okusantula kulemeddwa, naye tukugenda n\'okuzzaawo akawunti...',
+        accountCreated: 'Akawunti ezzaidwe! Tukukyusa ku login...',
+        registrationFailed: 'Okuzzaawo akawunti kulemeddwa. Ddamu ogezese.',
+        fillAllFields: 'Wandika ebintu byonna',
+        validEmail: 'Wandika endagiriro entuufu',
+        validPhone: 'Wandika nomba ya ssimu entuufu (256XXXXXXXXX)',
+        passwordTooShort: 'Kigambo kyokwemiriza kirina obunuzi 6 characters',
+        fillDriverFields: 'Wandika ebintu byonna byomudduzi',
+        validVehicleReg: 'Wandika nomba yammeeza entuufu (e.g., UBA 123A)',
+        roleRiderDesc: '🚕 Noonya emmeeza n\'obupimo obutakyuka mu East Africa',
+        roleDriverDesc: '🚗 Funa ssente nga oweereza abantu emmeeza ez\'ekyokwerinda',
+        roleAdminDesc: '⚙️ Kola n\'abakozesa, abadduzi, era londoola sisitemu'
+      },
+      sw: {
+        pageTitle: 'Jisajili – SafeMove',
+        registrationTitle: 'Jiunge na SafeMove',
+        registrationSubtitle: 'Unda akaunti yako ili uanze',
+        roleLabel: 'Nataka kujisajili kama:',
+        roleRider: '👤 Mwendesha (Abiria)',
+        roleDriver: '🚗 Dereva',
+        roleAdmin: '⚙️ Msimamizi',
+        nameLabel: 'Jina Kamili',
+        namePlaceholder: 'Ingiza jina lako kamili',
+        emailLabel: 'Anwani ya Barua Pepe',
+        emailPlaceholder: 'Ingiza anwani yako ya barua pepe',
+        emailHelp: 'Inahitajika kwa uthibitisho wa akaunti na arifa',
+        phoneLabel: 'Nambari ya Simu',
+        phonePlaceholder: 'e.g., 256700123456',
+        phoneHelp: 'Umbizo: 256700123456 (nambari 10 baada ya 256)',
+        passwordLabel: 'Nenosiri',
+        passwordPlaceholder: 'Angalau herufi 6',
+        registerButton: 'Unda Akaunti',
+        loginLink: 'Tayari una akaunti? Ingia hapa',
+        driverSectionTitle: 'Nyaraka za Uthibitisho wa Dereva',
+        nationalIdLabel: 'Nambari ya Kitambulisho',
+        nationalIdPlaceholder: 'Ingiza nambari yako ya kitambulisho',
+        nationalIdHelp: 'Inahitajika kwa uthibitisho wa dereva',
+        drivingLicenseLabel: 'Nambari ya Leseni ya Udereva',
+        drivingLicensePlaceholder: 'Ingiza nambari yako ya leseni ya udereva',
+        drivingLicenseHelp: 'Lazima iwe halali na ya sasa',
+        vehicleTypeLabel: 'Aina ya Gari',
+        vehicleTypePlaceholder: 'Chagua aina ya gari',
+        vehicleTypeBoda: '🛵 Boda (Pikipiki)',
+        vehicleTypeCar: '🚗 Gari',
+        vehicleTypeBus: '🚌 Basi',
+        vehicleRegistrationLabel: 'Nambari ya Usajili wa Gari',
+        vehicleRegistrationPlaceholder: 'e.g., UBA 123A',
+        vehicleRegistrationHelp: 'Nambari ya sahani ya gari',
+        vehicleMakeLabel: 'Aina na Modeli ya Gari',
+        vehicleMakePlaceholder: 'e.g., Toyota Camry 2020',
+        vehicleColorLabel: 'Rangi ya Gari',
+        vehicleColorPlaceholder: 'e.g., White',
+        documentUploadTitle: 'Pakia Nyaraka za Uthibitisho',
+        nationalIdFileLabel: 'Picha ya Kitambulisho',
+        nationalIdFileHelp: 'Pakia picha au skana ya kitambulisho chako',
+        licenseFileLabel: 'Picha ya Leseni ya Udereva',
+        licenseFileHelp: 'Pakia picha au skana ya leseni yako ya udereva',
+        vehicleFileLabel: 'Nyaraka za Usajili wa Gari',
+        vehicleFileHelp: 'Pakia nyaraka za usajili wa gari au logbook',
+        creatingAccount: 'Inaunda akaunti...',
+        uploadingDocuments: 'Inapakia nyaraka...',
+        documentsUploaded: 'Nyaraka zimepakiwa kikamilifu!',
+        uploadFailed: 'Upakiaji wa nyaraka umeshindwa, lakini tunaendelea na usajili...',
+        accountCreated: 'Akaunti imeundwa kikamilifu! Tunakuelekeza kwenye ingizo...',
+        registrationFailed: 'Usajili umeshindwa. Tafadhali jaribu tena.',
+        fillAllFields: 'Tafadhali jaza sehemu zote',
+        validEmail: 'Tafadhali ingiza anwani halali ya barua pepe',
+        validPhone: 'Tafadhali ingiza nambari halali ya simu (256XXXXXXXXX)',
+        passwordTooShort: 'Nenosiri lazima iwe na angalau herufi 6',
+        fillDriverFields: 'Tafadhali jaza sehemu zote za uthibitisho wa dereva',
+        validVehicleReg: 'Tafadhali ingiza nambari halali ya usajili wa gari (e.g., UBA 123A)',
+        roleRiderDesc: '🚕 Hifadhi safari kwa bei iliyo wazi, isiyobadilika kote Afrika Mashariki',
+        roleDriverDesc: '🚗 Pata pesa kwa kutoa huduma salama, ya kuaminika ya usafirishaji',
+        roleAdminDesc: '⚙️ Simamia watumiaji, madereva, na ufuatiliaji wa mfumo'
+      }
+    };
+
+    // Global Language Management Functions
+    function setGlobalLanguage(lang) {
+      currentLanguage = lang;
+      selectedVoiceLanguage = getVoiceLanguage(lang);
+
+      // Store preference in localStorage
+      localStorage.setItem('selectedLanguage', lang);
+
+      // Update all page content with selected language
+      updateRegistrationPageContent();
+
+      // Update button states
+      document.querySelectorAll('.global-lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+
+      showStatus(`Language set to: ${getLanguageName(lang)}`, 'info');
+    }
+
+    function updateRegistrationPageContent() {
+      const content = registrationLanguageContent[currentLanguage];
+
+      // Update page title
+      document.title = content.pageTitle;
+
+      // Update main elements
+      const regTitle = document.querySelector('.registration-title');
+      if (regTitle) regTitle.textContent = content.registrationTitle;
+
+      const regSubtitle = document.querySelector('.registration-subtitle');
+      if (regSubtitle) regSubtitle.textContent = content.registrationSubtitle;
+
+      // Update role selection
+      const roleLabel = document.querySelector('.role-label');
+      if (roleLabel) roleLabel.textContent = content.roleLabel;
+
+      // Update form labels and placeholders
+      const nameLabel = document.querySelector('label[for="name"]');
+      if (nameLabel) nameLabel.textContent = content.nameLabel;
+
+      const nameInput = document.getElementById('name');
+      if (nameInput) nameInput.placeholder = content.namePlaceholder;
+
+      const emailLabel = document.querySelector('label[for="email"]');
+      if (emailLabel) emailLabel.textContent = content.emailLabel;
+
+      const emailInput = document.getElementById('email');
+      if (emailInput) emailInput.placeholder = content.emailPlaceholder;
+
+      const emailHelp = document.querySelector('label[for="email"] + .form-requirements');
+      if (emailHelp) emailHelp.textContent = content.emailHelp;
+
+      const phoneLabel = document.querySelector('label[for="phone"]');
+      if (phoneLabel) phoneLabel.textContent = content.phoneLabel;
+
+      const phoneInput = document.getElementById('phone');
+      if (phoneInput) phoneInput.placeholder = content.phonePlaceholder;
+
+      const phoneHelp = document.querySelector('label[for="phone"] + .form-requirements');
+      if (phoneHelp) phoneHelp.textContent = content.phoneHelp;
+
+      const passwordLabel = document.querySelector('label[for="password"]');
+      if (passwordLabel) passwordLabel.textContent = content.passwordLabel;
+
+      const passwordInput = document.getElementById('password');
+      if (passwordInput) passwordInput.placeholder = content.passwordPlaceholder;
+
+      const registerBtn = document.getElementById('registerBtn');
+      if (registerBtn) registerBtn.textContent = content.registerButton;
+
+      const loginLink = document.querySelector('.login-link a');
+      if (loginLink) loginLink.textContent = content.loginLink;
+
+      // Update driver-specific fields
+      updateDriverFieldsContent();
+
+      // Update role descriptions
+      updateRoleDescriptions();
+    }
+
+    function updateDriverFieldsContent() {
+      const content = registrationLanguageContent[currentLanguage];
+
+      const driverFields = document.getElementById('driverFields');
+      if (driverFields && driverFields.style.display !== 'none') {
+        const sectionTitle = document.querySelector('.section-title');
+        if (sectionTitle) sectionTitle.textContent = content.driverSectionTitle;
+
+        const nationalIdLabel = document.querySelector('label[for="nationalId"]');
+        if (nationalIdLabel) nationalIdLabel.textContent = content.nationalIdLabel;
+
+        const nationalIdInput = document.getElementById('nationalId');
+        if (nationalIdInput) nationalIdInput.placeholder = content.nationalIdPlaceholder;
+
+        const nationalIdHelp = document.querySelector('label[for="nationalId"] + .form-requirements');
+        if (nationalIdHelp) nationalIdHelp.textContent = content.nationalIdHelp;
+
+        const drivingLicenseLabel = document.querySelector('label[for="drivingLicense"]');
+        if (drivingLicenseLabel) drivingLicenseLabel.textContent = content.drivingLicenseLabel;
+
+        const drivingLicenseInput = document.getElementById('drivingLicense');
+        if (drivingLicenseInput) drivingLicenseInput.placeholder = content.drivingLicensePlaceholder;
+
+        const drivingLicenseHelp = document.querySelector('label[for="drivingLicense"] + .form-requirements');
+        if (drivingLicenseHelp) drivingLicenseHelp.textContent = content.drivingLicenseHelp;
+
+        const vehicleTypeLabel = document.querySelector('label[for="vehicleType"]');
+        if (vehicleTypeLabel) vehicleTypeLabel.textContent = content.vehicleTypeLabel;
+
+        const vehicleTypeSelect = document.getElementById('vehicleType');
+        if (vehicleTypeSelect) {
+          vehicleTypeSelect.querySelector('option[value=""]').textContent = content.vehicleTypePlaceholder;
+          vehicleTypeSelect.querySelector('option[value="boda"]').textContent = content.vehicleTypeBoda;
+          vehicleTypeSelect.querySelector('option[value="car"]').textContent = content.vehicleTypeCar;
+          vehicleTypeSelect.querySelector('option[value="bus"]').textContent = content.vehicleTypeBus;
+        }
+
+        const vehicleRegistrationLabel = document.querySelector('label[for="vehicleRegistration"]');
+        if (vehicleRegistrationLabel) vehicleRegistrationLabel.textContent = content.vehicleRegistrationLabel;
+
+        const vehicleRegistrationInput = document.getElementById('vehicleRegistration');
+        if (vehicleRegistrationInput) vehicleRegistrationInput.placeholder = content.vehicleRegistrationPlaceholder;
+
+        const vehicleRegistrationHelp = document.querySelector('label[for="vehicleRegistration"] + .form-requirements');
+        if (vehicleRegistrationHelp) vehicleRegistrationHelp.textContent = content.vehicleRegistrationHelp;
+
+        const vehicleMakeLabel = document.querySelector('label[for="vehicleMake"]');
+        if (vehicleMakeLabel) vehicleMakeLabel.textContent = content.vehicleMakeLabel;
+
+        const vehicleMakeInput = document.getElementById('vehicleMake');
+        if (vehicleMakeInput) vehicleMakeInput.placeholder = content.vehicleMakePlaceholder;
+
+        const vehicleColorLabel = document.querySelector('label[for="vehicleColor"]');
+        if (vehicleColorLabel) vehicleColorLabel.textContent = content.vehicleColorLabel;
+
+        const vehicleColorInput = document.getElementById('vehicleColor');
+        if (vehicleColorInput) vehicleColorInput.placeholder = content.vehicleColorPlaceholder;
+
+        const documentUploadTitle = document.querySelector('.document-upload h4');
+        if (documentUploadTitle) documentUploadTitle.textContent = content.documentUploadTitle;
+
+        const nationalIdFileLabel = document.querySelector('label[for="nationalIdFile"]');
+        if (nationalIdFileLabel) nationalIdFileLabel.textContent = content.nationalIdFileLabel;
+
+        const nationalIdFileHelp = document.querySelector('label[for="nationalIdFile"] + .form-requirements');
+        if (nationalIdFileHelp) nationalIdFileHelp.textContent = content.nationalIdFileHelp;
+
+        const licenseFileLabel = document.querySelector('label[for="licenseFile"]');
+        if (licenseFileLabel) licenseFileLabel.textContent = content.licenseFileLabel;
+
+        const licenseFileHelp = document.querySelector('label[for="licenseFile"] + .form-requirements');
+        if (licenseFileHelp) licenseFileHelp.textContent = content.licenseFileHelp;
+
+        const vehicleFileLabel = document.querySelector('label[for="vehicleRegistrationFile"]');
+        if (vehicleFileLabel) vehicleFileLabel.textContent = content.vehicleFileLabel;
+
+        const vehicleFileHelp = document.querySelector('label[for="vehicleRegistrationFile"] + .form-requirements');
+        if (vehicleFileHelp) vehicleFileHelp.textContent = content.vehicleFileHelp;
+      }
+    }
+
+    function updateRoleDescriptions() {
+      const content = registrationLanguageContent[currentLanguage];
+
+      // Update role dropdown options
+      const riderOption = document.querySelector('option[value="rider"]');
+      if (riderOption) riderOption.textContent = content.roleRider;
+
+      const driverOption = document.querySelector('option[value="driver"]');
+      if (driverOption) driverOption.textContent = content.roleDriver;
+
+      const adminOption = document.querySelector('option[value="admin"]');
+      if (adminOption) adminOption.textContent = content.roleAdmin;
+
+      // Update role descriptions
+      const roleDescriptions = {
+        rider: content.roleRiderDesc,
+        driver: content.roleDriverDesc,
+        admin: content.roleAdminDesc
+      };
+
+      // Store in global variable for updateRoleDescription function
+      window.roleDescriptions = roleDescriptions;
+    }
+
+    function getLocalizedText(key, param) {
+      let text = registrationLanguageContent[currentLanguage][key] || registrationLanguageContent.en[key] || 'Text not found';
+      if (param) {
+        text = text.replace('%s', param);
+      }
+      return text;
+    }
+
+    function getVoiceLanguage(lang) {
+      const voiceMap = {
+        'en': 'en-US',
+        'lg': 'en-US', // Luganda voices might not be available, fallback to English
+        'sw': 'sw-TZ' // Swahili (Tanzania)
+      };
+      return voiceMap[lang] || 'en-US';
+    }
+
+    function getLanguageName(lang) {
+      const nameMap = {
+        'en': 'English',
+        'lg': 'Luganda',
+        'sw': 'Swahili'
+      };
+      return nameMap[lang] || 'English';
+    }
     // Role descriptions
     const roleDescriptions = {
       rider: '🚕 Book rides with transparent, fixed pricing across East Africa',
@@ -424,75 +1013,235 @@
 
     // Enhanced registration function
     async function register(event) {
-      event.preventDefault();
+       event.preventDefault();
 
-      const name = document.getElementById('name').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const password = document.getElementById('password').value;
-      const role = document.getElementById('userRole').value;
+       const name = document.getElementById('name').value.trim();
+       const email = document.getElementById('email').value.trim();
+       const phone = document.getElementById('phone').value.trim();
+       const password = document.getElementById('password').value;
+       const role = document.getElementById('userRole').value;
 
-      // Validation
-      if (!name || !phone || !password) {
-        showStatus('Please fill in all fields', 'error');
-        return;
-      }
+       // Basic validation
+       if (!name || !email || !phone || !password) {
+         showStatus(getLocalizedText('fillAllFields'), 'error');
+         return;
+       }
 
-      // Phone validation
-      const phonePattern = /^256[0-9]{9}$/;
-      if (!phonePattern.test(phone)) {
-        showStatus('Please enter a valid phone number (256XXXXXXXXX)', 'error');
-        return;
-      }
+       // Email validation
+       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+       if (!emailPattern.test(email)) {
+         showStatus(getLocalizedText('validEmail'), 'error');
+         return;
+       }
 
-      // Password validation
-      if (password.length < 6) {
-        showStatus('Password must be at least 6 characters long', 'error');
-        return;
-      }
+       // Phone validation
+       const phonePattern = /^256[0-9]{9}$/;
+       if (!phonePattern.test(phone)) {
+         showStatus(getLocalizedText('validPhone'), 'error');
+         return;
+       }
 
-      const registerBtn = document.getElementById('registerBtn');
-      const originalText = registerBtn.textContent;
+       // Password validation
+       if (password.length < 6) {
+         showStatus(getLocalizedText('passwordTooShort'), 'error');
+         return;
+       }
 
-      try {
-        registerBtn.textContent = 'Creating Account...';
-        registerBtn.disabled = true;
+       // Driver-specific validation
+       if (role === 'driver') {
+         const nationalId = document.getElementById('nationalId').value.trim();
+         const drivingLicense = document.getElementById('drivingLicense').value.trim();
+         const vehicleType = document.getElementById('vehicleType').value;
+         const vehicleRegistration = document.getElementById('vehicleRegistration').value.trim();
 
-        const response = await apiFetch('/auth/register', 'POST', {
-          name: name,
-          phone: phone,
-          password: password,
-          role: role
-        }, false); // Don't require auth for registration
+         if (!nationalId || !drivingLicense || !vehicleType || !vehicleRegistration) {
+           showStatus(getLocalizedText('fillDriverFields'), 'error');
+           return;
+         }
 
-        if (response.message) {
-          showStatus('Account created successfully! Redirecting to login...', 'success');
+         // Validate vehicle registration format (basic validation)
+         const vehicleRegPattern = /^[A-Z]{2,3}\s?\d{1,4}[A-Z]?$/;
+         if (!vehicleRegPattern.test(vehicleRegistration.toUpperCase())) {
+           showStatus(getLocalizedText('validVehicleReg'), 'error');
+           return;
+         }
+       }
 
-          // Store registration info for login
-          localStorage.setItem('justRegistered', 'true');
-          localStorage.setItem('registeredPhone', phone);
+       const registerBtn = document.getElementById('registerBtn');
+       const originalText = registerBtn.textContent;
 
-          // Redirect to login after success
-          setTimeout(() => {
-            window.location.href = 'login.html';
-          }, 2000);
-        }
+       try {
+         registerBtn.textContent = getLocalizedText('creatingAccount');
+         registerBtn.disabled = true;
 
-      } catch (error) {
-        console.error('Registration error:', error);
-        showStatus(error.message || 'Registration failed. Please try again.', 'error');
-      } finally {
-        registerBtn.textContent = originalText;
-        registerBtn.disabled = false;
-      }
-    }
+         // Prepare registration data
+         const registrationData = {
+           name: name,
+           email: email,
+           phone: phone,
+           password: password,
+           role: role
+         };
+
+         // Add driver-specific data if role is driver
+         if (role === 'driver') {
+           registrationData.driverDetails = {
+             nationalId: document.getElementById('nationalId').value.trim(),
+             drivingLicense: document.getElementById('drivingLicense').value.trim(),
+             vehicleType: document.getElementById('vehicleType').value,
+             vehicleRegistration: document.getElementById('vehicleRegistration').value.trim().toUpperCase(),
+             vehicleMake: document.getElementById('vehicleMake').value.trim(),
+             vehicleColor: document.getElementById('vehicleColor').value.trim()
+           };
+
+           // Handle file uploads
+           const nationalIdFile = document.getElementById('nationalIdFile').files[0];
+           const licenseFile = document.getElementById('licenseFile').files[0];
+           const vehicleFile = document.getElementById('vehicleRegistrationFile').files[0];
+
+           if (nationalIdFile || licenseFile || vehicleFile) {
+             showStatus(getLocalizedText('uploadingDocuments'), 'info');
+
+             // Create FormData for file uploads
+             const formData = new FormData();
+
+             if (nationalIdFile) {
+               formData.append('nationalIdFile', nationalIdFile);
+             }
+             if (licenseFile) {
+               formData.append('licenseFile', licenseFile);
+             }
+             if (vehicleFile) {
+               formData.append('vehicleFile', vehicleFile);
+             }
+
+             // Upload files first
+             try {
+               const uploadResponse = await fetch('/v1/upload/driver-documents', {
+                 method: 'POST',
+                 body: formData
+               });
+
+               if (uploadResponse.ok) {
+                 const uploadResult = await uploadResponse.json();
+                 registrationData.driverDetails.documents = uploadResult.files;
+                 showStatus(getLocalizedText('documentsUploaded'), 'success');
+               } else {
+                 showStatus(getLocalizedText('uploadFailed'), 'error');
+               }
+             } catch (uploadError) {
+               console.error('Upload error:', uploadError);
+               showStatus(getLocalizedText('uploadFailed'), 'error');
+             }
+           }
+         }
+
+         const response = await apiFetch('/auth/register', 'POST', registrationData, false);
+
+         if (response.message) {
+           showStatus(getLocalizedText('accountCreated'), 'success');
+
+           // Store registration info for login
+           localStorage.setItem('justRegistered', 'true');
+           localStorage.setItem('registeredPhone', phone);
+
+           // Redirect to login after success
+           setTimeout(() => {
+             window.location.href = 'login.html';
+           }, 2000);
+         }
+
+       } catch (error) {
+         console.error('Registration error:', error);
+         showStatus(error.message || getLocalizedText('registrationFailed'), 'error');
+       } finally {
+         registerBtn.textContent = originalText;
+         registerBtn.disabled = false;
+       }
+     }
 
     // Clear status when user types
     document.getElementById('name').addEventListener('input', clearStatus);
     document.getElementById('phone').addEventListener('input', clearStatus);
     document.getElementById('password').addEventListener('input', clearStatus);
 
-    // Initialize role description
+    // Initialize role description and driver fields visibility
     updateRoleDescription();
-  </script>
-</body>
-</html>
+    updateDriverFieldsVisibility();
+
+    // File preview function
+    function previewFile(input, previewId) {
+      const preview = document.getElementById(previewId);
+      const img = preview.querySelector('img');
+
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          img.src = e.target.result;
+          preview.style.display = 'block';
+        };
+
+        reader.readAsDataURL(input.files[0]);
+      } else {
+        preview.style.display = 'none';
+      }
+    }
+
+    // Show/hide driver fields based on role selection
+    function updateDriverFieldsVisibility() {
+      const role = document.getElementById('userRole').value;
+      const driverFields = document.getElementById('driverFields');
+
+      if (role === 'driver') {
+        driverFields.style.display = 'block';
+        // Make driver fields required
+        setTimeout(() => {
+          document.getElementById('nationalId').required = true;
+          document.getElementById('drivingLicense').required = true;
+          document.getElementById('vehicleType').required = true;
+          document.getElementById('vehicleRegistration').required = true;
+        }, 100);
+      } else {
+        driverFields.style.display = 'none';
+        // Remove required attribute for non-driver roles
+        setTimeout(() => {
+          document.getElementById('nationalId').required = false;
+          document.getElementById('drivingLicense').required = false;
+          document.getElementById('vehicleType').required = false;
+          document.getElementById('vehicleRegistration').required = false;
+        }, 100);
+      }
+    }
+
+    // Add event listener for role change
+    document.getElementById('userRole').addEventListener('change', updateDriverFieldsVisibility);
+
+    // Override the updateRoleDescription function to use localized content
+    function updateRoleDescription() {
+       const role = document.getElementById('userRole').value;
+       const description = document.getElementById('roleDescription');
+
+       if (window.roleDescriptions && window.roleDescriptions[role]) {
+         description.textContent = window.roleDescriptions[role];
+         description.className = `role-description ${role}-desc`;
+       }
+     }
+
+     // Initialize page with saved language preference
+     document.addEventListener('DOMContentLoaded', function() {
+       // Set initial language from localStorage or default to English
+       const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+       setGlobalLanguage(savedLanguage);
+
+       // Update page content immediately
+       updateRegistrationPageContent();
+
+       // Ensure English defaults are applied
+       if (!localStorage.getItem('selectedLanguage')) {
+         localStorage.setItem('selectedLanguage', 'en');
+       }
+     });
+   </script>
+ </body>
+ </html>

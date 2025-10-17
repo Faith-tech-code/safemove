@@ -6,16 +6,16 @@
   <link rel="stylesheet" href="css/components.css">
   <style>
     :root {
-      --primary-bg: #1a1a2e;
-      --accent-color: #7b68ee;
-      --transport-blue: #9370db;
-      --transport-green: #ba55d3;
-      --transport-orange: #ff69b4;
+      --primary-bg: #0355a6;
+      --accent-color: #a9bf04;
+      --transport-blue: #0355a6;
+      --transport-green: #a9bf04;
+      --transport-orange: #f1a732;
     }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #2d1b69 100%);
+      background: linear-gradient(135deg, #0355a6 0%, #a9bf04 50%, #f1a732 100%);
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
@@ -30,9 +30,9 @@
       right: 0;
       bottom: 0;
       background:
-        radial-gradient(circle at 20% 80%, rgba(123, 104, 238, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(147, 112, 219, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 60% 40%, rgba(186, 85, 211, 0.06) 0%, transparent 50%);
+        radial-gradient(circle at 20% 80%, rgba(3, 85, 166, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(169, 191, 4, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 60% 40%, rgba(241, 167, 50, 0.06) 0%, transparent 50%);
       z-index: -2;
     }
 
@@ -44,8 +44,8 @@
       right: 0;
       bottom: 0;
       background-image:
-        url('data:image/svg+xml,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%237b68ee" fill-opacity="0.02"><path d="M20,20 L80,20 L80,80 L20,80 Z"/></g></svg>'),
-        url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%239370db" fill-opacity="0.02"><circle cx="30" cy="30" r="3"/></g></svg>');
+        url("data:image/svg+xml;charset=UTF-8,%3csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' fill-rule='evenodd'%3e%3cg fill='%230355a6' fill-opacity='0.02'%3e%3cpath d='M20,20 L80,20 L80,80 L20,80 Z'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e"),
+        url("data:image/svg+xml;charset=UTF-8,%3csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' fill-rule='evenodd'%3e%3cg fill='%23a9bf04' fill-opacity='0.02'%3e%3ccircle cx='30' cy='30' r='3'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
       background-position: 0 0, 50px 50px;
       animation: float 30s ease-in-out infinite;
       z-index: -1;
@@ -58,12 +58,12 @@
     }
 
     .container {
-      max-width: 500px;
-      margin: 0 auto;
-      padding: 40px 20px;
-      position: relative;
-      z-index: 1;
-    }
+       max-width: 500px;
+       margin: 0 auto;
+       padding: 60px 50px;
+       position: relative;
+       z-index: 1;
+     }
 
     /* Enhanced container with glass morphism effect */
     .container::before {
@@ -85,7 +85,7 @@
       margin-bottom: 20px;
     }
     .back-link a {
-      color: #7b68ee;
+      color: #0355a6;
       text-decoration: none;
       font-size: 14px;
     }
@@ -93,70 +93,6 @@
       text-decoration: underline;
     }
 
-    .demo-section {
-      margin-bottom: 30px;
-      text-align: center;
-    }
-
-    .demo-title {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 15px;
-      color: #333;
-    }
-
-    .demo-users {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .demo-user {
-      border: 2px solid #e0e0e0;
-      border-radius: 10px;
-      padding: 15px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      background: white;
-    }
-
-    .demo-user:hover {
-      border-color: #7b68ee;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(123,104,238,0.2);
-    }
-
-    .demo-user.selected {
-      border-color: #7b68ee;
-      background: #f8f9ff;
-    }
-
-    .demo-user-icon {
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
-
-    .demo-user-name {
-      font-weight: bold;
-      margin-bottom: 5px;
-      color: #333;
-    }
-
-    .demo-user-role {
-      font-size: 12px;
-      color: #666;
-      margin-bottom: 5px;
-    }
-
-    .demo-user-phone {
-      font-size: 11px;
-      color: #888;
-    }
-
-    .rider-card { border-left: 4px solid #ba55d3; }
-    .driver-card { border-left: 4px solid #7b68ee; }
-    .admin-card { border-left: 4px solid #ff69b4; }
 
     .login-form {
       margin-top: 20px;
@@ -183,14 +119,14 @@
 
     .form-group input:focus {
       outline: none;
-      border-color: #7b68ee;
-      box-shadow: 0 0 0 2px rgba(123,104,238,0.25);
+      border-color: #0355a6;
+      box-shadow: 0 0 0 2px rgba(3,85,166,0.25);
     }
 
     .login-btn {
       width: 100%;
       padding: 12px;
-      background: #7b68ee;
+      background: #0355a6;
       color: white;
       border: none;
       border-radius: 5px;
@@ -201,7 +137,7 @@
     }
 
     .login-btn:hover {
-      background: #6a5acd;
+      background: #a9bf04;
     }
 
     .login-btn:disabled {
@@ -234,19 +170,673 @@
     }
 
     .register-link a {
-      color: #7b68ee;
+      color: #0355a6;
       text-decoration: none;
     }
 
     .register-link a:hover {
       text-decoration: underline;
     }
+
+    .forgot-password-link {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .forgot-password-link a {
+      color: #6c757d;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .forgot-password-link a:hover {
+      text-decoration: underline;
+      color: #0355a6;
+    }
+
+    /* Enhanced Sign-in Options */
+    .signin-options {
+      text-align: center;
+    }
+
+    .signin-methods {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .signin-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      background: white;
+      color: #333;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .signin-btn:hover {
+      border-color: #0355a6;
+      background: rgba(3, 85, 166, 0.05);
+      transform: translateY(-1px);
+    }
+
+    .google-icon, .voice-icon {
+      font-size: 18px;
+    }
+
+    .divider {
+      position: relative;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -50px;
+      right: -50px;
+      height: 1px;
+      background: #ddd;
+    }
+
+    .divider span {
+      background: white;
+      padding: 0 15px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Transport Modes Section */
+    .transport-modes {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      padding: 25px;
+      margin: 30px 0;
+      backdrop-filter: blur(10px);
+    }
+
+    .transport-modes-title {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .transport-modes-grid {
+       display: grid;
+       grid-template-columns: repeat(5, 1fr);
+       gap: 15px;
+     }
+
+    .transport-mode {
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .transport-mode:hover {
+      transform: translateY(-3px);
+    }
+
+    .transport-mode.boda {
+      background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+    }
+
+    .transport-mode.taxi {
+      background: linear-gradient(135deg, #74b9ff, #0984e3);
+      color: white;
+    }
+
+    .transport-mode.car {
+      background: linear-gradient(135deg, #fd79a8, #e84393);
+      color: white;
+    }
+
+    .transport-mode.bus {
+      background: linear-gradient(135deg, #fdcb6e, #e17055);
+      color: white;
+    }
+
+    .transport-mode.train {
+      background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+      color: white;
+    }
+
+    .transport-mode-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .transport-mode-name {
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .transport-mode-desc {
+      font-size: 11px;
+      opacity: 0.8;
+    }
+
+    /* App Features Section */
+    .app-features {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      padding: 25px;
+      margin: 30px 0;
+      backdrop-filter: blur(10px);
+    }
+
+    .features-title {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: 20px;
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .feature-title {
+      font-weight: bold;
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    /* Bottom Features */
+    .bottom-features {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      padding: 25px;
+      margin: 30px 0;
+      backdrop-filter: blur(10px);
+    }
+
+    .bottom-features-title {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .features-list {
+       display: grid;
+       grid-template-columns: repeat(3, 1fr);
+       gap: 15px;
+     }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    }
+
+    .feature-item-icon {
+      font-size: 20px;
+    }
+
+    .feature-item-text {
+      font-size: 13px;
+      color: #333;
+    }
+
+    /* Social Media */
+    .social-media {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 30px 0;
+      backdrop-filter: blur(10px);
+    }
+
+    .social-title {
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .facebook {
+      background: #1877f2;
+      color: white;
+    }
+
+    .twitter {
+      background: #1da1f2;
+      color: white;
+    }
+
+    .instagram {
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      color: white;
+    }
+
+    .linkedin {
+      background: #0077b5;
+      color: white;
+    }
+
+    .social-icon {
+      font-size: 16px;
+    }
+
+    /* Global Language Selector Styles */
+    .global-language-selector {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .language-selector-header {
+      text-align: center;
+    }
+
+    .language-label {
+      display: block;
+      font-size: 12px;
+      color: #333;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .global-language-buttons {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+    }
+
+    .global-lang-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 8px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: white;
+      color: #333;
+      font-size: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 50px;
+    }
+
+    .global-lang-btn:hover {
+      background: #f0f0f0;
+      transform: translateY(-1px);
+    }
+
+    .global-lang-btn.active {
+      background: #4CAF50;
+      color: white;
+      border-color: #4CAF50;
+    }
+
+    .lang-flag {
+      font-size: 14px;
+    }
+
+    .lang-name {
+      font-size: 9px;
+      font-weight: bold;
+    }
+
+    /* Voice Authentication Modal Styles */
+    .voice-modal-content {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .voice-modal-header {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 20px 20px 0 0;
+      margin: -30px -30px 20px -30px;
+    }
+
+    .voice-step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .step-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .step-dot.active {
+      background: #4CAF50;
+      transform: scale(1.2);
+    }
+
+    .step-dot.completed {
+      background: #2196F3;
+    }
+
+    .voice-instruction {
+      font-size: 18px;
+      margin: 20px 0;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .voice-status-icon {
+      font-size: 48px;
+      margin: 20px 0;
+      opacity: 0.8;
+    }
+
+    .voice-progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+
+    .voice-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4CAF50, #2196F3);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .voice-auth-button {
+      background: rgba(255,255,255,0.2);
+      border: 2px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 10px;
+    }
+
+    .voice-auth-button:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+    }
+
+    .voice-auth-button.recording {
+      background: #ff4444;
+      animation: pulse 1.5s infinite;
+    }
+
+    /* Language Selection Styles */
+    .language-buttons {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .lang-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 12px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 70px;
+    }
+
+    .lang-btn:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    .lang-btn.active {
+      background: rgba(76, 175, 80, 0.3);
+      border-color: #4CAF50;
+      box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+    }
+
+    .lang-icon {
+      font-size: 20px;
+    }
+
+    .lang-text {
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    /* Visual Instruction Cards for Low-Literacy Users */
+    .instruction-cards {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+      gap: 10px;
+    }
+
+    .instruction-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      border: 2px solid rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .instruction-card:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-3px);
+    }
+
+    .instruction-card.active {
+      background: rgba(76, 175, 80, 0.2);
+      border-color: #4CAF50;
+    }
+
+    .card-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .card-text {
+      font-size: 12px;
+      text-align: center;
+      color: white;
+    }
+
+    .card-step {
+      background: #4CAF50;
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0); }
+    }
+
+    .countdown-number {
+      font-size: 48px;
+      font-weight: bold;
+      color: #4CAF50;
+      animation: countdownPulse 1s infinite;
+      text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    }
+
+    @keyframes countdownPulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Modal Styles */
+    .modal {
+      position: fixed;
+      z-index: 1001;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      color: #0355a6;
+    }
+
+    .close {
+      color: #aaa;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: #0355a6;
+    }
+
+    .modal-body {
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body onload="checkAuth(); checkJustRegistered()">
   <div class="container">
-    <div class="back-link">
-      <a href="index.html">← Back to Home</a>
+    <!-- Language Selector at Top -->
+    <div class="global-language-selector">
+      <div class="language-selector-header">
+        <span class="language-label">🌐 Language / Lugha / Olulimi:</span>
+        <div class="global-language-buttons">
+          <button class="global-lang-btn" onclick="setGlobalLanguage('en')" data-lang="en">
+            <span class="lang-flag">🇺🇸</span>
+            <span class="lang-name">English</span>
+          </button>
+          <button class="global-lang-btn" onclick="setGlobalLanguage('lg')" data-lang="lg">
+            <span class="lang-flag">🇺🇬</span>
+            <span class="lang-name">Luganda</span>
+          </button>
+          <button class="global-lang-btn" onclick="setGlobalLanguage('sw')" data-lang="sw">
+            <span class="lang-flag">🇹🇿</span>
+            <span class="lang-name">Swahili</span>
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Brand Logo Section -->
@@ -260,68 +850,41 @@
       </div>
     </div>
 
-    <h2 style="text-align: center; color: black; margin-bottom: 30px;">Login to SafeMove</h2>
+    <h2 style="text-align: center; color: white; margin-bottom: 30px; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">Login to SafeMove</h2>
 
-    <!-- Demo Users Section -->
-    <div class="demo-section">
-      <h3 class="demo-title">Try Demo Accounts</h3>
-      <div class="demo-users">
-        <div class="demo-user rider-card" onclick="selectDemoUser('rider')">
-          <div class="demo-user-icon">🧍‍♂️</div>
-          <div class="demo-user-name">Demo Rider</div>
-          <div class="demo-user-role">Passenger Account</div>
-          <div class="demo-user-phone">+256701234567</div>
-        </div>
-        <div class="demo-user driver-card" onclick="selectDemoUser('driver')">
-          <div class="demo-user-icon">🚗</div>
-          <div class="demo-user-name">Demo Driver</div>
-          <div class="demo-user-role">Driver Account</div>
-          <div class="demo-user-phone">+256707654321</div>
-        </div>
-        <div class="demo-user admin-card" onclick="selectDemoUser('admin')">
-          <div class="demo-user-icon">⚙️</div>
-          <div class="demo-user-name">Demo Admin</div>
-          <div class="demo-user-role">Administrator</div>
-          <div class="demo-user-phone">+256789012345</div>
-        </div>
+    <!-- Enhanced Sign-in Options -->
+    <div class="signin-options" style="margin-bottom: 30px;">
+      <div class="signin-methods">
+        <button class="signin-btn google-btn" onclick="signinWithGoogle()">
+          <span class="google-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+          </span>
+          <span>Continue with Google</span>
+        </button>
+        <button class="signin-btn voice-btn" onclick="startVoiceAuth()">
+          <span class="voice-icon">🎤</span>
+          <span>Voice Authentication</span>
+        </button>
+      </div>
+      <div class="divider">
+        <span>or continue with phone</span>
       </div>
     </div>
 
-    <!-- Transport Mode Showcase -->
-    <div class="transport-showcase">
-      <div class="transport-item" data-mode="boda">
-        <span class="transport-icon">🛵</span>
-        <div class="transport-name">Boda</div>
-        <div class="transport-desc">Quick & Affordable</div>
-      </div>
-      <div class="transport-item" data-mode="taxi">
-        <span class="transport-icon">🚕</span>
-        <div class="transport-name">Taxi</div>
-        <div class="transport-desc">Comfortable Ride</div>
-      </div>
-      <div class="transport-item" data-mode="car">
-        <span class="transport-icon">🚗</span>
-        <div class="transport-name">Car</div>
-        <div class="transport-desc">Premium Service</div>
-      </div>
-      <div class="transport-item" data-mode="bus">
-        <span class="transport-icon">🚌</span>
-        <div class="transport-name">Bus</div>
-        <div class="transport-desc">Budget Friendly</div>
-      </div>
-      <div class="transport-item" data-mode="train">
-        <span class="transport-icon">🚆</span>
-        <div class="transport-name">Train</div>
-        <div class="transport-desc">Long Distance</div>
-      </div>
-    </div>
+
 
 
     <!-- Login Form -->
     <div class="login-form">
       <div class="form-group">
-        <label for="phone">Phone Number</label>
-        <input type="text" id="phone" placeholder="Enter phone number" required>
+        <label for="loginInput">Email or Phone Number</label>
+        <input type="text" id="loginInput" placeholder="Enter email or phone number" required>
+        <div class="form-requirements">Use email: user@example.com or phone: 256700123456</div>
       </div>
 
       <div class="form-group">
@@ -336,57 +899,283 @@
       <div class="register-link">
         <a href="register.html">Need an account? Register here</a>
       </div>
+
+      <div class="forgot-password-link">
+        <a href="#" onclick="showForgotPasswordModal()">Forgot your password?</a>
+      </div>
     </div>
-  </div>
+
+    <!-- Transport Modes Section -->
+    <div class="transport-modes">
+      <h3 class="transport-modes-title">Choose Your Transport Mode</h3>
+      <div class="transport-modes-grid">
+        <div class="transport-mode boda">
+          <div class="transport-mode-icon">🛵</div>
+          <div class="transport-mode-name">Boda</div>
+          <div class="transport-mode-desc">Quick & Affordable</div>
+        </div>
+        <div class="transport-mode taxi">
+          <div class="transport-mode-icon">🚕</div>
+          <div class="transport-mode-name">Taxi</div>
+          <div class="transport-mode-desc">Comfortable Ride</div>
+        </div>
+        <div class="transport-mode car">
+          <div class="transport-mode-icon">🚗</div>
+          <div class="transport-mode-name">Car</div>
+          <div class="transport-mode-desc">Premium Service</div>
+        </div>
+        <div class="transport-mode bus">
+          <div class="transport-mode-icon">🚌</div>
+          <div class="transport-mode-name">Bus</div>
+          <div class="transport-mode-desc">Budget Friendly</div>
+        </div>
+        <div class="transport-mode train">
+          <div class="transport-mode-icon">🚆</div>
+          <div class="transport-mode-name">Train</div>
+          <div class="transport-mode-desc">Long Distance</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- App Features Section -->
+    <div class="app-features">
+      <h3 class="features-title">Why Choose SafeMove?</h3>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <div class="feature-title">Safe & Secure</div>
+          <div class="feature-desc">All drivers verified with background checks and vehicle inspections</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💰</div>
+          <div class="feature-title">Fixed Pricing</div>
+          <div class="feature-desc">No surge pricing or hidden fees. Know your fare upfront</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-title">Instant Booking</div>
+          <div class="feature-desc">Book rides instantly with real-time driver matching</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📍</div>
+          <div class="feature-title">Live Tracking</div>
+          <div class="feature-desc">Track your ride in real-time with GPS technology</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎤</div>
+          <div class="feature-title">Voice Assistant</div>
+          <div class="feature-desc">Hands-free booking and navigation with voice commands</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <div class="feature-title">USSD Support</div>
+          <div class="feature-desc">Works on any phone via *284*20# - no smartphone required</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Features Section -->
+    <div class="bottom-features">
+      <h3 class="bottom-features-title">Additional Features</h3>
+      <div class="features-list">
+        <div class="feature-item">
+          <span class="feature-item-icon">🚨</span>
+          <span class="feature-item-text">Emergency SOS button for immediate assistance</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-icon">👨‍👩‍👧‍👦</span>
+          <span class="feature-item-text">Family profiles for shared accounts and monitoring</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-icon">💳</span>
+          <span class="feature-item-text">Multiple payment options including mobile money</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-icon">⭐</span>
+          <span class="feature-item-text">Driver rating system for quality assurance</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-icon">🌍</span>
+          <span class="feature-item-text">Multi-language support for diverse users</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-item-icon">📊</span>
+          <span class="feature-item-text">Trip history and analytics for frequent travelers</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social Media Section -->
+    <div class="social-media">
+      <h4 class="social-title">Follow Us</h4>
+      <div class="social-buttons">
+        <a href="#" class="social-btn facebook">
+          <span class="social-icon">📘</span>
+          <span>Facebook</span>
+        </a>
+        <a href="#" class="social-btn twitter">
+          <span class="social-icon">🐦</span>
+          <span>Twitter</span>
+        </a>
+        <a href="#" class="social-btn instagram">
+          <span class="social-icon">📷</span>
+          <span>Instagram</span>
+        </a>
+        <a href="#" class="social-btn linkedin">
+          <span class="social-icon">💼</span>
+          <span>LinkedIn</span>
+        </a>
+      </div>
+    </div>
+   </div>
+
+   <!-- Forgot Password Modal -->
+   <div id="forgotPasswordModal" class="modal" style="display: none;">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h3>Reset Password</h3>
+         <span class="close" onclick="closeForgotPasswordModal()">&times;</span>
+       </div>
+       <div class="modal-body">
+         <div id="resetStep1">
+           <p>Enter your email address and we'll send you a password reset link.</p>
+           <div class="form-group">
+             <label for="resetEmail">Email Address</label>
+             <input type="email" id="resetEmail" placeholder="Enter your email address" required>
+           </div>
+           <button class="login-btn" onclick="requestPasswordReset()">Send Reset Link</button>
+         </div>
+         <div id="resetStep2" style="display: none;">
+           <p>Enter the reset token and your new password.</p>
+           <div class="form-group">
+             <label for="resetToken">Reset Token</label>
+             <input type="text" id="resetToken" placeholder="Enter reset token" required>
+           </div>
+           <div class="form-group">
+             <label for="newPassword">New Password</label>
+             <input type="password" id="newPassword" placeholder="Enter new password" required minlength="6">
+           </div>
+           <div class="form-group">
+             <label for="confirmPassword">Confirm New Password</label>
+             <input type="password" id="confirmPassword" placeholder="Confirm new password" required minlength="6">
+           </div>
+           <button class="login-btn" onclick="resetPassword()">Reset Password</button>
+         </div>
+         <div id="resetStatus" class="status"></div>
+       </div>
+     </div>
+   </div>
+
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
   <script>
-    // Demo user credentials
-    const demoUsers = {
-      rider: {
-        phone: '+256701234567',
-        password: 'rider123',
-        role: 'rider'
-      },
-      driver: {
-        phone: '+256707654321',
-        password: 'driver123',
-        role: 'driver'
-      },
-      admin: {
-        phone: '+256789012345',
-        password: 'admin123',
-        role: 'admin'
-      }
-    };
 
-    let selectedDemoUser = null;
+    // Global Language Management
+    function setGlobalLanguage(lang) {
+       currentLanguage = lang;
+       selectedVoiceLanguage = getVoiceLanguage(lang);
 
-    function selectDemoUser(userType) {
-      // Remove previous selection
-      document.querySelectorAll('.demo-user').forEach(user => {
-        user.classList.remove('selected');
-      });
+       // Store preference in localStorage
+       localStorage.setItem('selectedLanguage', lang);
 
-      // Add selection to clicked user
-      event.target.closest('.demo-user').classList.add('selected');
+       // Update all page content with selected language
+       updatePageContent();
 
-      // Store selected user
-      selectedDemoUser = demoUsers[userType];
+       // Update button states
+       document.querySelectorAll('.global-lang-btn').forEach(btn => {
+         btn.classList.remove('active');
+       });
+       document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
 
-      // Populate form
-      document.getElementById('phone').value = selectedDemoUser.phone;
-      document.getElementById('password').value = selectedDemoUser.password;
+       // Update voice authentication language if modal is open
+       if (document.getElementById('voiceAuthModal')) {
+         updateInstructionCards();
+         const instruction = document.getElementById('voiceInstruction');
+         if (instruction) {
+           instruction.textContent = languageContent[lang].voiceInstructions;
+         }
+       }
 
-      // Update status
-      showStatus('Demo user selected: ' + userType.toUpperCase(), 'success');
-    }
+       showStatus(`Language set to: ${getLanguageName(lang)}`, 'info');
+     }
+
+    function updatePageContent() {
+       const content = languageContent[currentLanguage];
+
+       // Update page title
+       document.title = content.pageTitle;
+
+       // Update main elements
+       const loginTitle = document.querySelector('h2');
+       if (loginTitle) loginTitle.textContent = content.loginTitle;
+
+       // Update form labels and placeholders
+       const emailPhoneLabel = document.querySelector('label[for="loginInput"]');
+       if (emailPhoneLabel) emailPhoneLabel.textContent = content.emailPhoneLabel;
+
+       const emailPhoneInput = document.getElementById('loginInput');
+       if (emailPhoneInput) emailPhoneInput.placeholder = content.emailPhonePlaceholder;
+
+       const emailPhoneHelp = document.querySelector('.form-requirements');
+       if (emailPhoneHelp) emailPhoneHelp.textContent = content.emailPhoneHelp;
+
+       const passwordLabel = document.querySelector('label[for="password"]');
+       if (passwordLabel) passwordLabel.textContent = content.passwordLabel;
+
+       const passwordInput = document.getElementById('password');
+       if (passwordInput) passwordInput.placeholder = content.passwordPlaceholder;
+
+       const loginBtn = document.getElementById('loginBtn');
+       if (loginBtn) loginBtn.textContent = content.loginButton;
+
+       const registerLink = document.querySelector('.register-link a');
+       if (registerLink) registerLink.textContent = content.registerLink;
+
+       const voiceBtn = document.querySelector('.voice-btn');
+       if (voiceBtn) voiceBtn.textContent = content.voiceAuthButton;
+
+       // Update feature cards
+       updateFeatureCards();
+     }
+
+    function updateFeatureCards() {
+       const content = languageContent[currentLanguage];
+
+       const featureCards = document.querySelectorAll('.feature-card');
+       if (featureCards.length >= 6) {
+         const features = [
+           { title: content.feature1Title, desc: content.feature1Desc },
+           { title: content.feature2Title, desc: content.feature2Desc },
+           { title: content.feature3Title, desc: content.feature3Desc },
+           { title: content.feature4Title, desc: content.feature4Desc },
+           { title: content.feature5Title, desc: content.feature5Desc },
+           { title: content.feature6Title, desc: content.feature6Desc }
+         ];
+
+         featureCards.forEach((card, index) => {
+           if (features[index]) {
+             const titleEl = card.querySelector('.feature-title');
+             const descEl = card.querySelector('.feature-desc');
+             if (titleEl) titleEl.textContent = features[index].title;
+             if (descEl) descEl.textContent = features[index].desc;
+           }
+         });
+       }
+     }
+
+    function getLocalizedText(key, param) {
+       let text = languageContent[currentLanguage][key] || languageContent.en[key];
+       if (param) {
+         text = text.replace('%s', param);
+       }
+       return text;
+     }
 
     function showStatus(message, type) {
-      const statusEl = document.getElementById('status');
-      statusEl.textContent = message;
-      statusEl.className = `status ${type}`;
-    }
+       const statusEl = document.getElementById('status');
+       statusEl.textContent = message;
+       statusEl.className = `status ${type}`;
+     }
 
     function clearStatus() {
       const statusEl = document.getElementById('status');
@@ -401,7 +1190,7 @@
 
       if (justRegistered === 'true' && registeredPhone) {
         // Pre-populate phone number
-        document.getElementById('phone').value = registeredPhone;
+        document.getElementById('loginInput').value = registeredPhone;
 
         // Show welcome message
         showStatus('Welcome! Please enter your password to complete login.', 'info');
@@ -414,23 +1203,35 @@
 
     // Enhanced login function
     async function login() {
-      const phone = document.getElementById('phone').value.trim();
-      const password = document.getElementById('password').value.trim();
+       const loginInput = document.getElementById('loginInput').value.trim();
+       const password = document.getElementById('password').value.trim();
 
-      if (!phone || !password) {
-        showStatus('Please enter both phone number and password', 'error');
-        return;
-      }
+       if (!loginInput || !password) {
+         showStatus(getLocalizedText('fillFields'), 'error');
+         return;
+       }
+
+       // Validate if input is email or phone
+       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+       const phonePattern = /^256[0-9]{9}$/;
+
+       let isEmail = emailPattern.test(loginInput);
+       let isPhone = phonePattern.test(loginInput);
+
+       if (!isEmail && !isPhone) {
+         showStatus(getLocalizedText('invalidFormat'), 'error');
+         return;
+       }
 
       const loginBtn = document.getElementById('loginBtn');
       const originalText = loginBtn.textContent;
 
       try {
-        loginBtn.textContent = 'Logging in...';
+        loginBtn.textContent = getLocalizedText('loggingIn');
         loginBtn.disabled = true;
 
         const response = await apiFetch('/auth/login', 'POST', {
-          phone: phone,
+          loginInput: loginInput,
           password: password
         }, false); // Don't require auth for login
 
@@ -442,7 +1243,7 @@
             const payload = JSON.parse(atob(response.token.split('.')[1]));
             const userRole = payload.role || 'rider';
 
-            showStatus('Login successful! Redirecting to dashboard...', 'success');
+            showStatus(getLocalizedText('loginSuccess'), 'success');
 
             // Redirect based on role
             setTimeout(() => {
@@ -466,7 +1267,7 @@
 
       } catch (error) {
         console.error('Login error:', error);
-        showStatus(error.message || 'Login failed. Please try again.', 'error');
+        showStatus(error.message || getLocalizedText('loginFailed'), 'error');
       } finally {
         loginBtn.textContent = originalText;
         loginBtn.disabled = false;
@@ -474,15 +1275,1161 @@
     }
 
     // Clear status when user types
-    document.getElementById('phone').addEventListener('input', clearStatus);
+    document.getElementById('loginInput').addEventListener('input', clearStatus);
     document.getElementById('password').addEventListener('input', clearStatus);
 
     // Allow Enter key to submit
-    document.getElementById('phone').addEventListener('keypress', function(e) {
+    document.getElementById('loginInput').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') login();
     });
     document.getElementById('password').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') login();
+    });
+
+    // Enhanced Google Sign-in Function
+    async function signinWithGoogle() {
+       showStatus('Initializing Google sign-in...', 'info');
+
+       try {
+         // Check if Google Sign-In script is loaded
+         if (typeof google === 'undefined') {
+           // Load Google Sign-In script dynamically
+           await loadGoogleScript();
+         }
+
+         // Initialize Google Auth2
+         await initializeGoogleAuth();
+
+         // Show status
+         showStatus('Redirecting to Google...', 'info');
+
+         // In a real implementation, this would use Google's OAuth flow
+         // For demo purposes, we'll simulate the flow
+         setTimeout(async () => {
+           try {
+             // Simulate getting Google token (in real app, this comes from Google)
+             const mockToken = await getMockGoogleToken();
+
+             const response = await apiFetch('/auth/google', 'POST', {
+               token: mockToken
+             }, false);
+
+             if (response.access_token) {
+               localStorage.setItem('token', response.access_token);
+
+               showStatus('Google sign-in successful! Redirecting...', 'success');
+
+               setTimeout(() => {
+                 window.location.href = 'rider-dashboard.html';
+               }, 1000);
+             }
+           } catch (error) {
+             console.error('Google sign-in error:', error);
+             showStatus('Google sign-in failed. Please try manual login.', 'error');
+           }
+         }, 1500);
+
+       } catch (error) {
+         console.error('Google sign-in initialization error:', error);
+         showStatus('Google sign-in not available. Please use manual login.', 'error');
+       }
+     }
+
+     // Load Google Sign-In script
+     function loadGoogleScript() {
+       return new Promise((resolve, reject) => {
+         const script = document.createElement('script');
+         script.src = 'https://accounts.google.com/gsi/client';
+         script.onload = resolve;
+         script.onerror = reject;
+         document.head.appendChild(script);
+       });
+     }
+
+     // Initialize Google Auth
+     function initializeGoogleAuth() {
+       return new Promise((resolve, reject) => {
+         if (typeof google !== 'undefined') {
+           google.accounts.id.initialize({
+             client_id: 'your-google-client-id', // Replace with actual client ID
+             callback: handleGoogleCallback
+           });
+           resolve();
+         } else {
+           reject(new Error('Google script not loaded'));
+         }
+       });
+     }
+
+     // Handle Google callback (mock implementation)
+     function handleGoogleCallback(response) {
+       console.log('Google callback:', response);
+       // In real implementation, this would handle the Google response
+     }
+
+     // Mock Google token for demo (replace with real Google OAuth in production)
+     async function getMockGoogleToken() {
+       // In production, this would come from Google's OAuth flow
+       return 'mock-google-token-' + Date.now();
+     }
+
+    // Voice Authentication State Management
+    let voiceAuthStep = 0;
+    let voiceAuthData = {
+       loginInput: '',
+       password: ''
+    };
+
+    // Speech Synthesis Configuration
+    let speechSynthesis = window.speechSynthesis;
+    let currentVoice = null;
+    let speechVolume = 0.8;
+    let speechRate = 1.0;
+    let speechPitch = 1.0;
+
+    // Voice Authentication Control Variables
+    let currentRecognition = null;
+    let timeoutTimer = null;
+    let warningTimer = null;
+    let isListening = false;
+
+    // Global Language System
+    let currentLanguage = localStorage.getItem('selectedLanguage') || 'en'; // Default to English or saved preference
+    let selectedVoiceLanguage = 'en-US'; // Default voice language
+
+    // Comprehensive language content for entire application
+    const languageContent = {
+       en: {
+         // Page Content
+         pageTitle: 'Login – SafeMove',
+         brandName: 'SafeMove',
+         tagline: 'MULTI-MODAL TRANSPORT',
+         loginTitle: 'Login to SafeMove',
+         emailPhoneLabel: 'Email or Phone Number',
+         emailPhonePlaceholder: 'Enter email or phone number',
+         emailPhoneHelp: 'Use email: user@example.com or phone: 256700123456',
+         passwordLabel: 'Password',
+         passwordPlaceholder: 'Enter password',
+         loginButton: 'Login',
+         registerLink: 'Need an account? Register here',
+         voiceAuthButton: 'Voice Authentication',
+
+         // Status Messages
+         loggingIn: 'Logging in...',
+         loginSuccess: 'Login successful! Redirecting to dashboard...',
+         loginFailed: 'Login failed. Please try again.',
+         fillFields: 'Please enter both email/phone and password',
+         invalidFormat: 'Please enter a valid email address or phone number (256XXXXXXXXX)',
+
+         // Voice Authentication
+         voiceWelcome: 'Welcome to voice authentication. Step 1: Please say your email address or phone number clearly after the beep.',
+         voiceHeardEmail: 'I heard: "%s". Great! Step 2: Now please say your password clearly after the beep.',
+         voiceStep2: 'Step 2: Please say your password clearly after the beep.',
+         voicePasswordReceived: 'Password received. Attempting to log you in with your credentials. Please wait.',
+         voiceLoginSuccess: 'Login successful! Redirecting to your dashboard.',
+         voiceLoginFailed: 'Login failed. Please check your credentials and try again.',
+         voiceListening: 'Listening... Please speak clearly now.',
+         voiceTimeoutWarning: 'You have 15 seconds left. Please speak your information now.',
+         voiceTimeoutMessage: 'Voice authentication timed out due to inactivity. Please try again.',
+         voiceCancelled: 'Voice authentication cancelled.',
+         voiceInstructions: '🎤 Voice Authentication Starting...\n\nI will guide you through the login process step by step.',
+
+         // Feature Descriptions
+         feature1Title: 'Safe & Secure',
+         feature1Desc: 'All drivers verified with background checks and vehicle inspections',
+         feature2Title: 'Fixed Pricing',
+         feature2Desc: 'No surge pricing or hidden fees. Know your fare upfront',
+         feature3Title: 'Instant Booking',
+         feature3Desc: 'Book rides instantly with real-time driver matching',
+         feature4Title: 'Live Tracking',
+         feature4Desc: 'Track your ride in real-time with GPS technology',
+         feature5Title: 'Voice Assistant',
+         feature5Desc: 'Hands-free booking and navigation with voice commands',
+         feature6Title: 'USSD Support',
+         feature6Desc: 'Works on any phone via *284*20# - no smartphone required',
+
+         // Common
+         chooseLanguage: 'Choose Language',
+         back: 'Back',
+         next: 'Next',
+         cancel: 'Cancel',
+         confirm: 'Confirm',
+         save: 'Save'
+       },
+       lg: {
+         // Page Content
+         pageTitle: 'Nnoonya – SafeMove',
+         brandName: 'SafeMove',
+         tagline: 'TRANSPORT EYENKANA',
+         loginTitle: 'Nnoonya ku SafeMove',
+         emailPhoneLabel: 'Email oba Ssimu',
+         emailPhonePlaceholder: 'Wandika email oba nomba ya ssimu',
+         emailPhoneHelp: 'Kozesa email: user@example.com oba ssimu: 256700123456',
+         passwordLabel: 'Kigambo kyokwemiriza',
+         passwordPlaceholder: 'Wandika ekigambo kyokwemiriza',
+         loginButton: 'Nnoonya',
+         registerLink: 'Toyina akawunti? Zzaayo wano',
+         voiceAuthButton: 'Okunoonyereza Eddoboozi',
+
+         // Status Messages
+         loggingIn: 'Tukunoonya...',
+         loginSuccess: 'Okunoonya kulungi! Tukukyusa ku dashboard...',
+         loginFailed: 'Okunoonya tekulungi. Ddamu ogezese.',
+         fillFields: 'Wandika email/ssimu ne kigambo kyokwemiriza',
+         invalidFormat: 'Wandika email oba nomba ya ssimu (256XXXXXXXXX)',
+
+         // Voice Authentication
+         voiceWelcome: 'Tukwaniriza mu kunoonyereza eddoboozi. Ekisumuluzo 1: Gamba endagiriro yo oba nomba ya ssimu nga bwetuusa.',
+         voiceHeardEmail: 'Nkumanyi: "%s". Kirungi! Ekisumuluzo 2: Kaaka gamba ekigambo kyokwemiriza nga bwetuusa.',
+         voiceStep2: 'Ekisumuluzo 2: Gamba ekigambo kyokwemiriza nga bwetuusa.',
+         voicePasswordReceived: 'Ekigambo kyokwemiriza kituuse. Tukunoonyereza oba oli mu sisitemu. Lindako.',
+         voiceLoginSuccess: 'Okunoonya kulungi! Tukukyusa ku dashboard yo.',
+         voiceLoginFailed: 'Okunoonya tekulungi. Kebera ekigambo kyokwemiriza nogeza.',
+         voiceListening: 'Tukuwuliriza... Gamba nga bwetuusa.',
+         voiceTimeoutWarning: 'Oli ne sekondi 15. Gamba amawulire go kati.',
+         voiceTimeoutMessage: 'Ekiseera kyaweda. Ddamu ogezese.',
+         voiceCancelled: 'Okunoonyereza eddoboozi kirese.',
+         voiceInstructions: '🎤 Okunoonyereza Eddoboozi Kutandika...\n\nNja kukuwa amagezi ku ngeri yoku nnoonya.',
+
+         // Feature Descriptions
+         feature1Title: 'Kizibu n\'ekyokwerinda',
+         feature1Desc: 'Abadduzi bonna bakeebera n\'okukebera emmeeza',
+         feature2Title: 'Obupimo obutakyuka',
+         feature2Desc: 'Tewali kugulumiza oba ssente ezikwekeddwa. Manya omupiimo gwamu',
+         feature3Title: 'Okunoonya kwangu',
+         feature3Desc: 'Noonya emmeeza mwangu n\'okufuna omudduzi mwangu',
+         feature4Title: 'Okulondoola ennyanga',
+         feature4Desc: 'Londoola olugendo lwo ennyanga n\'ebyuma bya GPS',
+         feature5Title: 'Omuyambi w\'eddoboozi',
+         feature5Desc: 'Okunoonya n\'okulonda oluguudo lw\'eddoboozi',
+         feature6Title: 'USSD Support',
+         feature6Desc: 'Kola ku ssimu yonna nga *284*20# - tewali smartphone',
+
+         // Common
+         chooseLanguage: 'Londa Olulimi',
+         back: 'Genda Emabega',
+         next: 'Genda Mumaso',
+         cancel: 'Sazaamu',
+         confirm: 'Kakasa',
+         save: 'Tereka'
+       },
+       sw: {
+         // Page Content
+         pageTitle: 'Ingia – SafeMove',
+         brandName: 'SafeMove',
+         tagline: 'USAFRISHAJI WA NAMNA MBOLEA',
+         loginTitle: 'Ingia kwenye SafeMove',
+         emailPhoneLabel: 'Barua Pepe au Simu',
+         emailPhonePlaceholder: 'Ingiza barua pepe au nambari ya simu',
+         emailPhoneHelp: 'Tumia barua pepe: user@example.com au simu: 256700123456',
+         passwordLabel: 'Nenosiri',
+         passwordPlaceholder: 'Ingiza nenosiri',
+         loginButton: 'Ingia',
+         registerLink: 'Huna akaunti? Jisajili hapa',
+         voiceAuthButton: 'Uthibitisho wa Sauti',
+
+         // Status Messages
+         loggingIn: 'Inaingia...',
+         loginSuccess: 'Kuingia kumefaulu! Tunakuelekeza kwenye dashibodi...',
+         loginFailed: 'Kuingia kumeshindwa. Tafadhali jaribu tena.',
+         fillFields: 'Tafadhali ingiza barua pepe/simu na nenosiri',
+         invalidFormat: 'Tafadhali ingiza barua pepe halali au nambari ya simu (256XXXXXXXXX)',
+
+         // Voice Authentication
+         voiceWelcome: 'Karibu katika uthibitisho wa sauti. Hatua ya 1: Tafadhali sema barua pepe yako au nambari ya simu kwa uwazi baada ya mlio.',
+         voiceHeardEmail: 'Nimesikia: "%s". Vizuri! Hatua ya 2: Sasa tafadhali sema nenosiri lako kwa uwazi baada ya mlio.',
+         voiceStep2: 'Hatua ya 2: Tafadhali sema nenosiri lako kwa uwazi baada ya mlio.',
+         voicePasswordReceived: 'Nenosiri limepokelewa. Tunajaribu kuingia kwa kitambulisho chako. Tafadhali subiri.',
+         voiceLoginSuccess: 'Kuingia kumefaulu! Tunakuelekeza kwenye dashibodi yako.',
+         voiceLoginFailed: 'Kuingia kumeshindwa. Tafadhali angalia kitambulisho chako na ujaribu tena.',
+         voiceListening: 'Tunasikiliza... Tafadhali sema kwa uwazi sasa.',
+         voiceTimeoutWarning: 'Una sekunde 15 zilizobaki. Tafadhali sema maelezo yako sasa.',
+         voiceTimeoutMessage: 'Muda umeisha kwa sababu ya kutofanya kitu. Tafadhali jaribu tena.',
+         voiceCancelled: 'Uthibitisho wa sauti umesimamishwa.',
+         voiceInstructions: '🎤 Uthibitisho wa Sauti Unaanza...\n\nNitakuongoza kupitia mchakato wa kuingia hatua kwa hatua.',
+
+         // Feature Descriptions
+         feature1Title: 'Salama na Muhimu',
+         feature1Desc: 'Madereva wote wamethibitishwa na ukaguzi wa historia na ukaguzi wa magari',
+         feature2Title: 'Bei Iliyo Wazi',
+         feature2Desc: 'Hakuna bei ya kupanda au ada zilizofichwa. Jua nauli yako mapema',
+         feature3Title: 'Uhifadhi wa Papo Hapo',
+         feature3Desc: 'Hifadhi safari mara moja na ulinganishaji wa dereva wa wakati halisi',
+         feature4Title: 'Ufuatiliaji wa Moja kwa Moja',
+         feature4Desc: 'Fuata safari yako kwa wakati halisi na teknolojia ya GPS',
+         feature5Title: 'Msaidizi wa Sauti',
+         feature5Desc: 'Uhifadhi na urambazaji wa mikono na amri za sauti',
+         feature6Title: 'Usaidizi wa USSD',
+         feature6Desc: 'Inafanya kazi kwenye simu yoyote kupitia *284*20# - hakuna smartphone inahitajika',
+
+         // Common
+         chooseLanguage: 'Chagua Lugha',
+         back: 'Nyuma',
+         next: 'Mbele',
+         cancel: 'Ghairi',
+         confirm: 'Thibitisha',
+         save: 'Hifadhi'
+       }
+    };
+
+    function startVoiceAuth() {
+       if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+         showStatus('Voice recognition not supported in this browser. Please use manual login.', 'error');
+         return;
+       }
+
+       // Reset voice authentication state
+       voiceAuthStep = 0;
+       voiceAuthData = { loginInput: '', password: '' };
+
+       // Initialize speech synthesis
+       initializeSpeechSynthesis();
+
+       showStatus('🎤 Starting Voice Authentication...', 'info');
+
+       // Show voice authentication modal and begin immediately
+       showVoiceAuthGuide();
+
+       // Show countdown before starting
+       showCountdownAndBegin();
+     }
+
+     function showCountdownAndBegin() {
+       const instruction = document.getElementById('voiceInstruction');
+       let countdown = 2;
+
+       const countdownInterval = setInterval(() => {
+         if (instruction) {
+           instruction.innerHTML = `🎤 Voice Authentication Starting...<br><br>
+           I will guide you through the login process step by step.<br><br>
+           <div class="countdown-number">${countdown}</div>`;
+         }
+         countdown--;
+
+         if (countdown < 0) {
+           clearInterval(countdownInterval);
+           // Begin voice authentication
+           beginVoiceStep();
+         }
+       }, 1000);
+     }
+
+     // Initialize speech synthesis and voice selection
+     function initializeSpeechSynthesis() {
+       if ('speechSynthesis' in window) {
+         // Load available voices
+         let voices = speechSynthesis.getVoices();
+
+         // If voices aren't loaded yet, wait for them
+         if (voices.length === 0) {
+           speechSynthesis.onvoiceschanged = function() {
+             voices = speechSynthesis.getVoices();
+             selectBestVoice(voices);
+           };
+         } else {
+           selectBestVoice(voices);
+         }
+       }
+     }
+
+     // Select the best available voice for clarity
+     function selectBestVoice(voices) {
+       // Prefer female voices as they're often clearer, or English voices
+       const preferredVoices = voices.filter(voice =>
+         voice.lang.startsWith('en') &&
+         (voice.name.includes('Female') || voice.name.includes('Samantha') || voice.name.includes('Susan') ||
+          voice.name.includes('Zoe') || voice.name.includes('Google UK English Female'))
+       );
+
+       if (preferredVoices.length > 0) {
+         currentVoice = preferredVoices[0];
+       } else {
+         // Fallback to first English voice
+         const englishVoices = voices.filter(voice => voice.lang.startsWith('en'));
+         currentVoice = englishVoices.length > 0 ? englishVoices[0] : voices[0];
+       }
+     }
+
+     // Speak text with enhanced clarity
+     function speakText(text, priority = 'normal') {
+       if (!speechSynthesis || !text) {
+         console.log('Speech synthesis not available');
+         return;
+       }
+
+       // Check if speech synthesis is supported and not already speaking
+       if (!speechSynthesis.speaking && speechSynthesis.getVoices().length > 0) {
+         // Cancel any current speech
+         speechSynthesis.cancel();
+       } else {
+         return; // Exit if already speaking or no voices available
+       }
+
+       const utterance = new SpeechSynthesisUtterance(text);
+
+       // Configure voice settings for clarity
+       if (currentVoice) {
+         utterance.voice = currentVoice;
+       }
+
+       utterance.volume = speechVolume;
+       utterance.rate = speechRate;
+       utterance.pitch = speechPitch;
+
+       // Add emphasis for important instructions
+       if (priority === 'high') {
+         utterance.rate = 0.9; // Slightly slower for clarity
+         utterance.pitch = 1.1; // Slightly higher pitch
+       }
+
+       utterance.onstart = function() {
+         console.log('Speaking:', text);
+       };
+
+       utterance.onerror = function(event) {
+         console.error('Speech synthesis error:', event.error);
+         // Show visual feedback if speech fails
+         const voiceIcon = document.getElementById('voiceIcon');
+         if (voiceIcon) {
+           voiceIcon.textContent = '🔇';
+           setTimeout(() => {
+             voiceIcon.textContent = '🎤';
+           }, 2000);
+         }
+       };
+
+       utterance.onend = function() {
+         // Reset icon when speech ends
+         const voiceIcon = document.getElementById('voiceIcon');
+         if (voiceIcon && voiceIcon.textContent === '🔊') {
+           setTimeout(() => {
+             voiceIcon.textContent = '🎤';
+           }, 500);
+         }
+       };
+
+       // Speak the text
+       speechSynthesis.speak(utterance);
+     }
+
+     function showVoiceAuthGuide() {
+       const modal = document.createElement('div');
+       modal.id = 'voiceAuthModal';
+       modal.style.cssText = `
+         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+         background: rgba(0,0,0,0.8); display: flex; align-items: center;
+         justify-content: center; z-index: 1000; font-family: Arial, sans-serif;
+       `;
+
+       modal.innerHTML = `
+         <div class="voice-modal-content" style="padding: 30px; border-radius: 15px; max-width: 500px; width: 90%; text-align: center;">
+           <div class="voice-modal-header">
+             <h3 style="margin: 0 0 10px 0; color: white;">🎤 Voice Authentication</h3>
+             <p style="margin: 0; opacity: 0.9; font-size: 14px;">Secure hands-free login with voice guidance</p>
+           </div>
+
+           <!-- Language Selection -->
+           <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+             <div style="text-align: center; margin-bottom: 15px;">
+               <label style="color: white; font-size: 14px; display: block; margin-bottom: 10px;">🌐 Choose Language / Lugha / Olulimi:</label>
+               <div class="language-buttons">
+                 <button class="lang-btn active" onclick="setLanguage('en')" data-lang="en">
+                   <span class="lang-icon">🇺🇸</span>
+                   <span class="lang-text">English</span>
+                 </button>
+                 <button class="lang-btn" onclick="setLanguage('lg')" data-lang="lg">
+                   <span class="lang-icon">🇺🇬</span>
+                   <span class="lang-text">Luganda</span>
+                 </button>
+                 <button class="lang-btn" onclick="setLanguage('sw')" data-lang="sw">
+                   <span class="lang-icon">🇹🇿</span>
+                   <span class="lang-text">Swahili</span>
+                 </button>
+               </div>
+             </div>
+
+             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+               <label style="color: white; font-size: 12px;">🔊 Voice Volume:</label>
+               <input type="range" id="voiceVolume" min="0.1" max="1" step="0.1" value="0.8" style="width: 60%;">
+             </div>
+             <div style="display: flex; justify-content: space-between; align-items: center;">
+               <label style="color: white; font-size: 12px;">⚡ Voice Speed:</label>
+               <input type="range" id="voiceSpeed" min="0.5" max="2" step="0.1" value="1.0" style="width: 60%;">
+             </div>
+           </div>
+
+           <div class="voice-step-indicator">
+             <div class="step-dot" id="step1"></div>
+             <div class="step-dot" id="step2"></div>
+             <div class="step-dot" id="step3"></div>
+           </div>
+
+           <div class="voice-progress-bar">
+             <div class="voice-progress-fill" id="voiceProgress"></div>
+           </div>
+
+           <!-- Visual Instruction Cards for Low-Literacy Users -->
+           <div class="instruction-cards" id="instructionCards">
+             <div class="instruction-card" data-step="1">
+               <div class="card-step">1</div>
+               <div class="card-icon">📧/📱</div>
+               <div class="card-text" id="cardText1">Email/Phone</div>
+             </div>
+             <div class="instruction-card" data-step="2">
+               <div class="card-step">2</div>
+               <div class="card-icon">🔒</div>
+               <div class="card-text" id="cardText2">Password</div>
+             </div>
+             <div class="instruction-card" data-step="3">
+               <div class="card-step">3</div>
+               <div class="card-icon">✅</div>
+               <div class="card-text" id="cardText3">Complete</div>
+             </div>
+           </div>
+
+           <div id="voiceStepContent">
+             <div class="voice-status-icon" id="voiceIcon">🎤</div>
+             <div class="voice-instruction" id="voiceInstruction">
+               🎤 Voice Authentication Starting...<br><br>
+               I will guide you through the login process step by step.
+             </div>
+           </div>
+
+           <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+             <button onclick="closeVoiceModal()" class="voice-auth-button" style="background: rgba(255,255,255,0.1);">
+               Cancel
+             </button>
+             <button onclick="testVoice()" class="voice-auth-button" style="background: rgba(255,255,255,0.15);">
+               🔊 Test Voice
+             </button>
+           </div>
+         </div>
+       `;
+
+       document.body.appendChild(modal);
+
+       // Initialize step indicators
+       updateStepIndicators();
+
+       // Initialize instruction cards with selected language
+       updateInstructionCards();
+
+       // Set up voice control event listeners
+       document.getElementById('voiceVolume').oninput = function() {
+         speechVolume = parseFloat(this.value);
+       };
+
+       document.getElementById('voiceSpeed').oninput = function() {
+         speechRate = parseFloat(this.value);
+       };
+
+       document.getElementById('testVoice').onclick = function() {
+         testVoice();
+       };
+
+       // Add click functionality to instruction cards for low-literacy users
+       document.querySelectorAll('.instruction-card').forEach(card => {
+         card.onclick = function() {
+           const step = parseInt(this.getAttribute('data-step'));
+
+           // Provide visual and audio feedback
+           this.style.transform = 'scale(0.95)';
+           setTimeout(() => {
+             this.style.transform = '';
+           }, 200);
+
+           // Speak instruction for current step
+           if (step === 1 && voiceAuthStep === 0) {
+             speakText(getLocalizedText('welcome'), 'high');
+           } else if (step === 2 && voiceAuthStep === 1) {
+             speakText(getLocalizedText('step2'), 'high');
+           } else if (step === 3 && voiceAuthStep === 2) {
+             speakText(getLocalizedText('passwordReceived'), 'high');
+           }
+         };
+       });
+     }
+
+     function closeVoiceModal() {
+       stopVoiceAuthentication();
+
+       const modal = document.getElementById('voiceAuthModal');
+       if (modal) {
+         modal.remove();
+       }
+
+       // Reset state
+       voiceAuthStep = 0;
+       voiceAuthData = { loginInput: '', password: '' };
+       isListening = false;
+
+       const cancelledMessage = getLocalizedText('cancelled');
+       showStatus(cancelledMessage, 'info');
+     }
+
+     function beginVoiceStep() {
+       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+       const recognition = new SpeechRecognition();
+
+       // Store reference to current recognition
+       currentRecognition = recognition;
+       isListening = true;
+
+       recognition.continuous = false;
+       recognition.interimResults = false;
+       recognition.lang = 'en-US';
+
+       // Start timeout for this step
+       startStepTimeout();
+
+       if (voiceAuthStep === 0) {
+         // Step 1: Get email/phone
+         const instruction = getLocalizedText('welcome');
+         updateVoiceStep(instruction);
+         speakText(instruction, 'high');
+
+         recognition.onresult = function(event) {
+           // Reset timeout when user speaks
+           resetStepTimeout();
+
+           const transcript = event.results[0][0].transcript;
+           voiceAuthData.loginInput = transcript.trim();
+           const nextInstruction = getLocalizedText('heardEmail', transcript);
+           updateVoiceStep(nextInstruction, 1);
+           speakText(nextInstruction, 'high');
+         };
+       } else if (voiceAuthStep === 1) {
+         // Step 2: Get password
+         const instruction = getLocalizedText('step2');
+         updateVoiceStep(instruction);
+         speakText(instruction, 'high');
+
+         recognition.onresult = function(event) {
+           // Reset timeout when user speaks
+           resetStepTimeout();
+
+           const transcript = event.results[0][0].transcript;
+           voiceAuthData.password = transcript.trim();
+
+           const nextInstruction = getLocalizedText('passwordReceived');
+           updateVoiceStep(nextInstruction, 2);
+           speakText(nextInstruction, 'high');
+
+           // Attempt login with collected data
+           setTimeout(() => performVoiceLogin(), 1000);
+         };
+       }
+
+       recognition.onstart = function() {
+         // Reset timeout when listening starts
+         resetStepTimeout();
+
+         // Play beep sound first
+         playBeep();
+
+         setTimeout(() => {
+           const listeningMessage = getLocalizedText('listening');
+           updateVoiceStep(listeningMessage);
+           speakText(listeningMessage, 'normal');
+         }, 300); // Wait for beep to finish
+       };
+
+       recognition.onerror = function(event) {
+         const errorMessage = 'I had trouble hearing you. Please try again.';
+         updateVoiceStep(errorMessage, -1);
+         speakText(errorMessage, 'high');
+
+         // Clean up recognition reference
+         currentRecognition = null;
+         isListening = false;
+
+         setTimeout(() => {
+           if (voiceAuthStep >= 0) beginVoiceStep();
+         }, 3000);
+       };
+
+       recognition.onend = function() {
+         // Clean up recognition reference
+         currentRecognition = null;
+         isListening = false;
+
+         if (voiceAuthStep < 2) {
+           setTimeout(() => beginVoiceStep(), 1500);
+         }
+       };
+
+       try {
+         recognition.start();
+       } catch (error) {
+         const errorMessage = 'Error starting voice recognition. Please try manual login.';
+         updateVoiceStep(errorMessage, -1);
+         speakText(errorMessage, 'high');
+       }
+     }
+
+     function updateVoiceStep(message, stepIncrement = 0) {
+       const instruction = document.getElementById('voiceInstruction');
+       const voiceIcon = document.getElementById('voiceIcon');
+       const progressBar = document.getElementById('voiceProgress');
+
+       // Update step indicators
+       updateStepIndicators();
+
+       if (instruction) instruction.innerHTML = message;
+
+       // Update progress bar
+       if (progressBar) {
+         const progress = (voiceAuthStep / 2) * 100;
+         progressBar.style.width = Math.min(progress, 100) + '%';
+       }
+
+       // Update icon based on current step
+       if (voiceIcon) {
+         if (voiceAuthStep === 0) {
+           voiceIcon.textContent = '🎤';
+         } else if (voiceAuthStep === 1) {
+           voiceIcon.textContent = '🎙️';
+         } else if (voiceAuthStep === 2) {
+           voiceIcon.textContent = '🔒';
+         } else {
+           voiceIcon.textContent = '⚡';
+         }
+       }
+
+       voiceAuthStep += stepIncrement;
+
+       // Speak instructions unless we're currently listening (to avoid interference)
+       if (voiceAuthStep <= 2 && voiceAuthStep > 0) {
+         // Speak instructions with slight delay to avoid interference with recognition
+         setTimeout(() => {
+           speakText(message, 'high');
+         }, 500);
+       }
+     }
+
+     function updateStepIndicators() {
+       const step1 = document.getElementById('step1');
+       const step2 = document.getElementById('step2');
+       const step3 = document.getElementById('step3');
+
+       if (step1) step1.className = voiceAuthStep > 0 ? 'step-dot completed' : 'step-dot active';
+       if (step2) step2.className = voiceAuthStep > 1 ? 'step-dot completed' : voiceAuthStep === 1 ? 'step-dot active' : 'step-dot';
+       if (step3) step3.className = voiceAuthStep > 2 ? 'step-dot completed' : voiceAuthStep === 2 ? 'step-dot active' : 'step-dot';
+
+       // Update instruction cards for low-literacy users
+       updateInstructionCards();
+     }
+
+     function updateInstructionCards() {
+       // Remove active class from all cards
+       document.querySelectorAll('.instruction-card').forEach(card => {
+         card.classList.remove('active');
+       });
+
+       // Add active class to current step card
+       if (voiceAuthStep >= 0 && voiceAuthStep <= 2) {
+         const activeCard = document.querySelector(`[data-step="${voiceAuthStep + 1}"]`);
+         if (activeCard) {
+           activeCard.classList.add('active');
+         }
+       }
+
+       // Update card text with selected language
+       const cardTexts = {
+         en: ['Email/Phone', 'Password', 'Complete'],
+         lg: ['Email/Ssimu', 'Kigambo', 'Kiwedde'],
+         sw: ['Barua Pepe/Simu', 'Nenosiri', 'Imekamilika']
+       };
+
+       const texts = cardTexts[currentLanguage] || cardTexts.en;
+
+       document.getElementById('cardText1').textContent = texts[0];
+       document.getElementById('cardText2').textContent = texts[1];
+       document.getElementById('cardText3').textContent = texts[2];
+     }
+
+     async function performVoiceLogin() {
+       // Clear timers since we're processing the login
+       if (timeoutTimer) clearTimeout(timeoutTimer);
+       if (warningTimer) clearTimeout(warningTimer);
+
+       try {
+         const response = await apiFetch('/auth/login', 'POST', {
+           loginInput: voiceAuthData.loginInput,
+           password: voiceAuthData.password
+         }, false);
+
+         if (response.token) {
+           localStorage.setItem('token', response.token);
+           const successMessage = getLocalizedText('loginSuccess');
+           updateVoiceStep('✅ ' + successMessage, 3);
+           speakText(successMessage, 'high');
+
+           setTimeout(() => {
+             closeVoiceModal();
+             window.location.href = 'rider-dashboard.html';
+           }, 2000);
+         }
+       } catch (error) {
+         const failMessage = getLocalizedText('loginFailed');
+         updateVoiceStep('❌ ' + failMessage, -1);
+         speakText(failMessage, 'high');
+
+         // Clean up recognition reference
+         currentRecognition = null;
+         isListening = false;
+
+         setTimeout(() => {
+           voiceAuthStep = 0;
+           beginVoiceStep();
+         }, 3000);
+       }
+     }
+
+    // Stop all voice authentication processes
+    function stopVoiceAuthentication() {
+      // Stop speech recognition
+      if (currentRecognition) {
+        currentRecognition.stop();
+        currentRecognition = null;
+      }
+
+      // Stop speech synthesis
+      if (speechSynthesis) {
+        speechSynthesis.cancel();
+      }
+
+      // Clear all timers
+      if (timeoutTimer) {
+        clearTimeout(timeoutTimer);
+        timeoutTimer = null;
+      }
+
+      if (warningTimer) {
+        clearTimeout(warningTimer);
+        warningTimer = null;
+      }
+
+      isListening = false;
+    }
+
+    // Close voice modal function with proper cleanup
+    function closeVoiceModal() {
+      stopVoiceAuthentication();
+
+      const modal = document.getElementById('voiceAuthModal');
+      if (modal) {
+        modal.remove();
+      }
+
+      // Reset state
+      voiceAuthStep = 0;
+      voiceAuthData = { loginInput: '', password: '' };
+      isListening = false;
+
+      showStatus('Voice authentication cancelled.', 'info');
+    }
+
+    // Start timeout for current step
+    function startStepTimeout() {
+      // Clear any existing timers
+      if (timeoutTimer) clearTimeout(timeoutTimer);
+      if (warningTimer) clearTimeout(warningTimer);
+
+      // Set warning at 45 seconds
+      warningTimer = setTimeout(() => {
+        const warningMessage = getLocalizedText('timeoutWarning');
+        updateVoiceStep(warningMessage);
+        speakText(warningMessage, 'high');
+
+        const voiceIcon = document.getElementById('voiceIcon');
+        if (voiceIcon) voiceIcon.textContent = '⏰';
+      }, 45000); // 45 seconds
+
+      // Set timeout at 60 seconds
+      timeoutTimer = setTimeout(() => {
+        const timeoutMessage = getLocalizedText('timeoutMessage');
+        updateVoiceStep(timeoutMessage, -1);
+        speakText(timeoutMessage, 'high');
+
+        setTimeout(() => {
+          closeVoiceModal();
+          showStatus('Voice authentication timed out. Please try manual login or try again.', 'error');
+        }, 2000);
+      }, 60000); // 60 seconds
+    }
+
+    // Reset timeout when user speaks
+    function resetStepTimeout() {
+      if (timeoutTimer) clearTimeout(timeoutTimer);
+      if (warningTimer) clearTimeout(warningTimer);
+      startStepTimeout();
+    }
+
+    // Language switching function
+    function setLanguage(lang) {
+      currentLanguage = lang;
+      selectedVoiceLanguage = getVoiceLanguage(lang);
+
+      // Update button states
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+
+      // Update instruction cards with selected language
+      updateInstructionCards();
+
+      // Update initial instructions
+      const instruction = document.getElementById('voiceInstruction');
+      if (instruction) {
+        instruction.textContent = languageContent[lang].voiceInstructions;
+      }
+
+      // Reinitialize voice for new language
+      initializeSpeechSynthesis();
+
+      showStatus(`Language set to: ${getLanguageName(lang)}`, 'info');
+    }
+
+    function getVoiceLanguage(lang) {
+      const voiceMap = {
+        'en': 'en-US',
+        'lg': 'en-US', // Luganda voices might not be available, fallback to English
+        'sw': 'sw-TZ' // Swahili (Tanzania)
+      };
+      return voiceMap[lang] || 'en-US';
+    }
+
+    function getLanguageName(lang) {
+      const nameMap = {
+        'en': 'English',
+        'lg': 'Luganda',
+        'sw': 'Swahili'
+      };
+      return nameMap[lang] || 'English';
+    }
+
+    function updateInstructionCards() {
+      // Use English as default for instruction cards
+      const cardTexts = {
+        en: ['Email/Phone', 'Password', 'Complete'],
+        lg: ['Email/Ssimu', 'Kigambo', 'Kiwedde'],
+        sw: ['Barua Pepe/Simu', 'Nenosiri', 'Imekamilika']
+      };
+
+      const texts = cardTexts[currentLanguage] || cardTexts.en;
+
+      document.getElementById('cardText1').textContent = texts[0];
+      document.getElementById('cardText2').textContent = texts[1];
+      document.getElementById('cardText3').textContent = texts[2];
+    }
+
+    function getLocalizedText(key, param) {
+      let text = languageContent[currentLanguage][key] || languageContent.en[key];
+      if (param) {
+        text = text.replace('%s', param);
+      }
+      return text;
+    }
+
+    // Test voice functionality
+    function testVoice() {
+      // Default to English for voice test
+      const testMessages = {
+        en: 'Hello! This is a test of the voice system. If you can hear me clearly, the voice authentication is working properly.',
+        lg: 'Halo! Kuno kugezesa eddoboozi. Bwoba owulidde bulungi, okunoonyereza eddoboozi kulungi.',
+        sw: 'Halo! Hili ni jaribio la mfumo wa sauti. Ikiwa unanisikia vizuri, uthibitisho wa sauti unafanya kazi vizuri.'
+      };
+
+      const testMessage = testMessages[currentLanguage] || testMessages.en;
+      speakText(testMessage, 'high');
+
+      const testBtn = document.getElementById('testVoice');
+      if (testBtn) {
+        testBtn.textContent = '🔊 Testing Voice...';
+        testBtn.disabled = true;
+
+        setTimeout(() => {
+          if (testBtn) {
+            testBtn.textContent = '🔊 Test Voice';
+            testBtn.disabled = false;
+          }
+        }, 4000);
+      }
+    }
+
+    // Play beep sound before listening
+    function playBeep() {
+      try {
+        // Create audio context for beep sound
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        oscillator.frequency.value = 800; // 800Hz beep
+        oscillator.type = 'sine';
+
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.2);
+      } catch (error) {
+        console.log('Beep sound not supported in this browser');
+      }
+    }
+
+    // Transport mode interactions
+    document.querySelectorAll('.transport-mode').forEach(mode => {
+      mode.addEventListener('click', function() {
+        const modeName = this.querySelector('.transport-mode-name').textContent;
+        showStatus(`${modeName} selected! This transport mode will be available after login.`, 'info');
+
+        // Add visual feedback
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = '';
+        }, 200);
+      });
+    });
+
+    // Feature card interactions
+    document.querySelectorAll('.feature-card').forEach(card => {
+      card.addEventListener('click', function() {
+        const featureTitle = this.querySelector('.feature-title').textContent;
+        showStatus(`Learn more about ${featureTitle} after logging in!`, 'info');
+      });
+    });
+
+    // Password Reset Functions
+    function showForgotPasswordModal() {
+      document.getElementById('forgotPasswordModal').style.display = 'flex';
+      document.getElementById('resetEmail').focus();
+    }
+
+    function closeForgotPasswordModal() {
+      document.getElementById('forgotPasswordModal').style.display = 'none';
+      document.getElementById('resetStep1').style.display = 'block';
+      document.getElementById('resetStep2').style.display = 'none';
+      document.getElementById('resetStatus').innerHTML = '';
+
+      // Clear form fields
+      document.getElementById('resetEmail').value = '';
+      document.getElementById('resetToken').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('confirmPassword').value = '';
+    }
+
+    async function requestPasswordReset() {
+      const email = document.getElementById('resetEmail').value;
+      const statusEl = document.getElementById('resetStatus');
+
+      if (!email) {
+        statusEl.innerText = 'Please enter your email address';
+        statusEl.className = 'status error';
+        return;
+      }
+
+      statusEl.innerText = 'Sending reset link...';
+      statusEl.className = 'status info';
+
+      try {
+        const data = await apiFetch('/auth/forgot-password', 'POST', { email }, false);
+
+        statusEl.innerText = data.message || 'Reset link sent successfully!';
+        statusEl.className = 'status success';
+
+        if (data.resetToken) {
+          // Show the token for development/testing
+          statusEl.innerHTML = `<div>${data.message}</div><div style="margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px; font-family: monospace; font-size: 12px;">Reset Token: ${data.resetToken}</div><div style="margin-top: 10px; font-size: 12px; color: #666;">Copy this token and use it in Step 2</div>`;
+        }
+
+        // Show step 2 after 2 seconds if token is provided (development mode)
+        if (data.resetToken) {
+          setTimeout(() => {
+            document.getElementById('resetStep1').style.display = 'none';
+            document.getElementById('resetStep2').style.display = 'block';
+            document.getElementById('resetToken').value = data.resetToken;
+            document.getElementById('newPassword').focus();
+          }, 2000);
+        }
+
+      } catch (e) {
+        statusEl.innerText = e.message || 'Failed to send reset link. Please try again.';
+        statusEl.className = 'status error';
+        console.error('Password reset request error:', e);
+      }
+    }
+
+    async function resetPassword() {
+      const token = document.getElementById('resetToken').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const statusEl = document.getElementById('resetStatus');
+
+      if (!token || !newPassword || !confirmPassword) {
+        statusEl.innerText = 'Please fill in all fields';
+        statusEl.className = 'status error';
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        statusEl.innerText = 'Passwords do not match';
+        statusEl.className = 'status error';
+        return;
+      }
+
+      if (newPassword.length < 6) {
+        statusEl.innerText = 'Password must be at least 6 characters long';
+        statusEl.className = 'status error';
+        return;
+      }
+
+      statusEl.innerText = 'Resetting password...';
+      statusEl.className = 'status info';
+
+      try {
+        const data = await apiFetch('/auth/reset-password', 'POST', {
+          token: token,
+          newPassword: newPassword
+        }, false);
+
+        statusEl.innerText = data.message || 'Password reset successful!';
+        statusEl.className = 'status success';
+
+        // Close modal and redirect to login after success
+        setTimeout(() => {
+          closeForgotPasswordModal();
+          showStatus('Password reset successful! You can now login with your new password.', 'success');
+        }, 2000);
+
+      } catch (e) {
+        statusEl.innerText = e.message || 'Failed to reset password. Please try again.';
+        statusEl.className = 'status error';
+        console.error('Password reset error:', e);
+      }
+    }
+
+    // Initialize page with saved language preference
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set initial language from localStorage or default to English
+      const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+      setGlobalLanguage(savedLanguage);
+
+      // Update page content immediately
+      updatePageContent();
+
+      // Ensure English is default for instruction cards
+      updateInstructionCards();
+
+      // Set English as default if no language is saved
+      if (!localStorage.getItem('selectedLanguage')) {
+        localStorage.setItem('selectedLanguage', 'en');
+      }
     });
   </script>
 </body>

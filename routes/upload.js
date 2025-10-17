@@ -45,8 +45,58 @@ const upload = multer({
 });
 
 module.exports = async function (fastify, opts) {
-  // File upload endpoint
-  fastify.post('/', {
+   // Driver document upload endpoint (no auth required for registration)
+   fastify.post('/driver-documents', {
+     handler: async (req, reply) => {
+       try {
+         const files = [];
+         const parts = req.files();
+
+         for await (const part of parts) {
+           if (part.file) {
+             const uploadDir = path.join(__dirname, '../uploads');
+             await fs.mkdir(uploadDir, { recursive: true });
+
+             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+             const ext = path.extname(part.filename);
+             const filename = `driver-doc-${uniqueSuffix}${ext}`;
+             const filepath = path.join(uploadDir, filename);
+
+             // Save file
+             const buffer = await part.toBuffer();
+             await fs.writeFile(filepath, buffer);
+
+             // Return file info
+             files.push({
+               fieldname: part.fieldname,
+               filename: part.filename,
+               url: `/uploads/${filename}`,
+               mimeType: part.mimetype,
+               size: buffer.length
+             });
+           }
+         }
+
+         if (files.length === 0) {
+           return reply.code(400).send({ error: 'No files provided' });
+         }
+
+         return reply.send({
+           message: 'Files uploaded successfully',
+           files: files
+         });
+       } catch (error) {
+         console.error('Driver document upload error:', error);
+         if (error.message === 'Invalid file type. Only images and PDFs are allowed.') {
+           return reply.code(400).send({ error: error.message });
+         }
+         return reply.code(500).send({ error: 'Upload failed' });
+       }
+     }
+   });
+
+   // File upload endpoint (requires authentication)
+   fastify.post('/', {
     preHandler: authenticate,
     handler: async (req, reply) => {
       try {

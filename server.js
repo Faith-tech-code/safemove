@@ -4,12 +4,38 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('✅ MongoDB connected'))
+// Enhanced MongoDB connection with better error handling
+mongoose.connect(process.env.MONGO_URI, {
+  serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+  socketTimeoutMS: 45000
+})
+  .then(() => {
+    console.log('✅ MongoDB connected successfully');
+    console.log('📊 Database:', mongoose.connection.db.databaseName);
+  })
   .catch(err => {
-    console.error('❌ MongoDB connection error:', err);
-    process.exit(1);
+    console.error('❌ MongoDB connection error:', err.message);
+    console.error('🔍 Please check:');
+    console.error('   - MongoDB URI in .env file');
+    console.error('   - Network connectivity to MongoDB Atlas');
+    console.error('   - Database user permissions');
+    console.error('   - IP whitelist in MongoDB Atlas');
+    // Don't exit process, let server run without DB for debugging
+    console.log('⚠️ Server will continue running without database connection');
   });
+
+// Handle connection events
+mongoose.connection.on('connected', () => {
+  console.log('📱 Mongoose connected to MongoDB');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.error('❌ Mongoose connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('📱 Mongoose disconnected from MongoDB');
+});
 
 fastify.register(require('@fastify/cors'), {
   origin: (origin, callback) => {

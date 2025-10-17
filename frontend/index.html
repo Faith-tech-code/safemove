@@ -5,401 +5,1173 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SafeMove – Multi-Modal Transport</title>
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    .gradient-bg { background: linear-gradient(135deg, #e0f2fe 0%, #dcfce7 100%); min-height: 100vh; }
-    .header { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-bottom: 1px solid #e5e7eb; }
-    .header-content { max-width: 1280px; margin: 0 auto; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; height: 64px; }
-    .logo { display: flex; align-items: center; gap: 12px; }
-    .logo-icon { width: 40px; height: 40px; background: #2563eb; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.25rem; }
-    .logo-text { font-size: 1.5rem; font-weight: bold; color: #111827; }
-    .nav { display: flex; gap: 24px; }
-    .nav a { color: #4b5563; text-decoration: none; font-weight: 500; transition: color 0.2s; }
-    .nav a:hover { color: #2563eb; }
-    .container { max-width: 1280px; margin: 0 auto; padding: 3rem 1rem; }
-    .hero-title { font-size: 2.5rem; font-weight: bold; text-align: center; color: #111827; margin-bottom: 1rem; }
-    .hero-subtitle { font-size: 1.25rem; text-align: center; color: #4b5563; margin-bottom: 2rem; }
-    .grid { display: grid; gap: 1.5rem; margin-bottom: 3rem; }
-    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-    .card { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; text-align: center; }
-    .card-icon { font-size: 2rem; margin-bottom: 0.75rem; }
-    .card-title { font-weight: 600; color: #111827; margin-bottom: 0.5rem; }
-    .card-text { color: #6b7280; font-size: 0.875rem; }
-    .booking-card { background: white; border-radius: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 2rem; max-width: 1024px; margin: 0 auto; }
-    .section-title { font-size: 1.5rem; font-weight: bold; color: #111827; margin-bottom: 1.5rem; text-align: center; }
-    .transport-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-bottom: 2rem; }
-    .transport-btn { padding: 1rem; border-radius: 12px; border: 2px solid #e5e7eb; background: white; cursor: pointer; transition: all 0.2s; text-align: center; }
-    .transport-btn:hover { border-color: #d1d5db; }
-    .transport-btn.active { border-color: #2563eb; background: #eff6ff; }
-    .transport-icon { font-size: 2rem; margin-bottom: 0.5rem; }
-    .transport-name { font-weight: 600; color: #111827; font-size: 0.875rem; }
-    .transport-desc { color: #6b7280; font-size: 0.75rem; }
-    .input-group { margin-bottom: 1.5rem; }
-    .input-label { display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem; }
-    .input-wrapper { position: relative; }
-    .input-icon { position: absolute; left: 12px; top: 12px; color: #9ca3af; }
-    .input-field { width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; }
-    .input-field:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.5); }
-    .fare-display { background: #d1fae5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; display: none; }
-    .fare-display.active { display: block; }
-    .fare-amount { font-size: 1.25rem; font-weight: 600; color: #111827; margin-bottom: 0.5rem; }
-    .btn-primary { width: 100%; background: #2563eb; color: white; padding: 1rem; border-radius: 12px; font-weight: 600; font-size: 1.125rem; border: none; cursor: pointer; transition: background 0.2s; }
-    .btn-primary:hover { background: #1d4ed8; }
-    .btn-primary:disabled { background: #d1d5db; cursor: not-allowed; }
-    .demo-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-    .demo-card { background: white; border-radius: 12px; padding: 1.5rem; border: 2px solid #e5e7eb; transition: all 0.2s; text-decoration: none; display: block; }
-    .demo-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-    .demo-card.blue { background: #eff6ff; border-color: #bfdbfe; }
-    .demo-card.green { background: #f0fdf4; border-color: #bbf7d0; }
-    .demo-card.purple { background: #faf5ff; border-color: #e9d5ff; }
-    .demo-card.orange { background: #fff7ed; border-color: #fed7aa; }
-    .demo-title { font-weight: 600; color: #111827; margin-bottom: 0.5rem; }
-    .demo-text { color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem; }
-    .demo-link { font-weight: 500; }
-    .demo-link.blue { color: #2563eb; }
-    .demo-link.green { color: #16a34a; }
-    .demo-link.purple { color: #9333ea; }
-    .demo-link.orange { color: #ea580c; }
+    :root {
+      --primary-bg: #0355a6;
+      --accent-color: #a9bf04;
+      --transport-blue: #0355a6;
+      --transport-green: #a9bf04;
+      --transport-orange: #f1a732;
+      --glass-bg: rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0355a6 0%, #a9bf04 50%, #f1a732 100%);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      color: #ffffff;
+    }
+
+    /* Animated background elements */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(3, 85, 166, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(169, 191, 4, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 60% 40%, rgba(241, 167, 50, 0.06) 0%, transparent 60%);
+      z-index: -2;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        url("data:image/svg+xml;charset=UTF-8,%3csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' fill-rule='evenodd'%3e%3cg fill='%237b68ee' fill-opacity='0.02'%3e%3cpath d='M20,20 L80,20 L80,80 L20,80 Z'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
+      animation: float 30s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-5px) rotate(0.5deg); }
+      66% { transform: translateY(5px) rotate(-0.5deg); }
+    }
+
+    /* Navigation Header */
+    .header {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+      position: relative;
+    }
+
+    .logo {
+      position: absolute;
+      right: 350px;
+    }
+
+    .nav {
+      position: absolute;
+      left: 350px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #0355a6, #a9bf04);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+    }
+
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: max-content;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn.primary {
+      background: #0355a6;
+      border-color: #0355a6;
+    }
+
+    .nav-btn.primary:hover {
+      background: #a9bf04;
+      border-color: #a9bf04;
+    }
+
+    /* Navigation Sections */
+    .nav-section {
+      display: flex;
+      align-items: center;
+      position: absolute;
+    }
+
+    .nav-section-left {
+      left: 350px;
+    }
+
+    .nav-section-right {
+      right: 20px;
+    }
+
+    .nav-section-center {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Navigation Language Selector */
+    .nav-language-selector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 50px;
+      margin-left: 0px;
+    }
+
+    .nav-language-buttons {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-lang-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      text-align: center;
+      min-width: 70px;
+    }
+
+    .nav-lang-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .nav-lang-btn.active {
+      background: #0355a6;
+      border-color: #0355a6;
+      color: white;
+    }
+
+    .lang-name {
+      font-weight: 500;
+      text-align: center;
+    }
+
+    /* Navigation Buttons Container */
+    .nav-buttons {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    /* Voice Assistance */
+    .voice-assistance {
+      display: flex;
+      align-items: center;
+    }
+
+    .voice-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border: 2px solid #0355a6;
+      border-radius: 25px;
+      background: transparent;
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .voice-btn:hover {
+      background: #0355a6;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(3, 85, 166, 0.3);
+    }
+
+    .voice-btn.listening {
+      background: #ff4444;
+      border-color: #ff4444;
+      animation: pulse 1.5s infinite;
+    }
+
+    .voice-icon {
+      font-size: 16px;
+    }
+
+    .voice-text {
+      font-size: 14px;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0); }
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 20px 40px;
+      background-color: #0355a6;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      margin-bottom: 80px;
+      padding: 40px 20px;
+
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: bold;
+      color: #a9bf04;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff, #0355a6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    
+    }
+
+    .hero-subtitle {
+      font-size: 1.4rem;
+      color: #ffffff;
+      margin-bottom: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .cta-btn {
+      padding: 15px 30px;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .cta-btn.primary {
+      background: #0355a6;
+      color: white;
+    }
+
+    .cta-btn.primary:hover {
+      background: #a9bf04;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(3, 85, 166, 0.3);
+    }
+
+    .cta-btn.secondary {
+      background: transparent;
+      color: white;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .cta-btn.secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Transport Modes Section */
+    .transport-section {
+      margin-bottom: 80px;
+      padding: 20px 0;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 50px;
+      color: #ffffff;
+      font-weight: bold;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .transport-grid {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 40px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      flex-wrap: wrap;
+    }
+
+    .transport-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 25px 20px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      min-width: 140px;
+      flex: 0 1 auto;
+    }
+
+    .transport-card:hover {
+      transform: translateY(-10px);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .transport-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .transport-name {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .transport-desc {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    /* Features Section */
+    .features-section {
+      margin-bottom: 80px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .feature-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #ffffff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .feature-desc {
+      color: rgba(255, 255, 255, 0.95);
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    /* Additional Features */
+    .additional-features {
+      margin-bottom: 80px;
+    }
+
+    .additional-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .additional-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .additional-card:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-3px);
+    }
+
+    .additional-icon {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .additional-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 10px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .additional-desc {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    /* Social Media Section */
+    .social-section {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 50px 0;
+      margin-top: 80px;
+    }
+
+    .social-title {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      color: #ffffff;
+      font-weight: bold;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .social-grid {
+      display: grid;
+      justify-content: center;
+      gap: 15px;
+      max-width: 600px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .social-card {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      min-width: 100px;
+      flex: 0 1 auto;
+    }
+
+    .social-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .social-card.facebook {
+      background: #1877f2;
+      color: white;
+    }
+
+    .social-card.twitter {
+      background: #1da1f2;
+      color: white;
+    }
+
+    .social-card.instagram {
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      color: white;
+    }
+
+    .social-card.linkedin {
+      background: #0077b5;
+      color: white;
+    }
+
+    .social-icon {
+      font-size: 16px;
+    }
+
+    .social-name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .transport-grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .transport-card {
+        width: 100%;
+        max-width: 250px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-section {
+        position: relative;
+        margin: 10px 0;
+      }
+
+      .nav-section-left,
+      .nav-section-right,
+      .nav-section-center {
+        left: auto;
+        right: auto;
+        transform: none;
+      }
+
+      .nav-language-selector {
+        margin: 0;
+        flex: none;
+        order: 2;
+      }
+
+      .nav-buttons {
+        margin-right: 0;
+        order: 1;
+      }
+
+      .voice-assistance {
+        margin-top: 0;
+        order: 3;
+      }
+
+      .header-content {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+        gap: 20px;
+      }
+
+      .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
   </style>
 </head>
-<body class="gradient-bg">
-  <!-- Header -->
+<body>
+
+  <!-- Navigation Header -->
   <header class="header">
     <div class="header-content">
       <div class="logo">
         <div class="logo-icon">S</div>
         <h1 class="logo-text">SafeMove</h1>
       </div>
-      <nav class="nav">
-        <a href="#" onclick="goToDashboard()">Dashboard</a>
-        <a href="#" onclick="logout()">Logout</a>
-      </nav>
+      <!-- Left Navigation Section - Authentication -->
+      <div class="nav-section nav-section-left">
+        <div class="nav-buttons">
+          <a href="login.html" class="nav-btn">Login</a>
+          <a href="register.html" class="nav-btn primary">Sign Up</a>
+        </div>
+      </div>
+
+      <!-- Center Navigation Section - Utilities -->
+      <div class="nav-section nav-section-center">
+        <!-- Language Selector -->
+        <div class="nav-language-selector">
+          <div class="nav-language-buttons">
+            <button class="nav-lang-btn active" onclick="setGlobalLanguage('en')" data-lang="en">
+              <span class="lang-name">English</span>
+            </button>
+            <button class="nav-lang-btn" onclick="setGlobalLanguage('lg')" data-lang="lg">
+              <span class="lang-name">Luganda</span>
+            </button>
+            <button class="nav-lang-btn" onclick="setGlobalLanguage('sw')" data-lang="sw">
+              <span class="lang-name">Swahili</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Voice Assistance Button -->
+        <div class="voice-assistance">
+          <button class="voice-btn" onclick="toggleVoiceAssistance()" id="voiceBtn" title="Voice Assistant">
+            <span class="voice-icon">🎤</span>
+            <span class="voice-text">Voice</span>
+          </button>
+        </div>
+      </div>
     </div>
   </header>
 
   <div class="container">
     <!-- Hero Section -->
-    <div style="text-align: center; margin-bottom: 3rem;">
-      <h2 class="hero-title">Safe. Simple. Inclusive. Multimodal.</h2>
-      <p class="hero-subtitle">Transparent, fixed rate transport across East Africa. No surge pricing, no hidden fees.</p>
-    </div>
-
-    <!-- Platform Accessibility -->
-    <div class="grid grid-3">
-      <div class="card">
-        <div class="card-icon">💻</div>
-        <h3 class="card-title">Web Platform</h3>
-        <p class="card-text">Full-featured web application with voice assistance and family profiles</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">📱</div>
-        <h3 class="card-title">USSD Support</h3>
-        <p class="card-text">Works on any phone via *284*20# - no smartphone or internet required</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🔊</div>
-        <h3 class="card-title">Voice Accessible</h3>
-        <p class="card-text">Voice narration and hands-free booking for accessibility</p>
+    <div class="hero">
+      <h1 class="hero-title">SafeMove</h1>
+      <p class="hero-subtitle">Revolutionizing transportation across East Africa with transparent, fixed pricing and multi-modal accessibility. No surge pricing, no hidden fees - just reliable transport for everyone.</p>
+      <div class="hero-cta">
+        <a href="register.html" class="cta-btn primary">Get Started</a>
+        <a href="login.html" class="cta-btn secondary">Login</a>
       </div>
     </div>
 
-    <!-- Fixed Rate Benefits -->
-    <div class="grid grid-3">
-      <div class="card">
-        <div class="card-icon">🛡️</div>
-        <h3 class="card-title">Fixed Pricing</h3>
-        <p class="card-text">No surge pricing or hidden fees</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">⏱️</div>
-        <h3 class="card-title">Instant Quotes</h3>
-        <p class="card-text">See exact fare before booking</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">⭐</div>
-        <h3 class="card-title">Trusted Service</h3>
-        <p class="card-text">Reliable drivers and vehicles</p>
-      </div>
-    </div>
-
-    <!-- Demo Links -->
-    <div class="booking-card" style="margin-bottom: 3rem;">
-      <h3 class="section-title">Explore All SafeMove Features</h3>
-      <div class="grid demo-grid">
-        <a href="javascript:void(0)" onclick="goToRider()" class="demo-card blue">
-        <div class="card-icon">🧍‍♂️</div>
-        <h4 class="demo-title">Enhanced Rider Experience</h4>
-        <p class="demo-text">Complete booking with voice assistance and SOS alerts</p>
-        <span class="demo-link blue">Book Your Journey →</span>
-        </a>
-        <a href="javascript:void(0)" onclick="goToDriver()" class="demo-card green">
-        <div class="card-icon">🚗</div>
-        <h4 class="demo-title">Driver Dashboard</h4>
-        <p class="demo-text">Trip requests with upfront earnings and document verification</p>
-        <span class="demo-link green">View Dashboard →</span>
-        </a>
-        <a href="javascript:void(0)" onclick="goToAdmin()" class="demo-card purple">
-        <div class="card-icon">⚙️</div>
-        <h4 class="demo-title">Admin Dashboard</h4>
-        <p class="demo-text">Live monitoring, driver tracking, and verification management</p>
-        <span class="demo-link purple">Admin Panel →</span>
-        </a>
-        <a href="ussd-demo.html" class="demo-card orange">
-        <div class="card-icon">📱</div>
-        <h4 class="demo-title">USSD Feature Phone Demo</h4>
-        <p class="demo-text">How SafeMove works on basic phones via *284*20#</p>
-        <span class="demo-link orange">Try USSD Demo →</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- Quick Booking Interface -->
-    <div class="booking-card">
-      <h3 class="section-title">Quick Booking Demo</h3>
-      
-      <div style="margin-bottom: 2rem;">
-        <label class="input-label">Choose Transport Mode</label>
-        <div class="transport-grid" id="transportModes">
-          <button class="transport-btn active" data-mode="boda" data-fare="5">
-            <div class="transport-icon">🛵</div>
-            <div class="transport-name">Boda</div>
-            <div class="transport-desc">Quick & affordable</div>
-          </button>
-          <button class="transport-btn" data-mode="taxi" data-fare="15">
-            <div class="transport-icon">🚕</div>
-            <div class="transport-name">Taxi</div>
-            <div class="transport-desc">Comfortable ride</div>
-          </button>
-          <button class="transport-btn" data-mode="car" data-fare="25">
-            <div class="transport-icon">🚗</div>
-            <div class="transport-name">Car</div>
-            <div class="transport-desc">Premium service</div>
-          </button>
-          <button class="transport-btn" data-mode="bus" data-fare="10">
-            <div class="transport-icon">🚌</div>
-            <div class="transport-name">Bus</div>
-            <div class="transport-desc">Budget friendly</div>
-          </button>
-          <button class="transport-btn" data-mode="train" data-fare="35">
-            <div class="transport-icon">🚆</div>
-            <div class="transport-name">Train</div>
-            <div class="transport-desc">Long distance</div>
-          </button>
+    <!-- Modes of Transport Section -->
+    <div class="transport-section">
+      <h2 class="section-title">Choose Your Transport Mode</h2>
+      <div class="transport-grid">
+        <div class="transport-card" onclick="selectTransport('boda')">
+          <div class="transport-icon">🛵</div>
+          <div class="transport-name">Boda</div>
+          <div class="transport-desc">Quick & Affordable rides for short distances</div>
+        </div>
+        <div class="transport-card" onclick="selectTransport('taxi')">
+          <div class="transport-icon">🚕</div>
+          <div class="transport-name">Taxi</div>
+          <div class="transport-desc">Comfortable rides with professional drivers</div>
+        </div>
+        <div class="transport-card" onclick="selectTransport('car')">
+          <div class="transport-icon">🚗</div>
+          <div class="transport-name">Car</div>
+          <div class="transport-desc">Premium service with modern vehicles</div>
+        </div>
+        <div class="transport-card" onclick="selectTransport('bus')">
+          <div class="transport-icon">🚌</div>
+          <div class="transport-name">Bus</div>
+          <div class="transport-desc">Budget-friendly group transportation</div>
+        </div>
+        <div class="transport-card" onclick="selectTransport('train')">
+          <div class="transport-icon">🚆</div>
+          <div class="transport-name">Train</div>
+          <div class="transport-desc">Long-distance travel with scenic routes</div>
         </div>
       </div>
-
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
-        <div class="input-group">
-          <label class="input-label">Pickup Location</label>
-          <div class="input-wrapper">
-            <span class="input-icon">📍</span>
-            <input type="text" id="pickup" class="input-field" placeholder="Enter pickup location">
-          </div>
-        </div>
-        <div class="input-group">
-          <label class="input-label">Destination</label>
-          <div class="input-wrapper">
-            <span class="input-icon">📍</span>
-            <input type="text" id="destination" class="input-field" placeholder="Enter destination">
-          </div>
-        </div>
-      </div>
-
-      <div id="fareDisplay" class="fare-display">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <div style="margin-bottom: 0.5rem;">
-              <span style="background: #d1fae5; color: #065f46; font-size: 0.75rem; font-weight: 500; padding: 4px 10px; border-radius: 12px;">
-                Fixed Rate ✅
-              </span>
-            </div>
-            <h4 class="fare-amount">$<span id="fareAmount">0</span></h4>
-            <p style="font-size: 0.875rem; color: #6b7280;">Your fare is fixed. No extra charges.</p>
-          </div>
-          <div style="text-align: right;">
-            <div id="selectedIcon" style="font-size: 2rem; margin-bottom: 0.5rem;">🛵</div>
-            <div id="selectedMode" style="font-size: 0.875rem; font-weight: 500; color: #374151;">Boda</div>
-          </div>
-        </div>
-      </div>
-
-      <button id="bookBtn" class="btn-primary" disabled>Experience Full Booking - $0</button>
     </div>
 
-    <!-- Features Grid -->
-    <div style="margin-top: 4rem;" class="grid grid-3">
-      <div class="card">
-        <div class="card-icon">🛡️</div>
-        <h3 class="card-title">Safe & Secure</h3>
-        <p class="card-text">All drivers are verified and vehicles inspected</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">⏱️</div>
-        <h3 class="card-title">On Time</h3>
-        <p class="card-text">Reliable pickup and arrival times</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">⭐</div>
-        <h3 class="card-title">Rated Drivers</h3>
-        <p class="card-text">Top-rated professional drivers</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">📍</div>
-        <h3 class="card-title">Wide Coverage</h3>
-        <p class="card-text">Available across all major routes</p>
+    <!-- Cool Features Section -->
+    <div class="features-section">
+      <h2 class="section-title">Why Choose SafeMove?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <div class="feature-title">Safe & Secure</div>
+          <div class="feature-desc">All drivers verified with background checks and vehicle inspections for your peace of mind</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💰</div>
+          <div class="feature-title">Fixed Pricing</div>
+          <div class="feature-desc">No surge pricing or hidden fees. Know your exact fare before you book</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <div class="feature-title">Instant Booking</div>
+          <div class="feature-desc">Book rides instantly with real-time driver matching and GPS tracking</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📍</div>
+          <div class="feature-title">Live Tracking</div>
+          <div class="feature-desc">Track your ride in real-time with precise GPS technology and ETAs</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎤</div>
+          <div class="feature-title">Voice Assistant</div>
+          <div class="feature-desc">Hands-free booking and navigation with voice commands in multiple languages</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <div class="feature-title">USSD Support</div>
+          <div class="feature-desc">Works on any phone via *284*20# - no smartphone or internet required</div>
+        </div>
       </div>
     </div>
-  </div>
+
+    <!-- Additional Features Section -->
+    <div class="additional-features">
+      <h2 class="section-title">Additional Features</h2>
+      <div class="additional-grid">
+        <div class="additional-card">
+          <div class="additional-icon">🚨</div>
+          <div class="additional-title">Emergency SOS</div>
+          <div class="additional-desc">One-tap emergency button for immediate assistance</div>
+        </div>
+        <div class="additional-card">
+          <div class="additional-icon">👨‍👩‍👧‍👦</div>
+          <div class="additional-title">Family Profiles</div>
+          <div class="additional-desc">Shared accounts with monitoring for family safety</div>
+        </div>
+        <div class="additional-card">
+          <div class="additional-icon">💳</div>
+          <div class="additional-title">Multiple Payments</div>
+          <div class="additional-desc">Mobile money, cards, and cash payment options</div>
+        </div>
+        <div class="additional-card">
+          <div class="additional-icon">⭐</div>
+          <div class="additional-title">Driver Ratings</div>
+          <div class="additional-desc">Rate your driver to maintain quality standards</div>
+        </div>
+        <div class="additional-card">
+          <div class="additional-icon">🌍</div>
+          <div class="additional-title">Multi-Language</div>
+          <div class="additional-desc">Support for English, Luganda, and Swahili</div>
+        </div>
+        <div class="additional-card">
+          <div class="additional-icon">📊</div>
+          <div class="additional-title">Trip Analytics</div>
+          <div class="additional-desc">Detailed trip history and spending insights</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Social Media Section -->
+    <div class="social-section">
+      <h2 class="social-title">Follow Us</h2>
+      <div class="social-grid">
+        <a href="https://facebook.com/safemove" class="social-card facebook">
+          <span class="social-icon">📘</span>
+          <span class="social-name">Facebook</span>
+        </a>
+        <a href="https://twitter.com/safemove" class="social-card twitter">
+          <span class="social-icon">🐦</span>
+          <span class="social-name">Twitter</span>
+        </a>
+        <a href="https://instagram.com/safemove" class="social-card instagram">
+          <span class="social-icon">📷</span>
+          <span class="social-name">Instagram</span>
+        </a>
+        <a href="https://linkedin.com/company/safemove" class="social-card linkedin">
+          <span class="social-icon">💼</span>
+          <span class="social-name">LinkedIn</span>
+        </a>
+      </div>
+    </div>
   </div>
 
   <script>
-    // Check authentication on page load
-    window.addEventListener('DOMContentLoaded', function() {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        // Redirect to login if not authenticated
-        window.location.href = 'register.html';
-        return;
+    // Voice Assistance System
+    let recognition = null;
+    let isListening = false;
+    let synth = window.speechSynthesis;
+
+    // Initialize voice recognition
+    function initVoiceRecognition() {
+      if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = currentLanguage === 'en' ? 'en-US' :
+                          currentLanguage === 'lg' ? 'lg-UG' : 'sw-TZ';
+
+        recognition.onstart = function() {
+          isListening = true;
+          document.getElementById('voiceBtn').classList.add('listening');
+          speak("I'm listening. Try saying 'book a ride', 'change language', or 'help'");
+        };
+
+        recognition.onresult = function(event) {
+          const transcript = event.results[0][0].transcript.toLowerCase();
+          handleVoiceCommand(transcript);
+        };
+
+        recognition.onerror = function(event) {
+          console.error('Speech recognition error:', event.error);
+          speak("Sorry, I didn't hear that. Please try again.");
+        };
+
+        recognition.onend = function() {
+          isListening = false;
+          document.getElementById('voiceBtn').classList.remove('listening');
+        };
+      } else {
+        console.warn('Speech recognition not supported in this browser');
+        speak("Voice recognition is not supported in your browser");
+      }
+    }
+
+    // Toggle voice assistance
+    function toggleVoiceAssistance() {
+      if (!recognition) {
+        initVoiceRecognition();
       }
 
-      // Decode token to get user role (simplified - in production use proper JWT decoding)
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        const userRole = payload.role || 'rider';
-
-        // Redirect to appropriate dashboard based on role
-        if (userRole === 'driver') {
-          window.location.href = 'driver-dashboard.html';
-        } else if (userRole === 'admin') {
-          window.location.href = 'admin-dashboard.html';
-        }
-        // Stay on index.html for riders
-      } catch (e) {
-        // Invalid token, redirect to login
-        localStorage.removeItem('token');
-        window.location.href = 'register.html';
+      if (isListening) {
+        recognition.stop();
+      } else {
+        recognition.start();
       }
-    });
+    }
 
-    let selectedMode = 'boda';
-    let selectedFare = 5;
-    let selectedIcon = '🛵';
-    let selectedName = 'Boda';
+    // Handle voice commands
+    function handleVoiceCommand(command) {
+      console.log('Voice command received:', command);
 
-    const transportBtns = document.querySelectorAll('.transport-btn');
-    const pickupInput = document.getElementById('pickup');
-    const destinationInput = document.getElementById('destination');
-    const fareDisplay = document.getElementById('fareDisplay');
-    const fareAmount = document.getElementById('fareAmount');
-    const bookBtn = document.getElementById('bookBtn');
-    const selectedIconEl = document.getElementById('selectedIcon');
-    const selectedModeEl = document.getElementById('selectedMode');
+      if (command.includes('book') || command.includes('ride') || command.includes('taxi')) {
+        speak("Redirecting you to booking page");
+        setTimeout(() => window.location.href = 'register.html', 1000);
+      }
+      else if (command.includes('login') || command.includes('sign in')) {
+        speak("Taking you to login page");
+        setTimeout(() => window.location.href = 'login.html', 1000);
+      }
+      else if (command.includes('language') || command.includes('change language')) {
+        speak("Say English, Luganda, or Swahili to change language");
+      }
+      else if (command.includes('english') || command.includes('ingiliz')) {
+        setGlobalLanguage('en');
+        speak("Language changed to English");
+      }
+      else if (command.includes('luganda') || command.includes('oluganda')) {
+        setGlobalLanguage('lg');
+        speak("Language changed to Luganda");
+      }
+      else if (command.includes('swahili') || command.includes('kiswahili')) {
+        setGlobalLanguage('sw');
+        speak("Language changed to Swahili");
+      }
+      else if (command.includes('help') || command.includes('what can you do')) {
+        speak("I can help you book rides, change language, or navigate. Try saying 'book a ride' or 'change language'");
+      }
+      else if (command.includes('home') || command.includes('main page')) {
+        speak("You are already on the main page");
+      }
+      else {
+        speak("I'm not sure what you mean. Try saying 'help' for assistance");
+      }
+    }
 
-    transportBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        transportBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        selectedMode = btn.dataset.mode;
-        selectedFare = parseInt(btn.dataset.fare);
-        selectedIcon = btn.querySelector('.transport-icon').textContent;
-        selectedName = btn.querySelector('.transport-name').textContent;
-        updateFare();
+    // Text-to-speech function
+    function speak(text) {
+      if (synth.speaking) {
+        synth.cancel();
+      }
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = currentLanguage === 'en' ? 'en-US' :
+                      currentLanguage === 'lg' ? 'lg-UG' : 'sw-TZ';
+      utterance.rate = 0.9;
+      utterance.pitch = 1;
+
+      // Set voice based on language
+      const voices = synth.getVoices();
+      const preferredVoice = voices.find(voice =>
+        currentLanguage === 'en' ? voice.lang.startsWith('en') :
+        currentLanguage === 'lg' ? voice.lang.startsWith('lg') || voice.lang.startsWith('en') :
+        voice.lang.startsWith('sw') || voice.lang.startsWith('en')
+      );
+
+      if (preferredVoice) {
+        utterance.voice = preferredVoice;
+      }
+
+      synth.speak(utterance);
+    }
+
+    // Global Language System for Landing Page
+    let currentLanguage = localStorage.getItem('selectedLanguage') || 'en';
+
+    // Landing page content in multiple languages
+    const landingPageContent = {
+      en: {
+        heroTitle: 'SafeMove',
+        heroSubtitle: 'Revolutionizing transportation across East Africa with transparent, fixed pricing and multi-modal accessibility. No surge pricing, no hidden fees - just reliable transport for everyone.',
+        getStarted: 'Get Started',
+        login: 'Login',
+        transportTitle: 'Choose Your Transport Mode',
+        featuresTitle: 'Why Choose SafeMove?',
+        additionalTitle: 'Additional Features',
+        followUs: 'Follow Us',
+        socialFacebook: 'Facebook',
+        socialTwitter: 'Twitter',
+        socialInstagram: 'Instagram',
+        socialLinkedIn: 'LinkedIn',
+        transportBoda: 'Boda',
+        transportTaxi: 'Taxi',
+        transportCar: 'Car',
+        transportBus: 'Bus',
+        transportTrain: 'Train',
+        transportDescBoda: 'Quick & Affordable rides for short distances',
+        transportDescTaxi: 'Comfortable rides with professional drivers',
+        transportDescCar: 'Premium service with modern vehicles',
+        transportDescBus: 'Budget-friendly group transportation',
+        transportDescTrain: 'Long-distance travel with scenic routes'
+      },
+      lg: {
+        heroTitle: 'SafeMove',
+        heroSubtitle: 'Okukyuusa ebyokutambuza mu East Africa n\'obupimo obutakyuka era enkana yenkana. Tewali kugulumiza oba ssente ezikwekeddwa - kifo kyetagisa ebyokutambuza.',
+        getStarted: 'Tandika',
+        login: 'Nnoonya',
+        transportTitle: 'Londa Ekika Kyokutambuza',
+        featuresTitle: 'Lwaki Olonda SafeMove?',
+        additionalTitle: 'Ebintu Ebirala',
+        followUs: 'Tugoberere',
+        socialFacebook: 'Facebook',
+        socialTwitter: 'Twitter',
+        socialInstagram: 'Instagram',
+        socialLinkedIn: 'LinkedIn',
+        transportBoda: 'Boda',
+        transportTaxi: 'Taaksi',
+        transportCar: 'Mmotoka',
+        transportBus: 'Bbas',
+        transportTrain: 'Ggwanika',
+        transportDescBoda: 'Okutambuza okwangu era okusuffu oluguudo olufupi',
+        transportDescTaxi: 'Okutambuza okweraba n\'abadduzi abakugu',
+        transportDescCar: 'Obusobozi obwama n\'emmeeza empya',
+        transportDescBus: 'Okutambuza okusuffu ekitongole',
+        transportDescTrain: 'Okutambuza oluguudo oluwanvu n\'ebifo ebirungi'
+      },
+      sw: {
+        heroTitle: 'SafeMove',
+        heroSubtitle: 'Inabadilisha usafiri kote Afrika Mashariki kwa bei iliyo wazi, isiyobadilika na ufikiaji wa aina nyingi. Hakuna bei ya kupanda au ada zilizofichwa - usafiri wa kuaminika tu kwa kila mtu.',
+        getStarted: 'Anza',
+        login: 'Ingia',
+        transportTitle: 'Chagua Njia Yako ya Usafiri',
+        featuresTitle: 'Kwanini Uchague SafeMove?',
+        additionalTitle: 'Vipengele Vingine',
+        followUs: 'Tufuate',
+        socialFacebook: 'Facebook',
+        socialTwitter: 'Twitter',
+        socialInstagram: 'Instagram',
+        socialLinkedIn: 'LinkedIn',
+        transportBoda: 'Boda',
+        transportTaxi: 'Teksi',
+        transportCar: 'Gari',
+        transportBus: 'Basi',
+        transportTrain: 'Gari la Moshi',
+        transportDescBoda: 'Safari za haraka na za bei nafuu kwa umbali mfupi',
+        transportDescTaxi: 'Safari za starehe na madereva wa kitaalam',
+        transportDescCar: 'Huduma ya malipo na magari ya kisasa',
+        transportDescBus: 'Usafiri wa bei nafuu wa kikundi',
+        transportDescTrain: 'Usafiri wa umbali mrefu na njia za kuvutia'
+      }
+    };
+
+    // Global Language Management
+    function setGlobalLanguage(lang) {
+      currentLanguage = lang;
+      localStorage.setItem('selectedLanguage', lang);
+
+      // Update all page content with selected language
+      updateLandingPageContent();
+
+      // Update button states
+      document.querySelectorAll('.nav-lang-btn').forEach(btn => {
+        btn.classList.remove('active');
       });
-    });
+      document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
 
-    function updateFare() {
-      const pickup = pickupInput.value.trim();
-      const destination = destinationInput.value.trim();
-
-      if (pickup && destination) {
-        fareDisplay.classList.add('active');
-        fareAmount.textContent = selectedFare;
-        selectedIconEl.textContent = selectedIcon;
-        selectedModeEl.textContent = selectedName;
-        bookBtn.disabled = false;
-        bookBtn.textContent = `Experience Full Booking - $${selectedFare}`;
-      } else {
-        fareDisplay.classList.remove('active');
-        bookBtn.disabled = true;
-        bookBtn.textContent = 'Experience Full Booking - $0';
+      // Update voice recognition language
+      if (recognition) {
+        recognition.lang = lang === 'en' ? 'en-US' :
+                          lang === 'lg' ? 'lg-UG' : 'sw-TZ';
       }
+
+      showStatus(`Language set to: ${getLanguageName(lang)}`, 'info');
     }
 
-    pickupInput.addEventListener('input', updateFare);
-    destinationInput.addEventListener('input', updateFare);
+    function updateLandingPageContent() {
+      const content = landingPageContent[currentLanguage];
 
-    bookBtn.addEventListener('click', () => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        window.location.href = 'booking.html';
-      } else {
-        localStorage.setItem('intendedDestination', 'booking.html');
-        window.location.href = 'register.html';
-      }
-    });
+      // Update hero section
+      document.querySelector('.hero-title').textContent = content.heroTitle;
+      document.querySelector('.hero-subtitle').textContent = content.heroSubtitle;
 
-    // Navigation functions
-    function goToRider() {
-      const token = localStorage.getItem('token');
-      if (token) {
-        window.location.href = 'booking.html';
-      } else {
-        localStorage.setItem('intendedDestination', 'booking.html');
-        localStorage.setItem('intendedRole', 'rider');
-        window.location.href = 'register.html';
-      }
+      // Update CTA buttons
+      document.querySelector('.cta-btn.primary').textContent = content.getStarted;
+      document.querySelector('.cta-btn.secondary').textContent = content.login;
+
+      // Update section titles
+      document.querySelector('.transport-section .section-title').textContent = content.transportTitle;
+      document.querySelector('.features-section .section-title').textContent = content.featuresTitle;
+      document.querySelector('.additional-features .section-title').textContent = content.additionalTitle;
+      document.querySelector('.social-title').textContent = content.followUs;
+
+      // Update transport cards
+      updateTransportCards();
+
+      // Update social media
+      updateSocialMedia();
     }
 
-    function goToDriver() {
-      const token = localStorage.getItem('token');
-      if (token) {
-        window.location.href = 'driver-dashboard.html';
-      } else {
-        localStorage.setItem('intendedDestination', 'driver-dashboard.html');
-        localStorage.setItem('intendedRole', 'driver');
-        window.location.href = 'register.html';
-      }
-    }
+    function updateTransportCards() {
+      const content = landingPageContent[currentLanguage];
 
-    function goToAdmin() {
-      const token = localStorage.getItem('token');
-      if (token) {
-        window.location.href = 'admin-dashboard.html';
-      } else {
-        localStorage.setItem('intendedDestination', 'admin-dashboard.html');
-        localStorage.setItem('intendedRole', 'admin');
-        window.location.href = 'register.html';
-      }
-    }
+      const transportCards = document.querySelectorAll('.transport-card');
+      const transportData = [
+        { name: content.transportBoda, desc: content.transportDescBoda },
+        { name: content.transportTaxi, desc: content.transportDescTaxi },
+        { name: content.transportCar, desc: content.transportDescCar },
+        { name: content.transportBus, desc: content.transportDescBus },
+        { name: content.transportTrain, desc: content.transportDescTrain }
+      ];
 
-    function goToDashboard() {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        window.location.href = 'register.html';
-        return;
-      }
-
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        const userRole = payload.role || 'rider';
-
-        if (userRole === 'driver') {
-          window.location.href = 'driver-dashboard.html';
-        } else if (userRole === 'admin') {
-          window.location.href = 'admin-dashboard.html';
-        } else {
-          window.location.href = 'rider-dashboard.html';
+      transportCards.forEach((card, index) => {
+        if (transportData[index]) {
+          card.querySelector('.transport-name').textContent = transportData[index].name;
+          card.querySelector('.transport-desc').textContent = transportData[index].desc;
         }
-      } catch (e) {
-        window.location.href = 'register.html';
-      }
+      });
     }
 
-    function logout() {
-      localStorage.removeItem('token');
-      window.location.href = 'register.html';
+    function updateSocialMedia() {
+      const content = landingPageContent[currentLanguage];
+
+      const socialCards = document.querySelectorAll('.social-card');
+      const socialData = [
+        { name: content.socialFacebook, handle: '@SafeMove' },
+        { name: content.socialTwitter, handle: '@SafeMove' },
+        { name: content.socialInstagram, handle: '@SafeMove' },
+        { name: content.socialLinkedIn, handle: 'SafeMove' }
+      ];
+
+      socialCards.forEach((card, index) => {
+        if (socialData[index]) {
+          card.querySelector('.social-name').textContent = socialData[index].name;
+          card.querySelector('.social-handle').textContent = socialData[index].handle;
+        }
+      });
     }
+
+    function getLanguageName(lang) {
+      const nameMap = {
+        'en': 'English',
+        'lg': 'Luganda',
+        'sw': 'Swahili'
+      };
+      return nameMap[lang] || 'English';
+    }
+
+    function showStatus(message, type) {
+      // Simple status display for demo
+      console.log(`${type}: ${message}`);
+    }
+
+    // Transport selection
+    function selectTransport(mode) {
+      const transportCards = document.querySelectorAll('.transport-card');
+      transportCards.forEach(card => {
+        card.style.transform = 'scale(0.98)';
+        setTimeout(() => {
+          card.style.transform = '';
+        }, 200);
+      });
+
+      showStatus(`Selected transport: ${mode}`, 'info');
+
+      // Redirect to registration for demo
+      setTimeout(() => {
+        window.location.href = 'register.html';
+      }, 1000);
+    }
+
+    // Initialize page with saved language preference
+    document.addEventListener('DOMContentLoaded', function() {
+       const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+       setGlobalLanguage(savedLanguage);
+       updateLandingPageContent();
+       initVoiceRecognition();
+     });
   </script>
 </body>
 </html>
+
