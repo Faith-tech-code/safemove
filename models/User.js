@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   phone: { type: String, required: true, unique: true },
   role: { type: String, enum: ['rider', 'driver', 'admin'], default: 'rider' },
   passwordHash: { type: String, required: true },
@@ -9,6 +10,10 @@ const userSchema = new mongoose.Schema({
   verified: { type: Boolean, default: false },
   tier: { type: String, enum: ['Silver', 'Gold', 'Premium'], default: 'Silver' },
   vehicleType: { type: String, enum: ['boda', 'taxi', 'bus', 'car', 'train', null], default: null },
+
+  // Password reset fields
+  resetPasswordToken: { type: String, default: null },
+  resetPasswordExpires: { type: Date, default: null }
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);
