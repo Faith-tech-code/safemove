@@ -708,8 +708,8 @@
   <div class="container">
     <!-- Hero Section -->
     <div class="hero">
-      <h1 class="hero-title">SafeMove</h1>
-      <p class="hero-subtitle">Revolutionizing transportation across East Africa with transparent, fixed pricing and multi-modal accessibility. No surge pricing, no hidden fees - just reliable transport for everyone.</p>
+      <h1 class="hero-title" data-narrate="true" data-narrate-key="heroTitle">SafeMove</h1>
+      <p class="hero-subtitle" data-narrate="true" data-narrate-key="heroSubtitle">Revolutionizing transportation across East Africa with transparent, fixed pricing and multi-modal accessibility. No surge pricing, no hidden fees - just reliable transport for everyone.</p>
       <div class="hero-cta">
         <a href="register.html" class="cta-btn primary">Get Started</a>
         <a href="login.html" class="cta-btn secondary">Login</a>
@@ -718,7 +718,7 @@
 
     <!-- Modes of Transport Section -->
     <div class="transport-section">
-      <h2 class="section-title">Choose Your Transport Mode</h2>
+      <h2 class="section-title" data-narrate="true" data-narrate-key="transportTitle">Choose Your Transport Mode</h2>
       <div class="transport-grid">
         <div class="transport-card" onclick="selectTransport('boda')">
           <div class="transport-icon">🛵</div>
@@ -750,7 +750,7 @@
 
     <!-- Cool Features Section -->
     <div class="features-section">
-      <h2 class="section-title">Why Choose SafeMove?</h2>
+      <h2 class="section-title" data-narrate="true" data-narrate-key="featuresTitle">Why Choose SafeMove?</h2>
       <div class="features-grid">
         <div class="feature-card">
           <div class="feature-icon">🛡️</div>
@@ -787,7 +787,7 @@
 
     <!-- Additional Features Section -->
     <div class="additional-features">
-      <h2 class="section-title">Additional Features</h2>
+      <h2 class="section-title" data-narrate="true" data-narrate-key="additionalTitle">Additional Features</h2>
       <div class="additional-grid">
         <div class="additional-card">
           <div class="additional-icon">🚨</div>
@@ -825,7 +825,7 @@
 
     <!-- Social Media Section -->
     <div class="social-section">
-      <h2 class="social-title">Follow Us</h2>
+      <h2 class="social-title" data-narrate="true" data-narrate-key="followUs">Follow Us</h2>
       <div class="social-grid">
         <a href="https://facebook.com/safemove" class="social-card facebook">
           <span class="social-icon">📘</span>
@@ -847,9 +847,9 @@
     </div>
   </div>
 
+  <script src="js/voice-assistance.js"></script>
   <script>
-    // Voice Assistance System
-    let recognition = null;
+    // Voice Assistance System (now handled by global voice assistant)
     let isListening = false;
     let synth = window.speechSynthesis;
 
@@ -1174,4 +1174,3 @@
   </script>
 </body>
 </html>
-

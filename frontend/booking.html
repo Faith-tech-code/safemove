@@ -301,6 +301,7 @@
     </div>
   </div>
 
+  <script src="js/voice-assistance.js"></script>
   <script>
     // State
     let state = {
@@ -600,32 +601,7 @@
 
       // Process payment based on method
       processPayment().then(success => {
-        if (success) {
-          const booking = {
-            id: 'trip-' + Date.now(),
-            booking_id: 'SM' + Date.now(),
-            transport_mode: state.selectedMode,
-            pickup: state.pickup,
-            destination: state.destination,
-            route: state.selectedRoute,
-            total_fare_ugx: calculateFare(),
-            payment_method: state.selectedPaymentMethod,
-            status: 'confirmed'
-          };
-
-          if (state.selectedMode === 'train' || state.selectedMode === 'bus') {
-            showTicket(booking);
-          } else {
-            state.currentTrip = booking;
-            showCurrentTrip();
-            // Redirect to trip tracking page after 2 seconds
-            setTimeout(() => {
-              window.location.href = 'trip-tracking.html';
-            }, 2000);
-          }
-
-          speakText('Your trip has been booked successfully');
-        }
+        if (success) createBooking();
       });
     }
 
@@ -635,20 +611,20 @@
       try {
         switch(state.selectedPaymentMethod) {
           case 'card':
-            // Process SafeMove card payment
             return await processCardPayment(amount);
+            break;
 
           case 'visa':
-            // Process Visa card payment
             return await processVisaPayment(amount);
+            break;
 
           case 'momo':
-            // Process Mobile Money payment
             return await processMobileMoneyPayment(amount);
+            break;
 
           case 'airtel':
-            // Process Airtel Money payment
             return await processAirtelMoneyPayment(amount);
+            break;
 
           default:
             throw new Error('Invalid payment method');
@@ -717,7 +693,7 @@
         border-radius: 10px;
         border: 1px solid ${type === 'success' ? '#c3e6cb' : '#f5c6cb'};
         font-weight: bold;
-        z-index: 1000;
+        z-index: 999;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         animation: fadeIn 0.3s ease-out;
       `;
@@ -747,6 +723,48 @@
           document.body.removeChild(statusDiv);
         }, 300);
       }, 3000);
+    }
+
+    async function createBooking() {
+      const bookingData = {
+        transport_mode: state.selectedMode,
+        pickup: state.pickup,
+        destination: state.destination,
+        route: state.selectedRoute,
+        total_fare_ugx: calculateFare(),
+        payment_method: state.selectedPaymentMethod,
+        status: 'confirmed'
+      };
+
+      try {
+        // In a real app, you would send this to the backend.
+        // For now, we simulate a successful booking.
+        console.log("Creating booking with data:", bookingData);
+        // const booking = await apiFetch('/bookings', 'POST', bookingData);
+        
+        // Simulate a successful response
+        const booking = { ...bookingData, id: 'trip-' + Date.now(), booking_id: 'SM' + Date.now() };
+
+        if (state.selectedMode === 'train' || state.selectedMode === 'bus') {
+          showTicket(booking);
+        } else {
+          // Show current trip and redirect to tracking
+          state.currentTrip = booking;
+          showCurrentTrip();
+
+          // Redirect to live tracking after booking
+          showPaymentStatus('✅ Booking confirmed! Redirecting to live tracking...', 'success');
+          setTimeout(() => {
+            redirectToTracking();
+          }, 1500);
+        }
+
+        speakText('Your trip has been booked successfully');
+
+      } catch (error) {
+        console.error("Booking failed:", error);
+        showPaymentStatus('Booking failed. Please try again.', 'error');
+      }
     }
 
     function showCurrentTrip() {
@@ -798,6 +816,8 @@
       modal.classList.remove('hidden');
     }
 
+
+
     function closeTicket() {
       document.getElementById('ticketModal').classList.add('hidden');
     }
@@ -807,6 +827,13 @@
         state.currentTrip = null;
         document.getElementById('currentTripDisplay').classList.add('hidden');
       }
+    }
+    
+    function redirectToTracking() {
+      showPaymentStatus('Redirecting to live tracking...', 'info');
+      setTimeout(() => {
+        window.location.href = 'trip-tracking.html';
+      }, 2000);
     }
 
     function shareTrip() {
@@ -864,7 +891,7 @@
         padding: 12px 20px;
         border-radius: 8px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        z-index: 1000;
+        z-index: 999;
         font-weight: 500;
         animation: slideIn 0.3s ease-out;
       `;
@@ -923,5 +950,6 @@
     // Initialize on load
     init();
   </script>
+
 </body>
 </html>

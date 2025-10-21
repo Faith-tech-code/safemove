@@ -28,7 +28,7 @@ async function register() {
         statusEl.innerText = `Success! ${data.message || 'Registered successfully'}. Redirecting...`;
         statusEl.style.color = 'green';
         localStorage.removeItem('intendedRole');
-        setTimeout(() => { window.location.href = 'register.html'; }, 1500);
+        setTimeout(() => { window.location.href = 'login.html'; }, 1500);
     } catch (e) {
         statusEl.innerText = e.message || 'Registration failed. Please try again.';
         statusEl.style.color = 'red';
@@ -51,51 +51,100 @@ async function login() {
     statusEl.style.color = '#007bff';
 
     try {
+        console.log('🔐 Attempting login with:', loginInput);
          const data = await apiFetch('/auth/login', 'POST', { loginInput: loginInput, password }, false);
 
-        if (!data || !data.token) {
-            throw new Error('Invalid response from server');
+        console.log('📥 Raw login response:', data);
+        console.log('📊 Response type:', typeof data);
+        console.log('🔑 Response keys:', data ? Object.keys(data) : 'null/undefined');
+
+        // Handle different response formats
+        const token = data.token || data.access_token;
+        console.log('🎫 Token found:', !!token);
+        console.log('🎫 Token value:', token ? token.substring(0, 20) + '...' : 'null');
+
+        if (!data || !token) {
+            console.error('❌ Invalid response structure:', data);
+            throw new Error('Invalid response from server - no token found');
         }
 
-        localStorage.setItem('token', data.token);
+        console.log('Token received, storing...');
+        localStorage.setItem('token', token);
 
         // Handle different response structures from backend
-        if (data.user) {
-            localStorage.setItem('userName', data.user.name || data.user.username || loginInput);
-            localStorage.setItem('userRole', data.user.role || 'rider');
+        let userRole = 'rider'; // default role
+
+        console.log('🔄 Processing login response:', data);
+        console.log('📋 Response has user object:', !!data.user);
+        console.log('👤 User object type:', typeof data.user);
+
+        if (data.user && typeof data.user === 'object') {
+            const userName = data.user.name || data.user.username || loginInput;
+            userRole = data.user.role || 'rider';
+
+            localStorage.setItem('userName', userName);
+            localStorage.setItem('userRole', userRole);
+
+            console.log('✅ User data from response:', { name: userName, role: userRole });
         } else {
+            console.log('🔄 No user object in response, trying token decode...');
             // Fallback: decode token to get user info
             try {
-                const payload = JSON.parse(atob(data.token.split('.')[1]));
-                localStorage.setItem('userName', payload.name || payload.username || loginInput);
-                localStorage.setItem('userRole', payload.role || 'rider');
+                const tokenParts = token.split('.');
+                console.log('🎫 Token parts:', tokenParts.length);
+                const tokenPayload = JSON.parse(atob(tokenParts[1]));
+                console.log('🎫 Token payload:', tokenPayload);
+
+                const fallbackName = tokenPayload.name || tokenPayload.username || loginInput;
+                userRole = tokenPayload.role || 'rider';
+
+                localStorage.setItem('userName', fallbackName);
+                localStorage.setItem('userRole', userRole);
+
+                console.log('✅ User data from token:', { name: fallbackName, role: userRole });
             } catch (e) {
+                console.error('❌ Token decode error:', e);
                 localStorage.setItem('userName', loginInput);
                 localStorage.setItem('userRole', 'rider');
+                userRole = 'rider';
             }
         }
-        
+
+        console.log('✅ Final user role for redirection:', userRole);
+        console.log('💾 Stored in localStorage - userRole:', localStorage.getItem('userRole'));
+        console.log('💾 Stored in localStorage - userName:', localStorage.getItem('userName'));
+        console.log('💾 Stored in localStorage - token:', localStorage.getItem('token') ? 'YES' : 'NO');
+
         statusEl.innerText = 'Login successful! Redirecting...';
         statusEl.style.color = 'green';
-        
+
         // Redirect to intended destination or default based on role
         const intendedDestination = localStorage.getItem('intendedDestination');
+        console.log('🎯 Intended destination:', intendedDestination);
+
         localStorage.removeItem('intendedDestination');
         localStorage.removeItem('intendedRole');
-        
+
         setTimeout(() => {
+            console.log('⏰ Executing redirection after 500ms delay...');
             if (intendedDestination) {
+                console.log('🚀 Redirecting to intended destination:', intendedDestination);
                 window.location.href = intendedDestination;
             } else {
                 // Default redirects based on role
-                if (data.user.role === 'driver') {
+                console.log('🚀 Redirecting to role-based dashboard for role:', userRole);
+                if (userRole === 'driver') {
+                    console.log('🚗 Redirecting driver to driver-dashboard.html');
                     window.location.href = 'driver-dashboard.html';
-                } else if (data.user.role === 'admin') {
+                } else if (userRole === 'admin') {
+                    console.log('⚙️ Redirecting admin to admin-dashboard.html');
                     window.location.href = 'admin-dashboard.html';
                 } else {
+                    console.log('🎫 Redirecting rider to booking.html');
                     window.location.href = 'booking.html';
                 }
             }
+            console.log('✅ Redirection initiated');
         }, 500);
     } catch (e) {
         statusEl.innerText = e.message || 'Login failed. Please check your credentials.';
@@ -120,7 +169,7 @@ async function requestPasswordReset(email) {
     showStatus('Sending reset link...', 'info');
 
     try {
-        const data = await apiFetch('/auth/forgot-password', 'POST', { email }, false);
+        const data = await apiFetch('/forgot-password', 'POST', { email }, false);
         showStatus(data.message || 'Reset link sent successfully!', 'success');
 
         if (data.resetToken && window.location.pathname.includes('login.html')) {
@@ -152,7 +201,7 @@ async function resetPasswordWithToken(token, newPassword) {
     showStatus('Resetting password...', 'info');
 
     try {
-        const data = await apiFetch('/auth/reset-password', 'POST', {
+        const data = await apiFetch('/reset-password', 'POST', {
             token: token,
             newPassword: newPassword
         }, false);
@@ -177,13 +226,25 @@ function checkAuth() {
         localStorage.setItem('intendedDestination', path.split('/').pop());
         window.location.href = 'register.html';
     } else if (token && (path.includes('login.html') || path.includes('register.html'))) {
-        const userRole = localStorage.getItem('userRole');
-        if (userRole === 'driver') {
-            window.location.href = 'driver-dashboard.html';
-        } else if (userRole === 'admin') {
-            window.location.href = 'admin-dashboard.html';
+        // Only redirect if not in the middle of a login process
+        const isLoggingIn = document.getElementById('loginBtn') && document.getElementById('loginBtn').textContent === 'Logging in...';
+        if (!isLoggingIn) {
+            const userRole = localStorage.getItem('userRole') || 'rider';
+            const userName = localStorage.getItem('userName') || 'User';
+            console.log('User already logged in:', userName, 'role:', userRole, 'current path:', path);
+
+            if (userRole === 'driver') {
+                console.log('Redirecting driver to driver-dashboard.html');
+                window.location.href = 'driver-dashboard.html';
+            } else if (userRole === 'admin') {
+                console.log('Redirecting admin to admin-dashboard.html');
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                console.log('Redirecting rider to booking.html');
+                window.location.href = 'booking.html';
+            }
         } else {
-            window.location.href = 'booking.html';
+            console.log('Login in progress, not redirecting');
         }
     }
 

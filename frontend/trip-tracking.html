@@ -141,6 +141,7 @@
     </div>
   </div>
 
+  <script src="js/voice-assistance.js"></script>
   <script>
     // Check authentication on page load
     window.addEventListener('DOMContentLoaded', function() {
@@ -202,7 +203,7 @@
 
     function endTrip() {
       if (confirm('Confirm that the trip has been completed?')) {
-        window.location.href = 'trip-feedback.html';
+        window.location.href = 'trip-feedback.html'; // This is already correct, but confirming the flow.
       }
     }
 

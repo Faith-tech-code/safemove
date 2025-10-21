@@ -39,21 +39,17 @@ mongoose.connection.on('disconnected', () => {
 
 fastify.register(require('@fastify/cors'), {
   origin: (origin, callback) => {
-    // Allow requests from localhost (development) and Netlify (production)
-    const allowedOrigins = [
-      'http://localhost:8000',
-      'http://127.0.0.1:8000',
-      'http://localhost:5500',
-      'http://127.0.0.1:5500',
+    const productionOrigins = [
       'https://imaginative-mooncake-de0de1.netlify.app',
       'https://safemove.netlify.app',
       'https://main--safemove.netlify.app'
     ];
 
-    // Allow requests with no origin (mobile apps, etc.)
-    if (!origin) return callback(null, true);
-
-    if (allowedOrigins.includes(origin)) {
+    // Allow requests with no origin (file://, mobile apps, etc.) or from localhost on any port
+    if (!origin || origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1')) {
+      return callback(null, true);
+    }
+    if (productionOrigins.includes(origin)) {
       callback(null, true);
     } else {
       console.log('CORS blocked origin:', origin);
@@ -94,4 +90,3 @@ const start = async () => {
   }
 };
 start();
-
