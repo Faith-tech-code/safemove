@@ -40,7 +40,7 @@ mongoose.connection.on('disconnected', () => {
 fastify.register(require('@fastify/cors'), {
   origin: (origin, callback) => {
     // Log the incoming origin for debugging purposes
-    fastify.log.debug(`CORS Origin received: ${origin}`);
+    console.log(`🔍 CORS Origin received: ${origin}`);
     // More robust regex for Netlify deploy previews and branch deploys
     const netlifyRegex = /^https:\/\/([a-zA-Z0-9-]+--)?safemove\.netlify\.app$/;
     const allowedOrigins = [
@@ -49,21 +49,24 @@ fastify.register(require('@fastify/cors'), {
 
     // Allow requests with no origin (mobile apps, Postman, etc.)
     if (!origin) {
+      console.log('✅ CORS: Allowing request with no origin');
       return callback(null, true);
     }
 
     // Allow localhost for development
     if (origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1')) {
+      console.log('✅ CORS: Allowing localhost origin');
       return callback(null, true);
     }
 
     // Allow production origins
     if (allowedOrigins.includes(origin) || netlifyRegex.test(origin)) {
+      console.log(`✅ CORS: Allowing Netlify origin: ${origin}`);
       return callback(null, true);
     }
 
     // Block all other origins
-    fastify.log.warn(`CORS blocked origin: ${origin}`);
+    console.log(`❌ CORS: Blocked origin: ${origin}`);
     callback(new Error('Not allowed by CORS'));
   },
   credentials: true,

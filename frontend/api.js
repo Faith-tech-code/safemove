@@ -5,6 +5,9 @@ const API_BASE_URL = window.location.hostname === 'localhost' || window.location
     ? 'http://localhost:8000/v1'  // Local development
     : 'https://safemove.onrender.com/v1'; // Production backend
 
+// Fallback API URL in case production backend is not available
+const FALLBACK_API_URL = 'http://localhost:8000/v1';
+
 /**
  * A wrapper for the fetch API to communicate with the backend.
  * @param {string} endpoint - The API endpoint to call (e.g., '/auth/login').
@@ -14,7 +17,6 @@ const API_BASE_URL = window.location.hostname === 'localhost' || window.location
  * @returns {Promise<any>} - The JSON response from the server.
  */
 async function apiFetch(endpoint, method = 'GET', body = null, requireAuth = true) {
-    const url = `${API_BASE_URL}${endpoint}`;
     const headers = {
         'Content-Type': 'application/json',
     };
@@ -37,8 +39,30 @@ async function apiFetch(endpoint, method = 'GET', body = null, requireAuth = tru
         config.body = JSON.stringify(body);
     }
 
+    // Try production URL first, fallback to localhost if it fails
+    let baseUrl = API_BASE_URL;
+    let response;
+
     try {
-        const response = await fetch(url, config);
+        response = await fetch(`${baseUrl}${endpoint}`, config);
+        // If production URL fails and we're not in development, try localhost as fallback
+        if (!response.ok && !baseUrl.includes('localhost')) {
+            console.warn('Production API failed, trying localhost fallback...');
+            baseUrl = FALLBACK_API_URL;
+            response = await fetch(`${baseUrl}${endpoint}`, config);
+        }
+    } catch (error) {
+        // If production URL fails completely, try localhost fallback
+        if (!baseUrl.includes('localhost')) {
+            console.warn('Production API not accessible, using localhost fallback:', error.message);
+            baseUrl = FALLBACK_API_URL;
+            response = await fetch(`${baseUrl}${endpoint}`, config);
+        } else {
+            throw error;
+        }
+    }
+
+    try {
         const data = await response.json();
 
         if (!response.ok) {
