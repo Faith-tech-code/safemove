@@ -1,8 +1,9 @@
-// frontend/js/api.js
+// frontend/api.js
 
-// Define the base URL for your backend API.
-// According to your README, the server runs on port 8000.
-const API_BASE_URL = 'http://localhost:8000';
+// Dynamic API base URL for development and production
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === ''
+    ? 'http://localhost:8000/v1'  // Local development
+    : 'https://safemove.onrender.com/v1'; // Production backend
 
 /**
  * A wrapper for the fetch API to communicate with the backend.
