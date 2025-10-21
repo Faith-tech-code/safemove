@@ -51,12 +51,14 @@ fastify.register(require('@fastify/cors'), {
     ];
 
     // Allow requests with no origin (mobile apps, Postman, etc.)
+    // Allow requests with no origin (e.g., mobile apps, Postman)
     if (!origin) {
       console.log('✅ CORS: Allowing request with no origin');
       return callback(null, true);
     }
 
     // Allow localhost for development
+    // Allow localhost and 127.0.0.1 for local development on any port
     if (origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1')) {
       console.log('✅ CORS: Allowing localhost origin');
       return callback(null, true);
@@ -65,11 +67,14 @@ fastify.register(require('@fastify/cors'), {
     // Allow production origins
     if (allowedOrigins.includes(origin) || netlifyRegex.test(origin) || anyNetlifyRegex.test(origin)) {
       console.log(`✅ CORS: Allowing Netlify origin: ${origin}`);
+    // Allow your main Netlify domain and any of its subdomains (for deploy previews)
+    if (/(^https:\/\/safemove\.netlify\.app$)|(\.netlify\.app$)/.test(origin)) {
       return callback(null, true);
     }
 
     // Block all other origins
     console.log(`❌ CORS: Blocked origin: ${origin}`);
+    fastify.log.warn(`CORS: Blocked origin: ${origin}`);
     callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
