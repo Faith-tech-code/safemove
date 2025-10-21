@@ -43,8 +43,11 @@ fastify.register(require('@fastify/cors'), {
     console.log(`🔍 CORS Origin received: ${origin}`);
     // More robust regex for Netlify deploy previews and branch deploys
     const netlifyRegex = /^https:\/\/([a-zA-Z0-9-]+--)?safemove\.netlify\.app$/;
+    // Also allow any netlify.app domain for development/testing
+    const anyNetlifyRegex = /^https:\/\/[a-zA-Z0-9-]+.netlify\.app$/;
     const allowedOrigins = [
       'https://safemove.netlify.app', // Your main production site
+      'https://imaginative-mooncake-de0de1.netlify.app', // Current deployment
     ];
 
     // Allow requests with no origin (mobile apps, Postman, etc.)
@@ -60,7 +63,7 @@ fastify.register(require('@fastify/cors'), {
     }
 
     // Allow production origins
-    if (allowedOrigins.includes(origin) || netlifyRegex.test(origin)) {
+    if (allowedOrigins.includes(origin) || netlifyRegex.test(origin) || anyNetlifyRegex.test(origin)) {
       console.log(`✅ CORS: Allowing Netlify origin: ${origin}`);
       return callback(null, true);
     }
